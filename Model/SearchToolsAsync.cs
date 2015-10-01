@@ -33,7 +33,8 @@ namespace JDictU.Model
         }
 
         public static async Task<List<HeadwordSentence>>  getSentences(string word) {
-            List<HeadwordSentence> hws = await DBInfo.EconnAsync.QueryAsync<HeadwordSentence>("SELECT headword,reading,form,sensenumber, verified, sentencejpn, sentenceeng FROM headwords AS H JOIN sentences AS S ON H.sentenceid=S.id WHERE H.headword IS '" + word + "' ORDER BY H.verified DESC LIMIT 10");
+            string query = "SELECT headword,reading,form,sensenumber, verified, sentencejpn, sentenceeng FROM headwords AS H JOIN sentences AS S ON H.sentenceid=S.id WHERE H.headword IS ? ORDER BY H.verified DESC LIMIT 10";
+            List<HeadwordSentence> hws = await DBInfo.EconnAsync.QueryAsync<HeadwordSentence>(query, word);
             return hws;
         } 
 
