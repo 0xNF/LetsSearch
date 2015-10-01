@@ -45,7 +45,6 @@ namespace JDictU.Model
             Debug.WriteLine("ID: " + sr.entry_id);
             isFavorite = UserData.isFavorited(this._sr.entry_id);
             getExamples(MainKanji);
-
         }
 
         private async Task getExamples(string headword) {
