@@ -97,9 +97,14 @@ namespace JDictU.Model
                 return _sr.kanji[0];
             }
         }
+        
+        private string formatForFavorite() {
+            string text = string.Format("{0} - {1}", this.MainEnglish, this.MainKanji);
+            return text;
+        }
 
         public void favorite() {
-            UserData.insertIntoFavorites(this._sr.entry_id, this.MainEnglish);
+            UserData.insertIntoFavorites(this._sr.entry_id, this.formatForFavorite());
             this.isFavorite = true;
         }
 

@@ -49,13 +49,19 @@ namespace JDictU.Model
             }
         }
 
+        public static async Task clearFavorites() {
+            try {
+                await DBInfo.UconnAsync.ExecuteAsync("delete from favorites");
+            }
+            catch (SQLiteException sle) {
+                Debug.WriteLine(sle);
+            }
+        }
+
         /** retrieves all records from the Favorites table of UserData.sqlite**/
-        public static List<Favorites> retrieveFavorite() {
-            //TryCatch is at method call
-            //SQLiteConnection conn = new SQLiteConnection(userdata);
-            //List<Favorites> retFavs = conn.Query<Favorites>("select * from favorites order by entry_id asc");
-            //return retFavs;
-            return new List<Favorites>();
+        public static async Task<List<Favorites>> retrieveFavorite() {
+            List<Favorites> retFavs = await DBInfo.UconnAsync.QueryAsync<Favorites>("select * from favorites order by entry_id asc");
+            return retFavs;
         }
 
         /** inserts a new favorites into the Favorites table of UserData.sqlite **/

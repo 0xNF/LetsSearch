@@ -123,7 +123,9 @@ namespace JDictU {
 
         }
 
-
+        private void toFavorites(object sender, RoutedEventArgs e) {
+            this.Frame.Navigate(typeof(FavoritesPage));
+        }
     }
 }
 

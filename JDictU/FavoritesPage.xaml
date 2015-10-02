@@ -17,8 +17,36 @@
             <TextBlock Text="Favorites" Margin="9,-7,0,0" FontSize="48" FontFamily="Segoe WP"  HorizontalAlignment="Left" Width="366" Foreground="#FF91C3FF"/>
         </StackPanel>
 
-        <ListView Grid.Row="1" ItemsSource="{Binding}"/>
+        <ListView Grid.Row="1" ItemsSource="{Binding}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Tag="{Binding Path='entry_id'}" Tapped="toResult">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50*"/>
+                            <ColumnDefinition Width="50*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" HorizontalAlignment="Left" FontFamily="Segoe WP" FontSize="20" Text="{Binding Path='display_string', FallbackValue='No Favorites (｡•́︿•̀｡)'}"/>
+
+                        <!--<TextBox Grid.Column="1" Text="{Binding Path='', FallbackValue='No Favorites (｡•́︿•̀｡)'}"/>-->
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+
+        </ListView>
 
 
     </Grid>
+
+    <Page.BottomAppBar>
+        <CommandBar>
+            <!-- CommandBar content -->
+            <CommandBar.PrimaryCommands>
+                <AppBarButton Name="searchButton" Label="Search" Icon="Find" Click="goToSearch"/>
+            </CommandBar.PrimaryCommands>
+            <CommandBar.SecondaryCommands>
+                <AppBarButton Label="View history" Click="toHistory"/>
+                <AppBarButton Label="clear favorites" Click="clearFavorites"/>
+            </CommandBar.SecondaryCommands>
+        </CommandBar>
+    </Page.BottomAppBar>
 </Page>

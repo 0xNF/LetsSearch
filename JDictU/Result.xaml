@@ -379,7 +379,7 @@
             </CommandBar.PrimaryCommands>
             <CommandBar.SecondaryCommands>
                 <AppBarButton Label="View history" Click="toHistory"/>
-                <!--<AppBarButton Label="view favorites" Click="toFavorites"/>-->
+                <AppBarButton Label="view favorites" Click="toFavorites"/>
             </CommandBar.SecondaryCommands>
         </CommandBar>
     </Page.BottomAppBar>

@@ -368,10 +368,11 @@ namespace JDictU {
         }
 
         private void toFavorites(object sender, RoutedEventArgs e) {
+            this.Frame.Navigate(typeof(FavoritesPage));
 
         }
         private void toHistory(object sender, RoutedEventArgs e) {
-
+            this.Frame.Navigate(typeof(HistoryPage));
         }
 
         private void switchFormality(object sender, RoutedEventArgs e) {

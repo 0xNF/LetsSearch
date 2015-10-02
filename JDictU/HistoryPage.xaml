@@ -77,6 +77,7 @@
                 <AppBarButton Name="searchButton" Label="Search" Icon="Find" Click="goToSearch"/>
             </CommandBar.PrimaryCommands>
             <CommandBar.SecondaryCommands>
+                <AppBarButton Label="view favorites" Click="toFavorites"/>
                 <AppBarButton Label="Clear history" Click="clearHistoryCheck"/>
                 <!--<AppBarButton Label="view favorites" Click="toFavorites"/>-->
             </CommandBar.SecondaryCommands>

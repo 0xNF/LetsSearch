@@ -1,5 +1,7 @@
-﻿using System;
+﻿using JDictU.Model;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -20,8 +22,40 @@ namespace JDictU {
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
     public sealed partial class FavoritesPage : Page {
+
+        ObservableCollection<Favorites> favs = new ObservableCollection<Favorites>();
+
         public FavoritesPage() {
             this.InitializeComponent();
+            populateFavorites();
+            this.DataContext = favs;
+        }
+
+        private async void populateFavorites() {
+            var x = await UserData.retrieveFavorite();
+            foreach(Favorites f in x) {
+                favs.Add(f);
+            }
+        }
+
+
+        private void toResult(object sender, TappedRoutedEventArgs e) {
+            Grid g = sender as Grid;
+            int id = (int)g.Tag;
+            Frame.Navigate(typeof(Result), id);
+        }
+
+        private void toHistory(object sender, RoutedEventArgs e) {
+            this.Frame.Navigate(typeof(HistoryPage));
+        }
+
+        private void goToSearch(object sender, RoutedEventArgs e) {
+            this.Frame.Navigate(typeof(MainPage));
+        }
+
+        private async void clearFavorites(object sender, RoutedEventArgs e) {
+            await UserData.clearFavorites();
+            this.favs.Clear();
         }
     }
 }
