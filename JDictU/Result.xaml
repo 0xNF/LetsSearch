@@ -39,7 +39,7 @@
                                     <ColumnDefinition Width="3*"/>
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ScrollViewer x:Name="ScrollViewer_KanjiSpace" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" Margin="0,10,0,-10" d:LayoutOverrides="TopMargin, BottomMargin">
+                                <ScrollViewer x:Name="ScrollViewer_KanjiSpace" HorizontalScrollBarVisibility="Disabled" VerticalScrollMode="Disabled"  HorizontalScrollMode="Enabled"  Margin="0,10,0,-10" d:LayoutOverrides="TopMargin, BottomMargin">
                                     <TextBlock x:Name="TextBlock_KanjiSpace" Margin="22,16,1,20"  FontSize="48" FontFamily="Segoe WP SemiLight" Foreground="{StaticResource IceBlueBrush}" Text="{Binding MainKanji, FallbackValue='error'}">
                                     <FlyoutBase.AttachedFlyout>
                                         <MenuFlyout>
@@ -54,7 +54,7 @@
                                     </SymbolIcon.RenderTransform>
                                 </SymbolIcon>
                             </Grid>
-                            <ScrollViewer x:Name="ScrollViewer_Translation" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" HorizontalAlignment="Right" >
+                            <ScrollViewer x:Name="ScrollViewer_Translation" HorizontalScrollBarVisibility="Disabled" VerticalScrollMode="Disabled"  HorizontalScrollMode="Enabled" HorizontalAlignment="Right" >
                                 <TextBlock x:Name="TextBlock_Translation" Margin="0,0,20,0" Foreground="{StaticResource IceBlueBrush}" TextWrapping="Wrap" Text="{Binding MainEnglish, FallbackValue='error'}" VerticalAlignment="Top" Height="60" FontSize="36" HorizontalAlignment="Right" TextAlignment="Right" FontFamily="Segoe WP">
                                     <FlyoutBase.AttachedFlyout>
                                         <MenuFlyout>
@@ -66,7 +66,7 @@
                             <!--</Grid>-->
                             <!-- Readings -->
                             <TextBlock x:Name="TextBlock_Reading" TextWrapping="Wrap" Text="Reading" Foreground="{StaticResource DullGreyBrush}" Margin="7,0,-7,0"  FontSize="20"  FontFamily="Segoe WP"/>
-                            <ScrollViewer x:Name="ScrollViewer_Readings" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" Margin="0,0,28,0">
+                            <ScrollViewer x:Name="ScrollViewer_Readings" HorizontalScrollBarVisibility="Disabled" VerticalScrollMode="Disabled"  HorizontalScrollMode="Enabled" Margin="0,0,28,0">
                                 <ItemsControl x:Name="ItemControl_Readings">
                                     <ItemsControl.ItemsPanel>
                                         <ItemsPanelTemplate>
@@ -94,7 +94,7 @@
                             </ScrollViewer>
                             <!-- Parts of Speech -->
                             <TextBlock x:Name="TextBlock_Properties" TextWrapping="Wrap" Text="Properties" FontSize="20" Foreground="{StaticResource DullGreyBrush}" Margin="7,0,-7,0" FontFamily="Segoe WP"/>
-                            <ScrollViewer x:Name="ScrollViewer_Properties" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Margin="0,0,28,0">
+                            <ScrollViewer x:Name="ScrollViewer_Properties" HorizontalScrollBarVisibility="Disabled" VerticalScrollMode="Disabled"  HorizontalScrollMode="Enabled" Margin="0,0,28,0">
                                 <ItemsControl x:Name="ItemControl_Properties" >
                                     <ItemsControl.ItemsPanel>
                                         <ItemsPanelTemplate>
@@ -110,7 +110,7 @@
                             </ScrollViewer>
                             <!-- Extra Kanji -->
                             <TextBlock x:Name="TextBlock_ExtraKanji"  FontSize="20" TextWrapping="Wrap" Text="Alternative Kanji" Visibility="Visible" Foreground="{StaticResource DullGreyBrush}" Margin="7,0,-7,0" FontFamily="Segoe WP"/>
-                            <ScrollViewer x:Name="ScrollViewer_ExtraKanji" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Margin="0,0,28,0">
+                            <ScrollViewer x:Name="ScrollViewer_ExtraKanji" HorizontalScrollBarVisibility="Disabled" VerticalScrollMode="Disabled"  HorizontalScrollMode="Enabled" Margin="0,0,28,0">
                                 <ItemsControl  x:Name="ItemControl_ExtraKanji">
                                     <ItemsControl.ItemsPanel>
                                         <ItemsPanelTemplate>
@@ -126,7 +126,7 @@
                             </ScrollViewer>
                             <!-- Extra Definitions -->
                             <TextBlock x:Name="TextBlock_AlternateDefs" FontSize="20" TextWrapping="Wrap" Text="Alternative Definitions" Foreground="{StaticResource DullGreyBrush}" Margin="7,0,-7,0" FontFamily="Segoe WP"/>
-                            <ScrollViewer x:Name="ScrollViewer_AltDefs" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Margin="0,0,28,5">
+                            <ScrollViewer x:Name="ScrollViewer_AltDefs" HorizontalScrollBarVisibility="Disabled" VerticalScrollMode="Disabled"  HorizontalScrollMode="Enabled" Margin="0,0,28,5">
                                 <ItemsControl  x:Name="ItemControl_Definitions">
                                     <ItemsControl.ItemsPanel>
                                         <ItemsPanelTemplate>
@@ -211,7 +211,7 @@
                             <TextBlock x:Name="Block_Chau_Label" FontSize="20" Text="Chau:"  HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="93" Grid.Row="9" Grid.Column="0" Height="27" Margin="0,8.833,0,0" Foreground="{StaticResource DullGreyBrush}" />
 
 
-                            <ScrollViewer Grid.Row="0" Grid.Column="1" HorizontalScrollBarVisibility="Auto">
+                            <ScrollViewer Grid.Row="0" Grid.Column="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollMode="Disabled"  HorizontalScrollMode="Enabled">
                                 <TextBlock x:Name="TextBlock_IndicativeForm" FontSize="20" HorizontalAlignment="Right" Margin="0,8,0,0" TextWrapping="Wrap" Text="{Binding}" VerticalAlignment="Top" TextAlignment="Right" Height="27" Foreground="{StaticResource IceBlueBrush}">
                             <FlyoutBase.AttachedFlyout>
                                 <MenuFlyout>
@@ -221,7 +221,7 @@
                                 </TextBlock>
                             </ScrollViewer>
 
-                            <ScrollViewer Grid.Row="1" Grid.Column="1" HorizontalScrollBarVisibility="Auto">
+                            <ScrollViewer Grid.Row="1" Grid.Column="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollMode="Disabled"  HorizontalScrollMode="Enabled">
                                 <TextBlock x:Name="TextBlock_PresumptiveForm" FontSize="20" HorizontalAlignment="Right" Margin="0,8,0,0" TextWrapping="Wrap" Text="{Binding}" VerticalAlignment="Top"  TextAlignment="Right"   Height="27" Foreground="{StaticResource IceBlueBrush}">
                             <FlyoutBase.AttachedFlyout>
                                 <MenuFlyout>
@@ -231,7 +231,7 @@
                                 </TextBlock>
                             </ScrollViewer>
 
-                            <ScrollViewer Grid.Row="2" Grid.Column="1" HorizontalScrollBarVisibility="Auto">
+                            <ScrollViewer Grid.Row="2" Grid.Column="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollMode="Disabled"  HorizontalScrollMode="Enabled">
                                 <TextBlock x:Name="TextBlock_ImperativeForm" FontSize="20" HorizontalAlignment="Right" Margin="0,8,0,0" TextWrapping="Wrap" Text="{Binding}" VerticalAlignment="Top"  TextAlignment="Right"   Height="27" Foreground="{StaticResource IceBlueBrush}">
                             <FlyoutBase.AttachedFlyout>
                                 <MenuFlyout>
@@ -241,7 +241,7 @@
                                 </TextBlock>
                             </ScrollViewer>
 
-                            <ScrollViewer Grid.Row="3" Grid.Column="1" HorizontalScrollBarVisibility="Auto">
+                            <ScrollViewer Grid.Row="3" Grid.Column="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollMode="Disabled"  HorizontalScrollMode="Enabled">
                                 <TextBlock x:Name="TextBlock_ProvisionalForm" FontSize="20" HorizontalAlignment="Right" Margin="0,8,0,0" TextWrapping="Wrap" Text="{Binding}" VerticalAlignment="Top"  TextAlignment="Right"   Height="27" Foreground="{StaticResource IceBlueBrush}">
                                <FlyoutBase.AttachedFlyout>
                                 <MenuFlyout>
@@ -251,7 +251,7 @@
                                 </TextBlock>
                             </ScrollViewer>
 
-                            <ScrollViewer Grid.Row="4" Grid.Column="1" HorizontalScrollBarVisibility="Auto">
+                            <ScrollViewer Grid.Row="4" Grid.Column="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollMode="Disabled"  HorizontalScrollMode="Enabled">
                                 <TextBlock x:Name="TextBlock_ConditionalForm" FontSize="20" HorizontalAlignment="Right" Margin="0,8,0,0" TextWrapping="Wrap" Text="{Binding}" VerticalAlignment="Top"  TextAlignment="Right"  Height="27" Foreground="{StaticResource IceBlueBrush}">
                             <FlyoutBase.AttachedFlyout>
                                 <MenuFlyout>
@@ -261,7 +261,7 @@
                                 </TextBlock>
                             </ScrollViewer>
 
-                            <ScrollViewer Grid.Row="5" Grid.Column="1" HorizontalScrollBarVisibility="Auto">
+                            <ScrollViewer Grid.Row="5" Grid.Column="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollMode="Disabled"  HorizontalScrollMode="Enabled">
                                 <TextBlock x:Name="TextBlock_PotentialForm" FontSize="20" HorizontalAlignment="Right" Margin="0,8,0,0" TextWrapping="Wrap" Text="{Binding}" VerticalAlignment="Top" TextAlignment="Right"  Height="27" Foreground="{StaticResource IceBlueBrush}">
                             <FlyoutBase.AttachedFlyout>
                                 <MenuFlyout>
@@ -271,7 +271,7 @@
                                 </TextBlock>
                             </ScrollViewer>
 
-                            <ScrollViewer Grid.Row="6" Grid.Column="1" HorizontalScrollBarVisibility="Auto">
+                            <ScrollViewer Grid.Row="6" Grid.Column="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollMode="Disabled"  HorizontalScrollMode="Enabled">
                                 <TextBlock x:Name="TextBlock_CausativeForm" FontSize="20" HorizontalAlignment="Right" Margin="0,8,0,0" TextWrapping="Wrap" Text="{Binding}" VerticalAlignment="Top" TextAlignment="Right" Height="27" Foreground="{StaticResource IceBlueBrush}">
                             <FlyoutBase.AttachedFlyout>
                                 <MenuFlyout>
@@ -281,7 +281,7 @@
                                 </TextBlock>
                             </ScrollViewer>
 
-                            <ScrollViewer Grid.Row="7" Grid.Column="1" HorizontalScrollBarVisibility="Auto">
+                            <ScrollViewer Grid.Row="7" Grid.Column="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollMode="Disabled"  HorizontalScrollMode="Enabled">
                                 <TextBlock x:Name="TextBlock_ProgressiveForm" FontSize="20" HorizontalAlignment="Right" Margin="0,8,0,0" TextWrapping="Wrap" Text="{Binding}" VerticalAlignment="Top" TextAlignment="Right"  Height="27" Foreground="{StaticResource IceBlueBrush}">
                               <FlyoutBase.AttachedFlyout>
                                 <MenuFlyout>
@@ -291,7 +291,7 @@
                                 </TextBlock>
                             </ScrollViewer>
 
-                            <ScrollViewer Grid.Row="8" Grid.Column="1" HorizontalScrollBarVisibility="Auto">
+                            <ScrollViewer Grid.Row="8" Grid.Column="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollMode="Disabled"  HorizontalScrollMode="Enabled">
                                 <TextBlock x:Name="TextBlock_PassiveForm" FontSize="20" HorizontalAlignment="Right" Margin="0,8,0,0" TextWrapping="Wrap" Text="{Binding}" VerticalAlignment="Top"  TextAlignment="Right"  Height="27" Foreground="{StaticResource IceBlueBrush}">
                                   <FlyoutBase.AttachedFlyout>
                                 <MenuFlyout>
@@ -301,7 +301,7 @@
                                 </TextBlock>
                             </ScrollViewer>
 
-                            <ScrollViewer Grid.Row="9" Grid.Column="1" HorizontalScrollBarVisibility="Auto">
+                            <ScrollViewer Grid.Row="9" Grid.Column="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollMode="Disabled"  HorizontalScrollMode="Enabled">
                                 <TextBlock x:Name="TextBlock_ChauForm" FontSize="20" HorizontalAlignment="Right" Margin="0,8,0,0" TextWrapping="Wrap" Text="{Binding}" VerticalAlignment="Top" TextAlignment="Right" Height="27" Foreground="{StaticResource IceBlueBrush}">
                                   <FlyoutBase.AttachedFlyout>
                                 <MenuFlyout>
@@ -341,7 +341,7 @@
                                                 <TextBlock Text="Sense:" FontSize="20"/>
                                                 <TextBlock Text="{Binding sensenumber, FallbackValue='1'}" Foreground="{Binding Path=verified, Converter={StaticResource ColorBrushConverter}}" Margin="10,0,0,0" FontSize="20"/>
                                             </StackPanel>
-                                            <ScrollViewer Height="27" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+                                            <ScrollViewer Height="27" HorizontalScrollBarVisibility="Disabled" VerticalScrollMode="Disabled"  HorizontalScrollMode="Enabled">
                                                 <StackPanel Orientation="Horizontal">
                                                     <TextBlock Text="Form:" FontSize="20"/>
                                                     <TextBlock Text="{Binding form, FallbackValue='漢字フォーム'}" Foreground="{Binding Path=verified, Converter={StaticResource ColorBrushConverter}}" Margin="10,0,10,0" FontSize="20"/>
@@ -349,7 +349,7 @@
                                                     <TextBlock Text="{Binding reading, FallbackValue='かんじフォーム'}" Foreground="{Binding Path=verified, Converter={StaticResource ColorBrushConverter}}" Margin="10,0,0,0" FontSize="20"/>
                                                 </StackPanel>
                                             </ScrollViewer>
-                                            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+                                            <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollMode="Disabled"  HorizontalScrollMode="Enabled">
                                                 <StackPanel Orientation="Vertical">
                                                     <TextBlock FontSize="20"><Run 
                                                             Text="{Binding beforeForm, FallbackValue='日本語'}" Foreground="{Binding Path=verified, Converter={StaticResource ColorBrushConverter}}"/><Run 

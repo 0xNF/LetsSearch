@@ -88,7 +88,7 @@
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate x:Name="Template_ExactMatches">
-                                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollMode="Disabled">
+                                <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollMode="Disabled" >
                                     <Grid Height="68" MinWidth="{Binding ActualHeight, ElementName=ScrollViewer_Searches}" Background="{Binding Source={StaticResource SearchPageViewModel}, Path=CurrentColor}" Tag="{Binding}" Tapped="resultClicked" >
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="32*"/>
@@ -101,7 +101,7 @@
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
-                    <StackPanel x:Name="StackPanel_InexactMatches_TextBlock" Orientation="Horizontal" Tapped="collapse">
+                    <StackPanel x:Name="StackPanel_InexactMatches_TextBlock" Orientation="Horizontal" Tapped="collapse" >
                         <TextBlock x:Name="TextBlock_InexactMatches_Sign" Text="-" TextWrapping="Wrap" FontSize="36" Visibility="Visible" Foreground="#FF91C3FF" FontFamily="Segoe WP"/>
                         <TextBlock x:Name="TextBlock_InexactMatches_Core" Text="Partial Matches (" TextWrapping="Wrap" FontSize="36" Visibility="Visible" Foreground="#FF91C3FF" FontFamily="Segoe WP"/>
                         <TextBlock x:Name="TextBlock_InexactMatches_Count" Text="{Binding Count}" TextWrapping="Wrap" FontSize="36" Visibility="Visible" Foreground="#FF91C3FF" FontFamily="Segoe WP"/>
@@ -115,7 +115,7 @@
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate x:Name="Template_InexactMatches">
-                                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollMode="Disabled">
+                                <ScrollViewer  HorizontalScrollBarVisibility="Hidden" VerticalScrollMode="Disabled">
                                     <Grid Height="68" MinWidth="{Binding ActualHeight, ElementName=ScrollViewer_Searches}" Background="{Binding Source={StaticResource SearchPageViewModel}, Path=CurrentColor}" Tag="{Binding}" Tapped="resultClicked">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="32*"/>

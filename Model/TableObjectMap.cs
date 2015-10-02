@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 //using SQLite;
 using JDictU.Model;
+using SQLite.Net.Attributes;
 
 namespace JDictU.Model
 {
@@ -105,9 +106,9 @@ namespace JDictU.Model
     //Secondary Database things
     public class Favorites
     {
-        //[PrimaryKey]
+        [PrimaryKey]
         public int entry_id { get; set; }
-        //[Column("display_string")]
+        [Column("display_string")]
         public string display_string { get; set; }
 
         public override string ToString()
@@ -117,12 +118,12 @@ namespace JDictU.Model
     }
     public class History
     {
-        
-        //[PrimaryKey, AutoIncrement]
+
+        [PrimaryKey, AutoIncrement]
         public int id { get; set; }
-        //[Column("search_query"), MaxLength(1000)]
+        [Column("search_query"), MaxLength(1000)]
         public string search_query { get; set; }
-        //[Column("search_date")]
+        [Column("search_date")]
         public long search_date { get; set; }
         
     }

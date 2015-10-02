@@ -420,8 +420,9 @@ namespace JDictU {
         }
 
         private void favoriteEntry(object sender, TappedRoutedEventArgs e) {
+            //Unfavorite the item
             if (_viewmodel.isFavorite) {
-                Image_Favorite.Symbol = Symbol.Favorite;
+                Image_Favorite.Symbol = Symbol.Favorite; //Show that the item is free to favorite
                 _viewmodel.unFavorite();
             }
             else {

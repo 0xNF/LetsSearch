@@ -16,8 +16,6 @@ namespace JDictU.Model
         public static async Task insertIntoSearchHistory(string searchQuery) {
 
             long ticks = DateTime.UtcNow.Ticks;
-            //string s_datw = DateTime.Now.ToLocalTime().ToString();
-            
             try {
                 History H = new History {
                     search_query = searchQuery,
@@ -25,10 +23,12 @@ namespace JDictU.Model
                 };
                 await DBInfo.UconnAsync.InsertAsync(H);
             }
-            catch (SQLiteException sle) {
+            catch (NotSupportedException sle) {
                 Debug.WriteLine(sle);
             }
-            
+
+
+
         }
 
         public static async Task deleteItemFromSearchHistory(int id) {
@@ -59,49 +59,41 @@ namespace JDictU.Model
         }
 
         /** inserts a new favorites into the Favorites table of UserData.sqlite **/
-        public static void insertIntoFavorites(int entryID, string display) {
-            //try {
-            //    Debug.WriteLine("Favoriting " + entryID);
-            //    SQLiteConnection conn = new SQLiteConnection(userdata);
-            //    Favorites f = new Favorites {
-            //        entry_id = entryID,
-            //        display_string = display
-            //    };
-            //    conn.Insert(f);
-            //}
-            //catch (SQLiteException sle) {
-            //    Debug.WriteLine(sle);
-            //}
+        public static async void insertIntoFavorites(int entryID, string display) {
+            try {
+                Debug.WriteLine("Favoriting " + entryID);
+                Favorites f = new Favorites {
+                    entry_id = entryID,
+                    display_string = display
+                };
+                await DBInfo.UconnAsync.InsertAsync(f);
+            }
+            catch (SQLiteException sle) {
+                Debug.WriteLine(sle);
+            }
         }
 
         /** removes a favorite from the Favorites table of UserData.sqlite **/
-        public static void removeFromFavorites(int entryID) {
-            //try {
-            //    SQLiteConnection conn = new SQLiteConnection(userdata);
-            //    //conn.Delete<Favorites>(entryID); //Not working for some reason.
-            //    TableQuery<Favorites> returnFav = conn.Table<Favorites>().Where(x => x.entry_id == entryID);
-            //    List<Favorites> f = returnFav.ToList();
-            //    foreach (Favorites fav in f) {
-            //        conn.Delete(fav);
-            //    }
-            //}
-            //catch (SQLiteException sle) {
-            //    Debug.WriteLine(sle);
-            //}
+        public static async void removeFromFavorites(int entryID) {
+            try {
+                await DBInfo.UconnAsync.DeleteAsync<Favorites>(entryID);
+            }
+            catch (SQLiteException sle) {
+                Debug.WriteLine(sle);
+            }
         }
 
         /** Checks if a given entry ID is favorited **/
         public static bool isFavorited(int entryID) {
-            //try {
-            //    SQLiteConnection conn = new SQLiteConnection(userdata);
-            //    TableQuery<Favorites> returnFav = conn.Table<Favorites>().Where(x => x.entry_id == entryID);
-            //    return (returnFav.ToList().Count != 0);
-            //}
-            //catch (SQLiteException sle) {
-            //    Debug.WriteLine(sle);
-            //    return false;
-            //}
-            return false;
+            try {
+                var x = Task.Run(() => DBInfo.UconnAsync.QueryAsync<Favorites>("select * from favorites where entry_id is ?", entryID));
+                x.Wait();                
+                return x.Result.Count > 0;
+            }
+            catch (SQLiteException sle) {
+                Debug.WriteLine(sle);
+                return false;
+            }
         }
 
         /** Retrieves records from Search **/
