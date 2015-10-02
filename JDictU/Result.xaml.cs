@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using JDictU.Model;
+using Windows.UI.Core;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
 
@@ -32,7 +33,6 @@ namespace JDictU {
 
         public Result() {
             this.InitializeComponent();
-
         }
 
         /// <summary>
@@ -432,6 +432,10 @@ namespace JDictU {
             }
 
   
+        }
+
+        private void goBack(object sender, RoutedEventArgs e) {
+            
         }
     }
 }

@@ -373,6 +373,9 @@
     <Page.BottomAppBar>
         <CommandBar>
             <!-- CommandBar content -->
+            <!--<CommandBar.Content>
+                <AppBarButton Name="BackButton" Icon="Back" Click="goBack"/>
+            </CommandBar.Content>-->
             <CommandBar.PrimaryCommands>
                 <AppBarButton Name="searchButton" Label="Search" Icon="Find" Click="goToSearch"/>
                 <AppBarButton Name="conjugateButton" Label="Next Page" Click="toConjugations" Icon="Forward"/>
