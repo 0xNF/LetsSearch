@@ -2,7 +2,7 @@
 using System.Globalization;
 
 namespace JDictU{
-    class DateConverter : BaseValueConverter
+    public class DateConverter : BaseValueConverter
     {
 
        // {Binding Path=verified, Converter={StaticResource ColorBrushConverter}}

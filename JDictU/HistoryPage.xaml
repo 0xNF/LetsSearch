@@ -12,6 +12,28 @@
     </Page.Resources>
 
     <Grid>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="VisualStateGroup">
+                <VisualState x:Name="Phone5Inch">
+                    <VisualState.Setters>
+                        <Setter Target="TextBlock_SearchTerm.(TextBlock.FontSize)" Value="26.667"/>
+                        <Setter Target="TextBlock_Date.(TextBlock.FontSize)" Value="26.667"/>
+                    </VisualState.Setters>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="320"/>
+                    </VisualState.StateTriggers>
+                </VisualState>
+                <VisualState x:Name="Phone1280">
+                    <VisualState.Setters>
+                        <Setter Target="TextBlock_SearchTerm.(TextBlock.FontSize)" Value="36"/>
+                        <Setter Target="TextBlock_Date.(TextBlock.FontSize)" Value="36"/>
+                    </VisualState.Setters>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1280"/>
+                    </VisualState.StateTriggers>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
         <Grid.RowDefinitions>
             <RowDefinition Height="108*"/>
             <RowDefinition Height="58*"/>
@@ -23,6 +45,9 @@
         </StackPanel>
 
         <Grid x:Name="grid_SearchBlock" Grid.Row="1">
+            
+            
+            
             <Grid.RowDefinitions>
                 <RowDefinition Height="47*"/>
                 <RowDefinition Height="17*"/>
