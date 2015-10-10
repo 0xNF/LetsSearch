@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Threading;
 
 namespace JDictU.Model {
     public class SearchPageViewModel : INotifyPropertyChanged// : BaseViewModel
@@ -102,69 +103,118 @@ namespace JDictU.Model {
 
         //Still need logic to do in chunks of 25
         //Reverse forloop necessary because .removeAt() will update the count of the list.
-        private async Task transferToList(ObservableCollection<SearchResult> to, List<SearchResult> from) {
-            for (int i = from.Count-1; i >= 0 && to.Count < 150; i--) {
-                SearchResult sr = from[i];
-                to.Add(sr);
-                from.RemoveAt(i);
-            }
+        private async void transferToList(ObservableCollection<SearchResult> to, List<SearchResult> from) {
+            //if (!SearchComplete) {
+                for (int i = from.Count - 1; i >= 0 && to.Count < 150; i--) {                    
+                    SearchResult sr = from[i];
+                    to.Add(sr);
+                    //from.RemoveAt(i);
+                }
+            //}
         }
 
-        public async Task submitSearch(string searchText) {
+        private void updateUI(ObservableCollection<SearchResult> to, List<SearchResult> from, SynchronizationContext sync) {
+
+            sync.Post(new SendOrPostCallback(o => {
+
+                for (int i = from.Count - 1; i >= 0 && to.Count < 150; i--) {
+                    SearchResult sr = from[i];
+                    to.Add(sr);
+                }
+
+            }), from);           
+        
+    }
+
+        public void submitSearch(string searchText, SynchronizationContext sync, int limit=75) {
             if (!SearchComplete) {
                 Debug.WriteLine("Search still in progress");
                 return; 
             }
+            resetViewModel();
             ProgressBarActive = true;
             SearchComplete = false;
-            //TODO: Transfer the LIMIT to the exacts and partials list, with respect to the button that adds more if so clicked
-            UserData.insertIntoSearchHistory(searchText); //TODO - BUG with inserting duplicate elements,even across sessions
+            if(limit >= 75) { //this means that it was a search by enter, not by typing
+                UserData.insertIntoSearchHistory(searchText);
+            }
             if (!StringTools.ContainsUnicodeCharacter(searchText)) {  //If it does not contain any unicode, limit searching to either Romaji or Definitions
                 if (searchText.Contains(" ") || StringTools.endsInConsonantNotN(searchText)) {//If it contains a space, it's guaranteed to be found within Definitions
                     Debug.WriteLine("Contained Space or ended in consonant not 'n', search was in Definitions");
-                    var res = await Task.Run(() => SearchToolsAsync.searchEnglishAsync(searchText));
-                    _exactsFull = res.Item1;
-                    _partialsFull = res.Item2;
-                    Debug.WriteLine("FINISHED AWAITING, inDefs");
-                    transferToList(Exacts, _exactsFull);
-                    transferToList(Partials, _partialsFull);
+
+                    Task.Run(async () => {
+                        var re = await SearchToolsAsync.searchEnglishAsync(searchText, limit);
+                        updateUI(Exacts, re.Item1, sync);
+                        updateUI(Partials, re.Item2, sync);
+                    });
+
                 }
                 else { //if it didn't contain a space, then it can be found in either Romaji or Definitions, so we return both.
                     Debug.WriteLine("Ended in either a vowel, or a vowel + n, searching over both");
-                    Task<List<SearchResult>> resRomaExact = Task.Run(() => SearchToolsAsync.searchRomajiExactAsync(searchText));
-                    Task<List<SearchResult>> resRomaInexact = Task.Run(() => SearchToolsAsync.searchRomajiInexactAsync(searchText));
-                    Task<Tuple<List<SearchResult>, List<SearchResult>>> resEng = Task.Run(() => SearchToolsAsync.searchEnglishAsync(searchText));
-                    _exactsFull = await resRomaExact;
-                    transferToList(Exacts, _exactsFull);
-                    _partialsFull = await resRomaInexact;
-                    transferToList(Partials, _partialsFull);
-                    var vareng = await resEng;
-                    Debug.WriteLine("FINISHED AWAITING, defs and roma");
-                    _exactsFull.AddRange(vareng.Item1);
-                    transferToList(Exacts, _exactsFull);
-                    _partialsFull.AddRange(vareng.Item2);
-                    transferToList(Partials, _partialsFull);
+
+                    Task.Run(async () => {
+                        var re = await SearchToolsAsync.searchRomajiExactAsync(searchText, limit);
+                        updateUI(Exacts, re, sync);
+                    });
+
+
+
+                    Task.Run(async () => {
+                        var re = await SearchToolsAsync.searchRomajiInexactAsync(searchText, limit);
+                        updateUI(Partials, re, sync);
+                    });
+
+
+                    Task.Run(async () => {
+                        var re = await SearchToolsAsync.searchEnglishAsync(searchText, limit);
+                        updateUI(Exacts, re.Item1, sync);
+                        updateUI(Partials, re.Item2, sync);
+                    });
+                    
+
+
+
                 }
             }
             else {
-                //if it does contain unicode, then it can be found in either Kana or Kanji (ignoring french/german defintions)
+                //if it does contain unicode, then it can be found in either Kana or Kanji (ignoring french/german defintions), but first check to see that it's not a halfwidth character
+                //if (StringTools.hasHalfwidthLatin(searchText)) {
+                    
+                //}
                 if (StringTools.allKana(searchText)) {
                     Debug.WriteLine("match is in Kana");
-                    Task<List<SearchResult>> resKanaExact = Task.Run(() => SearchToolsAsync.searchKanaExactAsync(searchText));
-                    Task<List<SearchResult>> resKanaInexact = Task.Run(() => SearchToolsAsync.searchKanaInexactAsync(searchText));
-                    _exactsFull = await resKanaExact;
-                    transferToList(Exacts, _exactsFull);
-                    _partialsFull = await resKanaInexact;
-                    transferToList(Partials, _partialsFull);
+
+
+
+                    Task.Run(async () => {
+                        var re = await SearchToolsAsync.searchKanaExactAsync(searchText, limit);
+                        updateUI(Exacts, re, sync);
+                    });
+
+
+                    Task.Run(async () => {
+                        var re = await SearchToolsAsync.searchKanaInexactAsync(searchText, limit);
+                        updateUI(Partials, re, sync);
+                    });
+
+
+
                 }
-                else {
+                else {                    
                     Debug.WriteLine("match is in Kanji");
-                    Task<List<SearchResult>> resKanjiExact = Task.Run(() => SearchToolsAsync.searchKanjiExactAsync(searchText));
-                    Task<List<SearchResult>> resKanjiInexact = Task.Run(() => SearchToolsAsync.searchKanjiInexactAsync(searchText));
-                    _exactsFull = await resKanjiExact;
-                    transferToList(Exacts, _exactsFull);
-                    _partialsFull = await resKanjiInexact;                    
-                    transferToList(Partials, _partialsFull);
+
+                    Task.Run(async () => {
+                        var re = await SearchToolsAsync.searchKanjiExactAsync(searchText, limit);
+                        updateUI(Exacts, re, sync);
+                    });
+
+
+                    Task.Run(async () => {
+                        var re = await SearchToolsAsync.searchKanjiInexactAsync(searchText, limit);
+                        updateUI(Partials, re, sync);
+                    });
+
+
+
                 }
             }
             ProgressBarActive = false;

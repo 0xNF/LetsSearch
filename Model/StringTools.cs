@@ -13,6 +13,7 @@ namespace JDictU.Model
         private static readonly string kana = "ぁあぃいぅうぇえぉおかがきぎだちぢっつづてでとどなにぬねのはばぱひびぴふぶぷへべぺほぼぽまみむめもゃやゅゆょよらりるれろゎわゐゑをんゔゕゖ	゙ 	゚゛ ゜ゝゞゟ゠ァアィイゥウェエォオカガキギクグケゲコゴサザシジスズセゼソゾタダチヂッツヅテデトドナニヌネノハバパヒビピフブプヘベペホボポマミムメモャヤュユョヨラリルレロヮワヰヱヲンヴヵヶヷヸヹヺ・ーヽヾヿ｡｢｣､･ｦｧｨｩｪｫｬｭｮｯｰｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝﾞﾟㇰㇱㇲㇳㇴㇵㇶㇷㇸㇹㇺㇻㇼㇽㇾㇿ𛀀𛀁くぐけげこごさざしじすずせぜそぞた";
         private const string bumunu = "ぶむぬブムヌ";//todo: halfhearted, doesn't take into account the halfwidths and whatever from the above Kana field.
         private static readonly string katakana = "ァアィイゥウェエォオカガキギクグケゲコゴサザシジスズセゼソゾタダチヂッツヅテデトドナニヌネノハバパヒビピフブプヘベペホボポマミムメモャヤュユョヨラリルレロヮワヰヱヲンヴヵヶヷヸヹヺｦｧｨｩｪｫｬｭｮｯｰｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝﾞﾟㇰㇱㇲㇳㇴㇵㇶㇷㇸㇹㇺㇻㇼㇽㇾㇿ";
+        private static readonly string halfwidthlatin = "！＂＃＄％＆＇（）＊＋，－．／：；＜＝＞？［＼］＾＿｀";
         private static readonly byte[] bytes = Encoding.UTF8.GetBytes(kana);
         private const string vowels = "aeiou";
         private const string consonantsNotN = "bcdfghjklmpqrstvwxyz";
@@ -147,6 +148,10 @@ namespace JDictU.Model
 
         internal static bool endsInSuTsuDzu(string p) {
             return p.EndsWith("す") || p.EndsWith("つ") || p.EndsWith("づ") || p.EndsWith("ス") || p.EndsWith("ツ") || p.EndsWith("ヅ");
+        }
+
+        internal static bool hasHalfwidthLatin(object searchText) {
+            return false;
         }
     }
 }

@@ -46,7 +46,7 @@
             <StackPanel>
                 <Border>
                     <Grid>
-                        <TextBox  x:Name="TextBox_Search" KeyUp ="checkEnter" HorizontalAlignment="Stretch" Height="43" TextWrapping="Wrap" VerticalAlignment="Top" LostFocus="searchLostFocus" GotFocus="searchGotFocus" Background="#BFFFFFFF" BorderBrush="#00FF0000" />
+                        <TextBox  x:Name="TextBox_Search" KeyUp ="checkEnter" HorizontalAlignment="Stretch" Height="43" TextWrapping="Wrap" VerticalAlignment="Top" LostFocus="searchLostFocus" GotFocus="searchGotFocus" Background="#BFFFFFFF" BorderBrush="#00FF0000" TextChanged="keyByKeySearch"/>
                         <Border BorderThickness="2" HorizontalAlignment="Right" Height="48"  VerticalAlignment="Center" Width="47" Tapped="clearInput_Tapped" >
                             <SymbolIcon Symbol="Cancel"  Foreground="Black"/>
                         </Border>

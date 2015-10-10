@@ -15,6 +15,8 @@ using Windows.UI.Xaml.Navigation;
 using JDictU.Model;
 using System.Diagnostics;
 using Windows.System;
+using System.Threading.Tasks;
+using System.Threading;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -26,6 +28,8 @@ namespace JDictU
     public sealed partial class MainPage : Page
     {
         static SearchPageViewModel viewmodel { get; set; }
+        private string oldText = "";
+
 
         public MainPage() {
 
@@ -41,6 +45,7 @@ namespace JDictU
             TextBlock_InexactMatches_Count.DataContext = viewmodel.Partials;
             StackPanel_ExactMatches.ItemsSource = viewmodel.Exacts;
             StackPanel_InexactMatches.ItemsSource = viewmodel.Partials;
+
 
             //gv_ExactMatches.ItemsSource = viewmodel.Exacts;
 
@@ -109,8 +114,27 @@ namespace JDictU
                 if (numapos != 0) {
                     searchText = searchText.Replace("'", "''");
                 }
-                viewmodel.submitSearch(searchText);
+                viewmodel.submitSearch(searchText, SynchronizationContext.Current);
             }
+        }
+
+        private async void keyByKeySearch(object sender, TextChangedEventArgs e) {
+            if(TextBox_Search.Text == oldText) {
+                return;
+            }
+            oldText = TextBox_Search.Text;
+            viewmodel.resetViewModel();
+            TextBox_Search.Text.Trim().Replace("%", "");
+            string searchText = TextBox_Search.Text;
+            if (searchText.Length != 0) {
+                int numapos = searchText.Count(f => f == '\'');
+                if (numapos != 0) {
+                    searchText = searchText.Replace("'", "''");
+                }
+                viewmodel.submitSearch(searchText, SynchronizationContext.Current, limit: 20);
+                //Task.Run(()=>{ viewmodel.submitSearch(searchText, 20); });
+            }
+
         }
 
         //Colapses or expands a given stackpanel (item control) from view

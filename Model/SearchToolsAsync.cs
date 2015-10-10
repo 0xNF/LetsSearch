@@ -54,13 +54,13 @@ namespace JDictU.Model
         }
 
 
-        public static async Task<Tuple<List<SearchResult>, List<SearchResult>>> searchEnglishAsync(string term) {
-            string def = "select * from super where entry_id in (select entry_id from definitions_eng where definition like '" + term + "%' order by definition limit 100) order by entry_id ASC";
+        public static async Task<Tuple<List<SearchResult>, List<SearchResult>>> searchEnglishAsync(string term, int limit=75) {
+            string def = "select * from super where entry_id in (select entry_id from definitions_eng where definition like ? order by definition limit ?) order by entry_id ASC";
             //Dictionaries to put specific results into
             Dictionary<int, List<List<string>>> def_exact = new Dictionary<int, List<List<string>>>();
             Dictionary<int, List<List<string>>> def_partial = new Dictionary<int, List<List<string>>>();
             //List of combined results for both Romaji and Definitions
-                List<Super> definitions = await DBInfo.JconnAsync.QueryAsync<Super>(def);
+                List<Super> definitions = await DBInfo.JconnAsync.QueryAsync<Super>(def, term+"%", limit);
                 //comb over the Combined results and add the results to their own dictionary entry
                 foreach (Super c in definitions) {
                     List<string> returnfromDefs = StringTools.splitBar(c.definition);
@@ -89,38 +89,60 @@ namespace JDictU.Model
                 return Tuple.Create<List<SearchResult>, List<SearchResult>>(srExact, srInexact);
             }
 
-        public static async Task<List<SearchResult>> searchRomajiExactAsync(string term) {
-            string query = "select * from super where entry_id in (select entry_id from romaji where romaji = '" + term + "' limit 200) order by entry_id ASC";
-            return await queryWork(query);
+        public static async Task<List<SearchResult>> searchRomajiExactAsync(string term, int limit) {
+            string query = "select * from super where entry_id in (select entry_id from romaji where romaji = ? limit ?) order by entry_id ASC";
+            var x = queryWork2(await DBInfo.JconnAsync.QueryAsync<Super>(query, term, limit));
+            return x;
+            //string query = "select * from super where entry_id in (select entry_id from romaji where romaji = '" + term + "' limit 200) order by entry_id ASC";
+            //return await queryWork(query);
         }
 
-        public static async Task<List<SearchResult>> searchRomajiInexactAsync(string term) {
-            string query = "select * from super where entry_id in (select entry_id from romaji where romaji like '" + term + "%' AND romaji <> '" + term + "' limit 200) order by entry_id ASC";
-            return await queryWork(query);
+        public static async Task<List<SearchResult>> searchRomajiInexactAsync(string term, int limit) {
+            string param = "select * from super where entry_id in (select entry_id from romaji where romaji like ? AND romaji <> ? limit ?) order by entry_id ASC";
+            return queryWork2(await DBInfo.JconnAsync.QueryAsync<Super>(param, term+"%", term, limit));
+
+            //string query = "select * from super where entry_id in (select entry_id from romaji where romaji like '" + term + "%' AND romaji <> '" + term + "' limit 200) order by entry_id ASC";
+            //return await queryWork(query);
         }
 
-        public static async Task<List<SearchResult>> searchKanaExactAsync(string term) {
-            string query = "select * from super where entry_id in (select entry_id from kana where kana = '" + term + "' limit 200) order by entry_id ASC";
-            return await queryWork(query);
+        public static async Task<List<SearchResult>> searchKanaExactAsync(string term, int limit) {
+            string query = "select * from super where entry_id in (select entry_id from kana where kana = ? limit ?) order by entry_id ASC";
+            return queryWork2(await DBInfo.JconnAsync.QueryAsync<Super>(query, term, limit));
+            //string query = "select * from super where entry_id in (select entry_id from kana where kana = '" + term + "' limit 200) order by entry_id ASC";
+            //return await queryWork(query);
         }
 
-        public static async Task<List<SearchResult>> searchKanaInexactAsync(string term) {
-            string query = "select * from super where entry_id in (select entry_id from kana where kana like '" + term + "%' and kana <> '" + term + "' limit 200) order by entry_id ASC";
-            return await queryWork(query);
+        public static async Task<List<SearchResult>> searchKanaInexactAsync(string term, int limit) {
+            string param = "select * from super where entry_id in (select entry_id from kana where kana like ? and kana <> ? limit ?) order by entry_id ASC";
+            return queryWork2(await DBInfo.JconnAsync.QueryAsync<Super>(param, term+"%", term, limit));
+            //string query = "select * from super where entry_id in (select entry_id from kana where kana like '" + term + "%' and kana <> '" + term + "' limit 200) order by entry_id ASC";
+            //return await queryWork(query);
         }
 
-        public static async Task<List<SearchResult>> searchKanjiExactAsync(string term) {
-            string query = "select * from super where entry_id in (select entry_id from kanji where kanji = '" + term + "' limit 200) order by entry_id ASC";
-            return await queryWork(query);
+        public static async Task<List<SearchResult>> searchKanjiExactAsync(string term, int limit) {
+            string param = "select * from super where entry_id in (select entry_id from kanji where kanji = ? limit ?) order by entry_id ASC";
+            return queryWork2(await DBInfo.JconnAsync.QueryAsync<Super>(param, term, limit));
+            //string query = "select * from super where entry_id in (select entry_id from kanji where kanji = '" + term + "' limit 200) order by entry_id ASC";
+            //return await queryWork(query);
         }
 
-        public static async Task<List<SearchResult>> searchKanjiInexactAsync(string term) {
-            string query = "select * from super where entry_id in (select entry_id from kanji where kanji like '" + term + "%' and kanji <> '" + term + "' limit 200) order by entry_id ASC";
-            return await queryWork(query);
+        public static async Task<List<SearchResult>> searchKanjiInexactAsync(string term, int limit) {
+            string param = "select * from super where entry_id in (select entry_id from kanji where kanji like ? and kanji <> ? limit ?) order by entry_id ASC";
+            return queryWork2(await DBInfo.JconnAsync.QueryAsync<Super>(param, term+"%", term, limit));
+            //string query = "select * from super where entry_id in (select entry_id from kanji where kanji like '" + term + "%' and kanji <> '" + term + "' limit 200) order by entry_id ASC";
+            //return await queryWork(query);
         }
         #endregion
 
-        private static async Task<List<SearchResult>> queryWork(string query) {
+        private static List<SearchResult> queryWork2(List<Super> supers) {
+            Dictionary<int, List<List<string>>> resultDictionary = new Dictionary<int, List<List<string>>>();
+            foreach (Super s in supers) {
+                resultDictionary.Add(s.entry_id, new List<List<string>>() { StringTools.splitBar(s.definition), StringTools.splitBar(s.kana_map), StringTools.splitBar(s.kanji), StringTools.splitBar(s.pos) });
+            }
+            return neoSR_super(resultDictionary);
+        }
+
+        private static async Task<List<SearchResult>> queryWork(string query, int limit=75) {
             Dictionary<int, List<List<string>>> resultDictionary = new Dictionary<int, List<List<string>>>();
             List<Super> resultSupers = await DBInfo.JconnAsync.QueryAsync<Super>(query);
             foreach (Super s in resultSupers) {
@@ -130,25 +152,25 @@ namespace JDictU.Model
         }
 
         /** SUPER returns a 2 lists of search results for a given term, exact matches and partial matches. Type is given by the enumeration searchType **/
-        public static async Task<Tuple<List<SearchResult>, List<SearchResult>>> fetchResults_Unicode_superAsync(string term, int type) {
+        public static async Task<Tuple<List<SearchResult>, List<SearchResult>>> fetchResults_Unicode_superAsync(string term, int type, int limit=75) {
             Tuple<List<SearchResult>, List<SearchResult>> rets = Tuple.Create(new List<SearchResult>(), new List<SearchResult>());
             //format is {exact, partial}            
             if (type == 0) {
                 //return over romaji
-                var romaExact = await searchRomajiExactAsync(term);
-                var romaPartial = await searchRomajiInexactAsync(term);
+                var romaExact = await searchRomajiExactAsync(term, limit);
+                var romaPartial = await searchRomajiInexactAsync(term, limit);
                 rets = Tuple.Create(romaExact, romaPartial);
             }
             else if (type == 1) {
                 //return over kana
-                var kanaExact = await searchKanaExactAsync(term);
-                var kanaPartial = await searchKanaInexactAsync(term);
+                var kanaExact = await searchKanaExactAsync(term, limit);
+                var kanaPartial = await searchKanaInexactAsync(term, limit);
                 rets = Tuple.Create(kanaExact, kanaPartial);
             }
             else if (type == 2) {
                 //return over kanji
-                var kanjiExact = await searchKanjiExactAsync(term);
-                var kanjiIPartial = await searchKanjiInexactAsync(term);
+                var kanjiExact = await searchKanjiExactAsync(term, limit);
+                var kanjiIPartial = await searchKanjiInexactAsync(term, limit);
                 rets = Tuple.Create(kanjiExact, kanjiIPartial);
             }
             return rets;

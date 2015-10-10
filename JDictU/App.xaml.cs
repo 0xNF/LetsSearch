@@ -82,6 +82,7 @@ namespace JDictU
                 // Place the frame in the current Window
                 Window.Current.Content = rootFrame;
 
+                //SEE http://www.wintellect.com/devcenter/jprosise/handling-the-back-button-in-windows-10-uwp-apps for handling back button in UWP
                 // Register a handler for BackRequested events and set the
                 // visibility of the Back button
                 SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
