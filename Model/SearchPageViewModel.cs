@@ -113,7 +113,7 @@ namespace JDictU.Model {
             //}
         }
 
-        private void updateUI(ObservableCollection<SearchResult> to, List<SearchResult> from, SynchronizationContext sync) {
+        private async void updateUI(ObservableCollection<SearchResult> to, List<SearchResult> from, SynchronizationContext sync) {
 
             sync.Post(new SendOrPostCallback(o => {
 
@@ -122,11 +122,11 @@ namespace JDictU.Model {
                     to.Add(sr);
                 }
 
-            }), from);           
-        
-    }
+            }), from);
 
-        public void submitSearch(string searchText, SynchronizationContext sync, int limit=75) {
+        }
+
+        public void submitSearch(string searchText, SynchronizationContext sync, int limit=150) {
             if (!SearchComplete) {
                 Debug.WriteLine("Search still in progress");
                 return; 
@@ -134,7 +134,7 @@ namespace JDictU.Model {
             resetViewModel();
             ProgressBarActive = true;
             SearchComplete = false;
-            if(limit >= 75) { //this means that it was a search by enter, not by typing
+            if(limit >= 150) { //this means that it was a search by enter, not by typing
                 UserData.insertIntoSearchHistory(searchText);
             }
             if (!StringTools.ContainsUnicodeCharacter(searchText)) {  //If it does not contain any unicode, limit searching to either Romaji or Definitions

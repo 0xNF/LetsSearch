@@ -131,7 +131,7 @@ namespace JDictU
                 if (numapos != 0) {
                     searchText = searchText.Replace("'", "''");
                 }
-                viewmodel.submitSearch(searchText, SynchronizationContext.Current, limit: 20);
+                viewmodel.submitSearch(searchText, SynchronizationContext.Current, limit: 5);
                 //Task.Run(()=>{ viewmodel.submitSearch(searchText, 20); });
             }
 
