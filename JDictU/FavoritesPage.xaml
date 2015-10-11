@@ -45,7 +45,7 @@
             </CommandBar.PrimaryCommands>
             <CommandBar.SecondaryCommands>
                 <AppBarButton Label="View history" Click="toHistory"/>
-                <AppBarButton Label="clear favorites" Click="clearFavorites"/>
+                <AppBarButton Label="Clear favorites" Click="clearFavorites"/>
             </CommandBar.SecondaryCommands>
         </CommandBar>
     </Page.BottomAppBar>

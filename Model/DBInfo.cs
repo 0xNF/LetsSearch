@@ -33,18 +33,18 @@ namespace JDictU.Model
 
         //This function runs once every startup but only does the work when the app is started for the very first time. Copies from InstalledLocation into LocalFolder
         //Perhaps the single most important function in the entire system - note when moving to other platforms, this thing must be present in one form or another. 
-        static private async Task CopyDatabase(string file) {
+        static private async Task CopyDatabase(string file, StorageFolder loc) {
             string culledFile = file.Substring(6);
             Debug.WriteLine("Checking for Existence of " + culledFile);
             try {
-                StorageFile storageFile = await ApplicationData.Current.LocalFolder.GetFileAsync(culledFile);
+                StorageFile storageFile = await loc.GetFileAsync(culledFile);
             }
             catch(System.IO.FileNotFoundException fnf) {
                 Debug.WriteLine("Existence was false, loading the DB");
                 StorageFolder installed = Package.Current.InstalledLocation;
                 StorageFile databaseFile = await Package.Current.InstalledLocation.GetFileAsync(file); //this one stays the same, because we need to move it from Model\\whatever.db
                 try {
-                    await databaseFile.CopyAsync(ApplicationData.Current.LocalFolder, culledFile, NameCollisionOption.FailIfExists);
+                    await databaseFile.CopyAsync(loc, culledFile, NameCollisionOption.FailIfExists);
                 }
                 catch(Exception e) {
                     Debug.WriteLine("Already existed, everything is OK");                }
@@ -67,7 +67,7 @@ namespace JDictU.Model
         //assigns Jaydict to conn
         //This sets the class variable AND returns its handle - necessary or redundant?
         static async public void getJayDictAsync() {
-            await CopyDatabase(jayDict);
+            await CopyDatabase(jayDict, ApplicationData.Current.LocalFolder);
             if (JconnAsync == null) {
                 var conFunction = new Func<SQLiteConnectionWithLock>(() =>
                     new SQLiteConnectionWithLock(new SQLitePlatformWinRT(),
@@ -80,7 +80,7 @@ namespace JDictU.Model
         }
 
         static async public void getExamplesAsync() {
-            await CopyDatabase(examples);
+            await CopyDatabase(examples, ApplicationData.Current.LocalFolder);
             try {
                 if (EconnAsync == null) {
                     var conFunction = new Func<SQLiteConnectionWithLock>(() =>
@@ -106,12 +106,12 @@ namespace JDictU.Model
         }
 
         static async public void getUserDataAsync() {
-            await CopyDatabase(userdata);
+            await CopyDatabase(userdata, ApplicationData.Current.RoamingFolder);
             if (UconnAsync == null) {
                 var conFunction = new Func<SQLiteConnectionWithLock>(() =>
                     new SQLiteConnectionWithLock(new SQLitePlatformWinRT(),
-                        new SQLiteConnectionString(ApplicationData.Current.LocalFolder.Path +"\\userdata.db", false)));
-                var connectionString = new SQLiteConnectionString(ApplicationData.Current.LocalFolder.Path + "\\userdata.db", false);
+                        new SQLiteConnectionString(ApplicationData.Current.RoamingFolder.Path +"\\userdata.db", false)));
+                var connectionString = new SQLiteConnectionString(ApplicationData.Current.RoamingFolder.Path + "\\userdata.db", false);
                 var connectionWithLock = new SQLiteConnectionWithLock(new SQLitePlatformWinRT(), connectionString);
                 UconnAsync = new SQLiteAsyncConnection(() => connectionWithLock);
             }

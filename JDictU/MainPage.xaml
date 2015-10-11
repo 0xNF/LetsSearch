@@ -64,22 +64,6 @@
                         <TextBlock x:Name="TextBlock_ExactMatches_Count" Text="{Binding Count}" TextWrapping="Wrap" FontSize="36" Visibility="Visible" Foreground="#FF91C3FF" FontFamily="Segoe WP"/>
                         <TextBlock x:Name="TextBlock_ExactMatches_Close" Text=")" TextWrapping="Wrap" FontSize="36" Visibility="Visible" Foreground="#FF91C3FF" FontFamily="Segoe WP"/>
                     </StackPanel>
-                    <!--<GridView x:Name="gv_ExactMatches" ItemsSource="{Binding viewmodel.Exacts}">
-                        <GridView.ItemTemplate>
-                            <DataTemplate>
-                                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollMode="Disabled" IsHorizontalScrollChainingEnabled="True">
-                                    <Grid Height="68" MinWidth="{Binding ActualHeight, ElementName=ScrollViewer_Searches}" Background="{Binding Source={StaticResource SearchPageViewModel}, Path=CurrentColor}" Tag="{Binding}" Tapped="resultClicked" >
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="32*"/>
-                                            <RowDefinition Height="32"/>
-                                        </Grid.RowDefinitions>
-                                        <TextBlock Text="{Binding Path=headerText}" FontSize="30" FontFamily="Segoe WP" Grid.Row="0" Foreground="White" Margin="5,0,0,0"/>
-                                        <TextBlock Text="{Binding Path=defText}" FontSize="20" FontFamily="Segoe WP" Grid.Row="1" Foreground="#FFCBC8C8" Margin="5,0,0,0"/>
-                                    </Grid>
-                                </ScrollViewer>
-                            </DataTemplate>
-                        </GridView.ItemTemplate>
-                    </GridView>-->
                     <ItemsControl  x:Name="StackPanel_ExactMatches">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
@@ -148,7 +132,8 @@
             </CommandBar.PrimaryCommands>
             <CommandBar.SecondaryCommands>
                 <AppBarButton Label="View history" Click="toHistory"/>
-                <AppBarButton Label="view favorites" Click="toFavorites"/>
+                <AppBarButton Label="View favorites" Click="toFavorites"/>
+                <AppBarButton Label="About Let's Search!" Click="toAbout"/>
             </CommandBar.SecondaryCommands>
         </CommandBar>
     </Page.BottomAppBar>

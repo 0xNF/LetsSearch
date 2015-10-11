@@ -92,8 +92,10 @@ namespace JDictU.Model
         /** Checks if a given entry ID is favorited **/
         public static bool isFavorited(int entryID) {
             try {
-                var x = Task.Run(() => DBInfo.UconnAsync.QueryAsync<Favorites>("select * from favorites where entry_id is ?", entryID));
-                x.Wait();                
+                //    var x= await DBInfo.UconnAsync.QueryAsync<Favorites>("select * from favorites where entry_id is ?", entryID));
+                //    return x.Count > 0;
+                var x = Task.Run(() => DBInfo.UconnAsync.QueryAsync<Favorites>("select entry_id from favorites where entry_id is ?", entryID));
+                x.Wait();
                 return x.Result.Count > 0;
             }
             catch (SQLiteException sle) {

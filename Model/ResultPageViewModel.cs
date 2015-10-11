@@ -43,7 +43,7 @@ namespace JDictU.Model
             KanaRomaMap = _sr.getKanaRomaMap();
             DefinitionList = _sr.definitions.GetRange(1, _sr.definitions.Count - 1);//Should return everything except first element
             PoSList = _sr.pos;
-            verb = PoSList.Any(pos => pos.Contains(("verb"))) ? Verb.makeVerb(sr) : null;
+            verb = PoSList.Any(pos => pos.Contains((" verb"))) ? Verb.makeVerb(sr) : null;
             Debug.WriteLine("ID: " + sr.entry_id);
             isFavorite = UserData.isFavorited(this._sr.entry_id);
             //getExamples(MainKanji);

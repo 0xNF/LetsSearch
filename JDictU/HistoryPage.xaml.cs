@@ -16,38 +16,35 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using JDictU.Model;
+using System.Collections.ObjectModel;
 
-// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace JDictU {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class HistoryPage : Page {
 
         private static string fieldToOrderBy = "search_date";
         private static string direction = "DESC";
 
+        public ObservableCollection<History> history { get;set; }
+
         public HistoryPage() {
             this.InitializeComponent();
+            history = new ObservableCollection<History>();
+            this.DataContext = this;
         }
 
-        /// <summary>
-        /// Invoked when this page is about to be displayed in a Frame.
-        /// </summary>
-        /// <param name="e">Event data that describes how this page was reached.
-        /// This parameter is typically used to configure the page.</param>
+
         protected override void OnNavigatedTo(NavigationEventArgs e) {
             getHistory(fieldToOrderBy, direction);
         }
 
         private async Task getHistory(string field, string order) {
+            history.Clear();
             changeArrow();
             var res = await Task.Run(() => UserData.retrieveSearchHistory(field, order));
-            this.ItemsControl_History.ItemsSource = res;
+            foreach(History h in res) {
+                history.Add(h);
+            }
         }
 
         private void changeArrow() {

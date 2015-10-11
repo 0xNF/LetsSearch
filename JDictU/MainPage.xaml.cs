@@ -234,6 +234,8 @@ namespace JDictU
             Frame.Navigate(typeof(Result), sr);
         }
 
-
+        private void toAbout(object sender, RoutedEventArgs e) {
+            Frame.Navigate(typeof(AboutPage));
+        }
     }
 }

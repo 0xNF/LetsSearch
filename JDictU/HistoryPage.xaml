@@ -71,7 +71,7 @@
 
 
         <ScrollViewer Grid.Row="2">
-            <ItemsControl  x:Name="ItemsControl_History">
+            <ItemsControl  x:Name="ItemsControl_History" ItemsSource="{Binding history}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <StackPanel Orientation="Vertical"/>
@@ -102,7 +102,7 @@
                 <AppBarButton Name="searchButton" Label="Search" Icon="Find" Click="goToSearch"/>
             </CommandBar.PrimaryCommands>
             <CommandBar.SecondaryCommands>
-                <AppBarButton Label="view favorites" Click="toFavorites"/>
+                <AppBarButton Label="View favorites" Click="toFavorites"/>
                 <AppBarButton Label="Clear history" Click="clearHistoryCheck"/>
                 <!--<AppBarButton Label="view favorites" Click="toFavorites"/>-->
             </CommandBar.SecondaryCommands>

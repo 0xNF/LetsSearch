@@ -22,7 +22,25 @@
         <SolidColorBrush x:Key="DullGreyBrush" Color="#FFCBC8C8"/>
     </Page.Resources>
 
+
+    
+
     <Grid x:Name="LayoutRoot" Background="Transparent">
+        
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="VisualStateGroup">
+                <VisualState x:Name="Tablet">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="860"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="sv_conjugations.HorizontalAlignment" Value="Center"/>
+                        <Setter Target="grid_conjugations.Width" Value="640"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        
         <!--Pivot Control-->
         <Pivot x:Name="pivotControl"  SelectionChanged="Pivot_SelectionChanged">
             <Pivot.Title>
@@ -32,7 +50,7 @@
             <PivotItem x:Name="Pivot_Normal" Margin="0,-50,0,0">
                 <Grid x:Name="LayoutRoot2">
                     <ScrollViewer>
-                        <StackPanel x:Name="mainpanel" >                            
+                        <StackPanel x:Name="mainpanel" >
                             <Grid x:Name="Grid_KanjiAndFav" Height="100" VerticalAlignment="Top">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="14*"/>
@@ -48,11 +66,10 @@
                                     </FlyoutBase.AttachedFlyout>
                                     </TextBlock>
                                 </ScrollViewer>
-                                <SymbolIcon x:Name="Image_Favorite"  Symbol="Favorite" Grid.Column="1" RenderTransformOrigin="0.5,0.5" Foreground="White" Tapped="favoriteEntry" Margin="18,40,25,40" d:LayoutOverrides="TopMargin, BottomMargin">
-                                    <SymbolIcon.RenderTransform>
-                                        <CompositeTransform ScaleX="2" ScaleY="2"/>
-                                    </SymbolIcon.RenderTransform>
-                                </SymbolIcon>
+                                <Viewbox Grid.Column="1" Height="50">
+                                    <SymbolIcon x:Name="Image_Favorite"  Symbol="Favorite" Grid.Column="1"  Foreground="White" Tapped="favoriteEntry"/>
+                                </Viewbox>
+
                             </Grid>
                             <ScrollViewer x:Name="ScrollViewer_Translation" HorizontalScrollBarVisibility="Disabled" VerticalScrollMode="Disabled"  HorizontalScrollMode="Enabled" HorizontalAlignment="Right" >
                                 <TextBlock x:Name="TextBlock_Translation" Margin="0,0,20,0" Foreground="{StaticResource IceBlueBrush}" TextWrapping="Wrap" Text="{Binding MainEnglish, FallbackValue='error'}" VerticalAlignment="Top" Height="60" FontSize="36" HorizontalAlignment="Right" TextAlignment="Right" FontFamily="Segoe WP">
@@ -150,10 +167,14 @@
 
 
             <!--Pivot item two-->
-            <PivotItem x:Name="Pivot_Verb" Margin="0,-50,0,0">
+            <PivotItem x:Name="Pivot_Verb" Margin="0,-50,0,0">        
+                
                 <Grid x:Name="LayoutRoot3">
-
-                    <StackPanel>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="238*"/>
+                        <RowDefinition Height="353*"/>
+                    </Grid.RowDefinitions>     
+                    <StackPanel Grid.Row="0">
                         <TextBlock TextWrapping="Wrap" Text="Conjugations" FontSize="48" Foreground="{StaticResource DullGreyBrush}" HorizontalAlignment="Center" Margin="0,0,0,10"/>
                         <TextBlock x:Name="TextBlock_DictionaryForm" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding pronounciationKana, FallbackValue='Pronounciation_Kana'}" Foreground="{StaticResource IceBlueBrush}" VerticalAlignment="Top" TextAlignment="Center" FontSize="28" Margin="0,0,0,10">
                         <FlyoutBase.AttachedFlyout>
@@ -169,7 +190,7 @@
                             </MenuFlyout>
                         </FlyoutBase.AttachedFlyout>
                         </TextBlock>
-                        <Grid  Margin="0,20,0,0">
+                        <Grid  Margin="0,20,0,0" MaxWidth="640">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="183*"/>
                                 <ColumnDefinition Width="181*"/>
@@ -178,14 +199,14 @@
                                 <RowDefinition Height="30"/>
                                 <RowDefinition Height="30"/>
                             </Grid.RowDefinitions>
-                            <TextBlock x:Name="Block_FORMALTAB" Grid.Column="1" Grid.Row="0"  HorizontalAlignment="Left" TextWrapping="Wrap" Text="Plain" VerticalAlignment="Top" Width="156"  TextAlignment="Center" Height="34" FontSize="24"  Tapped="switchFormality" Foreground="{StaticResource DullGreyBrush}" Margin="10.75,0,0,0" Grid.RowSpan="2"/>
-                            <TextBlock x:Name="Block_KANATAB" Grid.Column="0"  Grid.Row="0" TextWrapping="Wrap" Text="Romaji" VerticalAlignment="Top"  TextAlignment="Center" Height="34" FontSize="24"  Tapped="switchAlphabet" Foreground="{StaticResource DullGreyBrush}"  RenderTransformOrigin="0.785,0.51" Margin="2,0,8.25,0" Grid.RowSpan="2"/>
-                            <TextBlock x:Name="Block_TENSETAB" Grid.Column="0" Grid.Row="1" TextWrapping="Wrap" Text="Present" VerticalAlignment="Top"  TextAlignment="Center" Height="34" FontSize="24"  Tapped="switchTense" Foreground="{StaticResource DullGreyBrush}" RenderTransformOrigin="0.785,0.51" Margin="2,0,10.25,-4"/>
-                            <TextBlock x:Name="Block_AGREEMENTTAB" Grid.Column="1" Grid.Row="1"  TextWrapping="Wrap" Text="Positive" VerticalAlignment="Top"  TextAlignment="Center" Height="34" FontSize="24"  Tapped="switchAgreement" Foreground="{StaticResource DullGreyBrush}" RenderTransformOrigin="0.785,0.51" Margin="9.75,0,13,-4"/>
+                            <TextBlock x:Name="Block_FORMALTAB" Grid.Column="1" Grid.Row="0" TextWrapping="Wrap" Text="Plain" VerticalAlignment="Top"  TextAlignment="Center" FontSize="24"  Tapped="switchFormality" Foreground="{StaticResource DullGreyBrush}" />
+                            <TextBlock x:Name="Block_KANATAB" Grid.Column="0"  Grid.Row="0" TextWrapping="Wrap" Text="Romaji" VerticalAlignment="Top"  TextAlignment="Center" FontSize="24"  Tapped="switchAlphabet" Foreground="{StaticResource DullGreyBrush}" />
+                            <TextBlock x:Name="Block_TENSETAB" Grid.Column="0" Grid.Row="1" TextWrapping="Wrap" Text="Present" VerticalAlignment="Top"  TextAlignment="Center" FontSize="24"  Tapped="switchTense" Foreground="{StaticResource DullGreyBrush}" />
+                            <TextBlock x:Name="Block_AGREEMENTTAB" Grid.Column="1" Grid.Row="1"  TextWrapping="Wrap" Text="Positive" VerticalAlignment="Top" TextAlignment="Center" FontSize="24"  Tapped="switchAgreement" Foreground="{StaticResource DullGreyBrush}"/>
                         </Grid>
                     </StackPanel>
-                    <ScrollViewer Margin="0,244,0,0" VerticalAlignment="Top">
-                        <Grid HorizontalAlignment="Left"  Height="590" VerticalAlignment="Bottom">
+                    <ScrollViewer x:Name="sv_conjugations" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1">
+                        <Grid x:Name="grid_conjugations" HorizontalAlignment="Left"  Height="590" VerticalAlignment="Bottom" MaxWidth="640">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="135"/>
                                 <ColumnDefinition/>
@@ -328,46 +349,37 @@
                     <!--TODO converters be fucked up yo. Aint got no what what is even going on brah -->
                     <ProgressRing x:Name="LoadingExamples" Visibility="Visible" IsActive="false" VerticalAlignment="Center" Height="150" Width="150" Grid.ColumnSpan="2" Grid.Row="1"/>
 
-                    <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="Examples" VerticalAlignment="Top" FontSize="48" Foreground="{StaticResource DullGreyBrush}"/>
-                    <ScrollViewer x:Name="ScrollViewer_Examples" Grid.Row="1">
-                        <ItemsControl x:Name="ItemControl_Examples">
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <StackPanel Orientation="Vertical"/>
-                                </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <Grid>
+                    <Viewbox>
+                        <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="Examples" VerticalAlignment="Top" Foreground="{StaticResource DullGreyBrush}"/>
+                    </Viewbox>
+                    <ItemsControl x:Name="ItemControl_Examples" Grid.Row="1" Background="Transparent">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollMode="Disabled">
+                                    <StackPanel Orientation="Vertical" MinWidth="{Binding ActualWidth, ElementName=ItemControl_Examples}" >
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Sense:" FontSize="20"/>
+                                            <TextBlock Text="{Binding sensenumber, FallbackValue='1'}" Foreground="{Binding Path=verified, Converter={StaticResource ColorBrushConverter}}" Margin="10,0,0,0" FontSize="20"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Form:" FontSize="20"/>
+                                            <TextBlock Text="{Binding form, FallbackValue='漢字フォーム'}" Foreground="{Binding Path=verified, Converter={StaticResource ColorBrushConverter}}" Margin="10,0,10,0" FontSize="20"/>
+                                            <TextBlock Text="Reading:" FontSize="20"/>
+                                            <TextBlock Text="{Binding reading, FallbackValue='かんじフォーム'}" Foreground="{Binding Path=verified, Converter={StaticResource ColorBrushConverter}}" Margin="10,0,0,0" FontSize="20"/>
+                                        </StackPanel>
                                         <StackPanel Orientation="Vertical">
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="Sense:" FontSize="20"/>
-                                                <TextBlock Text="{Binding sensenumber, FallbackValue='1'}" Foreground="{Binding Path=verified, Converter={StaticResource ColorBrushConverter}}" Margin="10,0,0,0" FontSize="20"/>
-                                            </StackPanel>
-                                            <ScrollViewer Height="27" HorizontalScrollBarVisibility="Disabled" VerticalScrollMode="Disabled"  HorizontalScrollMode="Enabled">
-                                                <StackPanel Orientation="Horizontal">
-                                                    <TextBlock Text="Form:" FontSize="20"/>
-                                                    <TextBlock Text="{Binding form, FallbackValue='漢字フォーム'}" Foreground="{Binding Path=verified, Converter={StaticResource ColorBrushConverter}}" Margin="10,0,10,0" FontSize="20"/>
-                                                    <TextBlock Text="Reading:" FontSize="20"/>
-                                                    <TextBlock Text="{Binding reading, FallbackValue='かんじフォーム'}" Foreground="{Binding Path=verified, Converter={StaticResource ColorBrushConverter}}" Margin="10,0,0,0" FontSize="20"/>
-                                                </StackPanel>
-                                            </ScrollViewer>
-                                            <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollMode="Disabled"  HorizontalScrollMode="Enabled">
-                                                <StackPanel Orientation="Vertical">
-                                                    <TextBlock FontSize="20"><Run 
+                                            <TextBlock FontSize="20"><Run 
                                                             Text="{Binding beforeForm, FallbackValue='日本語'}" Foreground="{Binding Path=verified, Converter={StaticResource ColorBrushConverter}}"/><Run 
                                                             Text="{Binding form, FallbackValue='の'}" Foreground="{Binding Path=verified, Converter={StaticResource InverseColorBrushConverter}}"/><Run
                                                             Text="{Binding afterForm, FallbackValue='文'}" Foreground="{Binding Path=verified, Converter={StaticResource ColorBrushConverter}}"/>
-                                                    </TextBlock>
-                                                    <TextBlock Text="{Binding sentenceeng, FallbackValue='English Sentence'}" Foreground="{Binding Path=verified, Converter={StaticResource ColorBrushConverter}}" FontSize="20"/>
-                                                </StackPanel>
-                                            </ScrollViewer>
+                                            </TextBlock>
+                                            <TextBlock Text="{Binding sentenceeng, FallbackValue='English Sentence'}" Foreground="{Binding Path=verified, Converter={StaticResource ColorBrushConverter}}" FontSize="20"/>
                                         </StackPanel>
-                                    </Grid>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </ScrollViewer>
+                                    </StackPanel>
+                                </ScrollViewer>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
                 </Grid>
             </PivotItem>
         </Pivot>
@@ -375,17 +387,13 @@
 
     <Page.BottomAppBar>
         <CommandBar>
-            <!-- CommandBar content -->
-            <!--<CommandBar.Content>
-                <AppBarButton Name="BackButton" Icon="Back" Click="goBack"/>
-            </CommandBar.Content>-->
             <CommandBar.PrimaryCommands>
                 <AppBarButton Name="searchButton" Label="Search" Icon="Find" Click="goToSearch"/>
                 <AppBarButton Name="conjugateButton" Label="Next Page" Click="toConjugations" Icon="Forward"/>
             </CommandBar.PrimaryCommands>
             <CommandBar.SecondaryCommands>
                 <AppBarButton Label="View history" Click="toHistory"/>
-                <AppBarButton Label="view favorites" Click="toFavorites"/>
+                <AppBarButton Label="View favorites" Click="toFavorites"/>
             </CommandBar.SecondaryCommands>
         </CommandBar>
     </Page.BottomAppBar>
