@@ -51,6 +51,8 @@ namespace JDictU {
             else {
                 throw new Exception("viewmodel type could not be determiend. Original link was neither a SearchResult nor an int");
             }
+            _viewmodel.pr = LoadingExamples;
+            _viewmodel.getExamples(_viewmodel.MainKanji);
             TextBlock_KanjiSpace.DataContext = _viewmodel;
             TextBlock_Translation.DataContext = _viewmodel;
             ItemControl_ExtraKanji.ItemsSource = _viewmodel.KanjiList;

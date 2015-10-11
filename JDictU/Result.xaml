@@ -326,7 +326,7 @@
                     </Grid.RowDefinitions>
 
                     <!--TODO converters be fucked up yo. Aint got no what what is even going on brah -->
-                    <ProgressRing x:Name="LoadingExamples" Visibility="Visible" IsActive="{Binding Converter={StaticResource TrueIfListNotEmptyConverter}, ConverterParameter={Binding}}" VerticalAlignment="Center"  Grid.ColumnSpan="2" Grid.Row="1"/>
+                    <ProgressRing x:Name="LoadingExamples" Visibility="Visible" IsActive="false" VerticalAlignment="Center" Height="150" Width="150" Grid.ColumnSpan="2" Grid.Row="1"/>
 
                     <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="Examples" VerticalAlignment="Top" FontSize="48" Foreground="{StaticResource DullGreyBrush}"/>
                     <ScrollViewer x:Name="ScrollViewer_Examples" Grid.Row="1">

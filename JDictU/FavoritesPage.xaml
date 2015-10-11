@@ -9,8 +9,8 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="29*"/>
-            <RowDefinition Height="227*"/>
+            <RowDefinition Height="107*"/>
+            <RowDefinition Height="533*"/>
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0" Margin="12,17,0,28" Grid.RowSpan="2">
             <TextBlock Text="Let's Search!"  FontSize="20" FontFamily="Segoe WP"  HorizontalAlignment="Left" Width="366" Foreground="#FF91C3FF"/>

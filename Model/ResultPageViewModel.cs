@@ -32,6 +32,8 @@ namespace JDictU.Model
         public ObservableCollection<HeadwordSentence> HWSList { get; set; }
         public ICollectionView hwsview { get; set; }
         public bool isFavorite { get; set; }
+        
+        public ProgressRing pr { get; set; }
 
         public ResultPageViewModel(SearchResult sr) {
             _sr = sr;
@@ -44,10 +46,11 @@ namespace JDictU.Model
             verb = PoSList.Any(pos => pos.Contains(("verb"))) ? Verb.makeVerb(sr) : null;
             Debug.WriteLine("ID: " + sr.entry_id);
             isFavorite = UserData.isFavorited(this._sr.entry_id);
-            getExamples(MainKanji);
+            //getExamples(MainKanji);
         }
 
-        private async Task getExamples(string headword) {
+        public async Task getExamples(string headword) {
+            pr.IsActive = true;
             if (HWSList == null) {
                 HWSList = new ObservableCollection<HeadwordSentence>();
 
@@ -60,6 +63,7 @@ namespace JDictU.Model
                 HWSList.Clear();
             }
             var hws = await SearchToolsAsync.getSentences(headword);
+            pr.IsActive = false;
             foreach (HeadwordSentence hw in hws) {
                 hw.form = hw.form != "" ? hw.form : hw.headword ;
 
