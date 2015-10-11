@@ -184,16 +184,18 @@ namespace JDictU.Model
 
     public class Super
     {
-        //[PrimaryKey]
+        [PrimaryKey]
         public int entry_id { get; set; }
-        //[Column("kanji")]
+        [Column("kanji")]
         public string kanji { get; set; }
-        //[Column("kana_map")]
+        [Column("kana_map")]
         public string kana_map { get; set; }
-        //[Column("definition")]
+        [Column("definition")]
         public string definition { get; set; }
-        //[Column("pos")]
+        [Column("pos")]
         public string pos { get; set; }
+        [Column("rank")]
+        public int rank { get; set; }
     }
 
 
