@@ -38,7 +38,8 @@ namespace JDictU
             JDictU.Model.DBInfo.getJayDict();
             JDictU.Model.DBInfo.getExamplesAsync();
             JDictU.Model.DBInfo.getJayDictAsync();
-            JDictU.Model.DBInfo.getUserDataAsync();         
+            JDictU.Model.DBInfo.getUserDataAsync();
+            JDictU.Model.DBInfo.getKradfileAsync();
 
 
         }

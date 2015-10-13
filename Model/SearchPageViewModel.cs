@@ -120,12 +120,7 @@ namespace JDictU.Model {
                 for(int i = 0; i < from.Count && to.Count < 150; i++) {
                     SearchResult sr = from[i];
                     to.Add(sr);
-                }
-
-                //for (int i = from.Count - 1; i >= 0 && to.Count < 150; i--) {
-                //    SearchResult sr = from[i];
-                //    to.Add(sr);
-                //}                
+                }        
 
             }), from);
 

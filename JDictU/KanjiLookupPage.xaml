@@ -1,0 +1,349 @@
+﻿<Page
+    x:Class="JDictU.KanjiLookupPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:JDictU"
+    xmlns:model="using:JDictU.Model"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <model:KanjiLookupPageModel x:Key="klpm"/>
+        <SolidColorBrush x:Key="IceBlueBuBrush" Color="#FF91C3FF"/>
+        <!--<Style TargetType="ListBoxItem">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <TextBlock Foreground="{Binding Path=color}"  Text="{Binding Path=message}"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+        </Style>-->
+    </Page.Resources>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">       
+
+        <Pivot Grid.Row="1">
+            <Pivot.Title>
+                <TextBlock Text="Let's Search! - Kanji Lookup" FontSize="20" FontFamily="Segoe WP"  HorizontalAlignment="Left" Foreground="#FF91C3FF" FontWeight="Normal"/>
+            </Pivot.Title>
+            <PivotItem>
+                <PivotItem.Header>
+                    <TextBlock Text="Lookup by Radical" Foreground="{StaticResource IceBlueBuBrush}"/>
+                </PivotItem.Header>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="75*"/>
+                        <RowDefinition Height="250*"/>
+                    </Grid.RowDefinitions>
+
+                    <GridView x:Name="gv_kanjiResults" Grid.Row="0" ItemsSource="{Binding matchingKanji}" BorderBrush="DarkGray" BorderThickness="2" ItemClick="searchThisKanji" IsItemClickEnabled="True">
+                        
+
+                    </GridView>
+
+                    <ScrollViewer x:Name="sv_bottomHalf" HorizontalScrollBarVisibility="Disabled" VerticalScrollMode="Auto" Grid.Row="1" Visibility="Visible">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="25*"/>
+                                <ColumnDefinition Width="145*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Grid x:Name="grid_StrokeCount" Grid.Column="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="50"/>
+                                </Grid.RowDefinitions>
+
+                                <Viewbox Grid.Row="0">
+                                    <TextBlock Text="1" HorizontalAlignment="Stretch"/>
+                                </Viewbox>
+                                <Viewbox Grid.Row="1">
+                                    <TextBlock Text="2" HorizontalAlignment="Stretch"/>
+                                </Viewbox>
+                                <Viewbox Grid.Row="2">
+                                    <TextBlock Text="3" HorizontalAlignment="Stretch"/>
+                                </Viewbox>
+                                <Viewbox Grid.Row="3">
+                                    <TextBlock Text="4" HorizontalAlignment="Stretch"/>
+                                </Viewbox>
+                                <Viewbox Grid.Row="4">
+                                    <TextBlock Text="5" HorizontalAlignment="Stretch"/>
+                                </Viewbox>
+                                <Viewbox Grid.Row="5">
+                                    <TextBlock Text="6" HorizontalAlignment="Stretch"/>
+                                </Viewbox>
+                                <Viewbox Grid.Row="6">
+                                    <TextBlock Text="7" HorizontalAlignment="Stretch"/>
+                                </Viewbox>
+                                <Viewbox Grid.Row="7">
+                                    <TextBlock Text="8" HorizontalAlignment="Stretch"/>
+                                </Viewbox>
+                                <Viewbox Grid.Row="8">
+                                    <TextBlock Text="9" HorizontalAlignment="Stretch"/>
+                                </Viewbox>
+                                <Viewbox Grid.Row="9">
+                                    <TextBlock Text="10" HorizontalAlignment="Stretch"/>
+                                </Viewbox>
+                                <Viewbox Grid.Row="10">
+                                    <TextBlock Text="11" HorizontalAlignment="Stretch"/>
+                                </Viewbox>
+                                <Viewbox Grid.Row="11">
+                                    <TextBlock Text="12" HorizontalAlignment="Stretch"/>
+                                </Viewbox>
+                                <Viewbox Grid.Row="12">
+                                    <TextBlock Text="13" HorizontalAlignment="Stretch"/>
+                                </Viewbox>
+                                <Viewbox Grid.Row="13">
+                                    <TextBlock Text="14" HorizontalAlignment="Stretch"/>
+                                </Viewbox>
+                                <Viewbox Grid.Row="14">
+                                    <TextBlock Text="17" HorizontalAlignment="Stretch"/>
+                                </Viewbox>                                
+                            </Grid>
+
+
+                            <ScrollViewer x:Name="sv_radicals" Grid.Column="1" VerticalScrollMode="Disabled" HorizontalScrollMode="Enabled" HorizontalScrollBarVisibility="Auto" >
+                                <Grid x:Name="grid_radicals" MinWidth="{Binding Path='ActualWidth', ElementName='sv_bottomHalf'}">
+                                    <Grid.RowDefinitions>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="50"/>
+                                </Grid.RowDefinitions>
+
+                                    <ListBox x:Name="lb_1" Grid.Row="0" SelectionChanged="lbSelectionChanged" SelectionMode="Multiple">
+                                        <ListBox.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Horizontal"/>
+                                            </ItemsPanelTemplate>
+                                        </ListBox.ItemsPanel>
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding}" Foreground="White"/>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                <ListBox x:Name="lb_2" Grid.Row="1" SelectionChanged="lbSelectionChanged" SelectionMode="Multiple">
+                                    <ListBox.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal"/>
+                                        </ItemsPanelTemplate>
+                                    </ListBox.ItemsPanel>
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding}" Foreground="White"/>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                <ListBox x:Name="lb_3" Grid.Row="2" SelectionChanged="lbSelectionChanged" SelectionMode="Multiple">
+                                    <ListBox.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal"/>
+                                        </ItemsPanelTemplate>
+                                    </ListBox.ItemsPanel>
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding}" Foreground="White"/>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                <ListBox x:Name="lb_4" Grid.Row="3" SelectionChanged="lbSelectionChanged" SelectionMode="Multiple">
+                                    <ListBox.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal"/>
+                                        </ItemsPanelTemplate>
+                                    </ListBox.ItemsPanel>
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding}" Foreground="White"/>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                <ListBox x:Name="lb_5" Grid.Row="4" SelectionChanged="lbSelectionChanged" SelectionMode="Multiple">
+                                    <ListBox.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal"/>
+                                        </ItemsPanelTemplate>
+                                    </ListBox.ItemsPanel>
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding}" Foreground="White"/>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                <ListBox x:Name="lb_6" Grid.Row="5" SelectionChanged="lbSelectionChanged" SelectionMode="Multiple">
+                                    <ListBox.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal"/>
+                                        </ItemsPanelTemplate>
+                                    </ListBox.ItemsPanel>
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding}" Foreground="White"/>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                <ListBox x:Name="lb_7" Grid.Row="6" SelectionChanged="lbSelectionChanged" SelectionMode="Multiple">
+                                    <ListBox.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal"/>
+                                        </ItemsPanelTemplate>
+                                    </ListBox.ItemsPanel>
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding}" Foreground="White"/>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                <ListBox x:Name="lb_8" Grid.Row="7" SelectionChanged="lbSelectionChanged" SelectionMode="Multiple">
+                                    <ListBox.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal"/>
+                                        </ItemsPanelTemplate>
+                                    </ListBox.ItemsPanel>
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding}" Foreground="White"/>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                <ListBox x:Name="lb_9" Grid.Row="8" SelectionChanged="lbSelectionChanged" SelectionMode="Multiple">
+                                    <ListBox.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal"/>
+                                        </ItemsPanelTemplate>
+                                    </ListBox.ItemsPanel>
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding}" Foreground="White"/>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                <ListBox x:Name="lb_10" Grid.Row="9" SelectionChanged="lbSelectionChanged" SelectionMode="Multiple">
+                                    <ListBox.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal"/>
+                                        </ItemsPanelTemplate>
+                                    </ListBox.ItemsPanel>
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding}" Foreground="White"/>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                <ListBox x:Name="lb_11" Grid.Row="10" SelectionChanged="lbSelectionChanged" SelectionMode="Multiple">
+                                    <ListBox.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal"/>
+                                        </ItemsPanelTemplate>
+                                    </ListBox.ItemsPanel>
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding}" Foreground="White"/>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                <ListBox x:Name="lb_12" Grid.Row="11" SelectionChanged="lbSelectionChanged" SelectionMode="Multiple">
+                                    <ListBox.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal"/>
+                                        </ItemsPanelTemplate>
+                                    </ListBox.ItemsPanel>
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding}" Foreground="White"/>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                <ListBox x:Name="lb_13" Grid.Row="12" SelectionChanged="lbSelectionChanged" SelectionMode="Multiple">
+                                    <ListBox.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal"/>
+                                        </ItemsPanelTemplate>
+                                    </ListBox.ItemsPanel>
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding}" Foreground="White"/>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                <ListBox x:Name="lb_14" Grid.Row="13" SelectionChanged="lbSelectionChanged" SelectionMode="Multiple">
+                                    <ListBox.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal"/>
+                                        </ItemsPanelTemplate>
+                                    </ListBox.ItemsPanel>
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding}" Foreground="White"/>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+
+                                <ListBox x:Name="lb_17" Grid.Row="14" SelectionChanged="lbSelectionChanged" SelectionMode="Multiple">
+                                    <ListBox.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal"/>
+                                        </ItemsPanelTemplate>
+                                    </ListBox.ItemsPanel>
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding}" Foreground="White"/>                                                
+                                            </DataTemplate>                                            
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+
+                            </Grid>
+                            </ScrollViewer>
+                        </Grid>
+                        
+                    </ScrollViewer>
+                </Grid>
+            </PivotItem>
+        </Pivot>
+    </Grid>
+
+    <Page.BottomAppBar>
+        <CommandBar>
+            <!-- CommandBar content -->
+            <CommandBar.PrimaryCommands>
+                <AppBarButton Name="searchButton" Label="Search" Icon="Find" Click="goToSearch"/>
+            </CommandBar.PrimaryCommands>
+            <CommandBar.SecondaryCommands>
+                <AppBarButton Label="View history" Click="toHistory"/>
+                <AppBarButton Label="View favorites" Click="toFavorites"/>
+                <AppBarButton Label="About Let's Search!" Click="toAbout"/>
+            </CommandBar.SecondaryCommands>
+        </CommandBar>
+    </Page.BottomAppBar>
+    
+</Page>

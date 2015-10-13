@@ -22,6 +22,7 @@ namespace JDictU.Model
         private const string jayDict = "model\\JayDictFIXED3.db";
         private const string userdata = "model\\userdata.db";
         private const string examples = "model\\examples.sqlite";
+        private const string kradfile = "model\\kradfile-u.txt";
         public static SQLiteAsyncConnection JconnAsync = null; //SQlite connect to Jaydict, filled in later
         public static SQLiteConnection Jconn = null;
         public static SQLiteAsyncConnection UconnAsync = null;
@@ -77,6 +78,10 @@ namespace JDictU.Model
                 var connectionWithLock = new SQLiteConnectionWithLock(new SQLitePlatformWinRT(), connectionString);
                 JconnAsync = new SQLiteAsyncConnection(() => connectionWithLock);
             }
+        }
+
+        static async public void getKradfileAsync() {
+            await CopyDatabase(kradfile, ApplicationData.Current.LocalFolder);
         }
 
         static async public void getExamplesAsync() {

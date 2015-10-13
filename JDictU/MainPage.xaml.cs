@@ -237,5 +237,9 @@ namespace JDictU
         private void toAbout(object sender, RoutedEventArgs e) {
             Frame.Navigate(typeof(AboutPage));
         }
+
+        private void toKanjiLookup(object sender, RoutedEventArgs e) {
+            Frame.Navigate(typeof(KanjiLookupPage));
+        }
     }
 }

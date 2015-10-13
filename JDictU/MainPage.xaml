@@ -133,6 +133,7 @@
             <CommandBar.SecondaryCommands>
                 <AppBarButton Label="View history" Click="toHistory"/>
                 <AppBarButton Label="View favorites" Click="toFavorites"/>
+                <AppBarButton Label="Kanji Lookup" Click="toKanjiLookup"/>
                 <AppBarButton Label="About Let's Search!" Click="toAbout"/>
             </CommandBar.SecondaryCommands>
         </CommandBar>
