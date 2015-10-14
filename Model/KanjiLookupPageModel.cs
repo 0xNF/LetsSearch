@@ -291,17 +291,20 @@ namespace JDictU.Model {
 
         //Kradfile.prepare_radikals()
         private async static Task<Dictionary<string, List<string>>> prepareRadicals() {
-            Dictionary<string, List<string>> results = new Dictionary<string, List<string>>();
-            StorageFile sf = await ApplicationData.Current.LocalFolder.GetFileAsync(kradfile);
-            IList<string> lines = await FileIO.ReadLinesAsync(sf, Windows.Storage.Streams.UnicodeEncoding.Utf8);
-            foreach(string line in lines) {
-                if(line != "" && !line.StartsWith("#")) {
-                    string[] splits = line.Split(':');
-                    results[splits[0].Trim()] = splits[1].Split(' ').Where(x => x != "").ToList();
+            if(radicals == null) {
+                Dictionary<string, List<string>> results = new Dictionary<string, List<string>>();
+                StorageFile sf = await ApplicationData.Current.LocalFolder.GetFileAsync(kradfile);
+                IList<string> lines = await FileIO.ReadLinesAsync(sf, Windows.Storage.Streams.UnicodeEncoding.Utf8);
+                foreach (string line in lines) {
+                    if (line != "" && !line.StartsWith("#")) {
+                        string[] splits = line.Split(':');
+                        results[splits[0].Trim()] = splits[1].Split(' ').Where(x => x != "").ToList();
+                    }
                 }
+                return results;
             }
-            
-            return results;
+
+            return radicals;;
         }
 
         //get_RadicalsFromKanji

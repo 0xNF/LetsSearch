@@ -40,7 +40,8 @@ namespace JDictU
             JDictU.Model.DBInfo.getJayDictAsync();
             JDictU.Model.DBInfo.getUserDataAsync();
             JDictU.Model.DBInfo.getKradfileAsync();
-
+            JDictU.Model.DBInfo.getKanjiAsync();
+            JDictU.Model.KanjiLookupPageModel.prepareModel();
 
         }
 

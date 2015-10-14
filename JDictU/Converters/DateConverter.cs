@@ -9,7 +9,9 @@ namespace JDictU{
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
             if (value != null && value is long) {
                 var ticks = (long)value;
-                return new DateTime(ticks).ToUniversalTime().ToString();
+                var d = new DateTime(ticks).ToUniversalTime();
+                var dstring = d.ToString() + " [" + d.DayOfWeek + "]";
+                return dstring;
             }
             return null;
         }

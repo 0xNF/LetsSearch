@@ -18,6 +18,7 @@
         <main:VisibilityConverter x:Key="VisibilityConverter"/>
         <main:VisibilityConverterListEmpty  x:Key="VisibilityConverterListEmpty"/>
         <SolidColorBrush x:Key="IceBlueBuBrush" Color="#FF91C3FF"/>
+        <SolidColorBrush x:Key="DullGreyBrush" Color="#FFCBC8C8"/>
     </Page.Resources>
 
 
@@ -112,6 +113,11 @@
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
+                    <TextBlock Text="..." Foreground="{StaticResource DullGreyBrush}" VerticalAlignment="Top" FontSize="100" HorizontalAlignment="Center" RenderTransformOrigin="0.5,0.5" Visibility="{Binding keyykey, Converter={StaticResource VisibilityConverter}, FallbackValue='Collapsed' }">
+                        <TextBlock.RenderTransform>
+                            <RotateTransform Angle="180"/>
+                        </TextBlock.RenderTransform>
+                    </TextBlock>
                     <Button x:Name="Button_PartialFetchMore" Content="Get more results (000 more)" Width="343" Visibility="Collapsed" Tapped="addMoreResults" HorizontalAlignment="Center"/>
                     <TextBlock x:Name="NoResults" Text="No Results" Margin="20,50,0,0" Foreground="#FFCBC8C8" Visibility="Collapsed"
                                Width="173" FontSize="36"/>
@@ -121,12 +127,12 @@
             </ScrollViewer>
             <!--</StackPanel>-->
         </Grid>
+
         <!--End Results Panel-->
     </Grid>
 
     <Page.BottomAppBar>
         <CommandBar>
-            <!-- CommandBar content -->
             <CommandBar.PrimaryCommands>
                 <AppBarButton Name="searchButton" Label="Search" Icon="Find" Click="searchButton_Click"/>
             </CommandBar.PrimaryCommands>

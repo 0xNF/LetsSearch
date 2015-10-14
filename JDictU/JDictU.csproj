@@ -123,6 +123,10 @@
       <DependentUpon>KanjiLookupPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="KanjiLookupPageViewModel.cs" />
+    <Compile Include="KanjiPage.xaml.cs">
+      <DependentUpon>KanjiPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="KanjiPageViewModel.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -178,6 +182,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="KanjiLookupPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="KanjiPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

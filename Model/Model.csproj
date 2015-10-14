@@ -116,6 +116,9 @@
     <Content Include="JayDictFIXED3.db">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="kanji.sqlite">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="project.json" />
     <Content Include="kradfile-u.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -128,6 +131,7 @@
     <Compile Include="Conjugator.cs" />
     <Compile Include="DBInfo.cs" />
     <Compile Include="KanjiLookupPageModel.cs" />
+    <Compile Include="KanjiPageModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResultPageViewModel.cs" />
     <Compile Include="Search.cs" />

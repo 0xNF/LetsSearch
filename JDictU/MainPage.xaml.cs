@@ -29,7 +29,7 @@ namespace JDictU
     {
         static SearchPageViewModel viewmodel { get; set; }
         private string oldText = "";
-
+        
 
         public MainPage() {
 
@@ -53,18 +53,23 @@ namespace JDictU
 
         }
 
-        /// <summary>
-        /// Invoked when this page is about to be displayed in a Frame.
-        /// </summary>
-        /// <param name="e">Event data that describes how this page was reached.
-        /// This parameter is typically used to configure the page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e) {
             var s = e.Parameter as string;
             if (!string.IsNullOrEmpty(s)) { //TODO dangerous - for some reason e.sourcePageType reads as MainPage, even if navigated from History. As such, have to resort to checking for string type. Should be okay, since no other page navigates to MainPage with a parameter.
                 //Fill search box and automatically search
-                string term = s;
-                this.TextBox_Search.Text = term;
-                searchButton_Internal();
+                if (s.StartsWith("kanji:")) {
+                    string term = s.Substring("kanji:".Length);
+                    this.TextBox_Search.Text = term;
+                    viewmodel.useDoubleLike = true;
+                    searchButton_Internal();
+                    viewmodel.useDoubleLike = false;
+                }
+                else {
+                    string term = s;
+                    this.TextBox_Search.Text = term;
+                    searchButton_Internal();
+                }
+
             }
             else if (e.NavigationMode == NavigationMode.Back) {
                 //do nothing, it automatically populates it with stored cached values
@@ -127,12 +132,15 @@ namespace JDictU
             TextBox_Search.Text.Trim().Replace("%", "");
             string searchText = TextBox_Search.Text;
             if (searchText.Length != 0) {
+                viewmodel.keybykey = true;
                 int numapos = searchText.Count(f => f == '\'');
                 if (numapos != 0) {
                     searchText = searchText.Replace("'", "''");
                 }
                 viewmodel.submitSearch(searchText, SynchronizationContext.Current, limit: 5);
-                //Task.Run(()=>{ viewmodel.submitSearch(searchText, 20); });
+            }
+            else {
+                viewmodel.keybykey = false;
             }
 
         }
@@ -193,6 +201,7 @@ namespace JDictU
 
         //When the search button on command bar is hit, searches non-empty text or resets the page
         private void searchButton_Internal() {
+            viewmodel.keybykey = false;
             string tosearch = TextBox_Search.Text.Trim();
             if (viewmodel.SearchComplete) {
                 resetPage();
@@ -231,7 +240,13 @@ namespace JDictU
 
         private void resultClicked(object sender, TappedRoutedEventArgs e) {
             SearchResult sr = (SearchResult)((Grid)sender).Tag;
-            Frame.Navigate(typeof(Result), sr);
+            if (sr.headerText.EndsWith("[Kanji]")) {
+                string literal = sr.headerText[0].ToString();
+                Frame.Navigate(typeof(KanjiPage), literal);
+            }
+            else {
+                Frame.Navigate(typeof(Result), sr);
+            }
         }
 
         private void toAbout(object sender, RoutedEventArgs e) {
@@ -241,5 +256,7 @@ namespace JDictU
         private void toKanjiLookup(object sender, RoutedEventArgs e) {
             Frame.Navigate(typeof(KanjiLookupPage));
         }
+
+
     }
 }

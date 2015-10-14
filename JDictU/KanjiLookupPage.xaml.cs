@@ -125,7 +125,7 @@ where childItem : DependencyObject {
 
         private void searchThisKanji(object sender, ItemClickEventArgs e) {
             string kanji = e.ClickedItem as string;
-            Frame.Navigate(typeof(MainPage), kanji);
+            Frame.Navigate(typeof(KanjiPage), kanji);
         }
     }
 }

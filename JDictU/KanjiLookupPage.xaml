@@ -328,8 +328,9 @@
                         
                     </ScrollViewer>
                 </Grid>
-            </PivotItem>
+            </PivotItem>            
         </Pivot>
+        
     </Grid>
 
     <Page.BottomAppBar>

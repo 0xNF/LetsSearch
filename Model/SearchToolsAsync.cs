@@ -32,6 +32,17 @@ namespace JDictU.Model
             
         }
 
+        public static async Task<KanjiDict> getKanji(string literal) {
+            string query = "SELECT * FROM kanji WHERE literal is ?";
+            List<KanjiDict> kanj  = await DBInfo.KconnAsync.QueryAsync<KanjiDict>(query, literal);
+            if(kanj.Count != 0) {
+                return kanj.First();
+            }
+            else {
+                return null;
+            }
+        }
+
         public static async Task<List<HeadwordSentence>>  getSentences(string word) {
             string query = "SELECT headword,reading,form,sensenumber, verified, sentencejpn, sentenceeng FROM headwords AS H JOIN sentences AS S ON H.sentenceid=S.id WHERE H.headword IS ? ORDER BY H.verified DESC LIMIT 10";
             List<HeadwordSentence> hws = await DBInfo.EconnAsync.QueryAsync<HeadwordSentence>(query, word);
@@ -54,7 +65,7 @@ namespace JDictU.Model
         }
 
 
-        public static async Task<Tuple<List<SearchResult>, List<SearchResult>>> searchEnglishAsync(string term, int limit=75) {
+        public static async Task<Tuple<List<SearchResult>, List<SearchResult>>> searchEnglishAsync(string term, int limit = 75, bool useDoubleLike = false) {
             string def = "select * from super where entry_id in (select entry_id from definitions_eng where definition like ? order by definition limit ?) order by rank ASC";
             //Dictionaries to put specific results into
             Dictionary<int, List<List<string>>> def_exact = new Dictionary<int, List<List<string>>>();
@@ -89,48 +100,40 @@ namespace JDictU.Model
                 return Tuple.Create<List<SearchResult>, List<SearchResult>>(srExact, srInexact);
             }
 
-        public static async Task<List<SearchResult>> searchRomajiExactAsync(string term, int limit) {
+        public static async Task<List<SearchResult>> searchRomajiExactAsync(string term, int limit,bool useDoubleLike = false) {
             string query = "select * from super where entry_id in (select entry_id from romaji where romaji = ? limit ?) order by rank ASC";
-            var x = queryWork2(await DBInfo.JconnAsync.QueryAsync<Super>(query, term, limit));
-            return x;
-            //string query = "select * from super where entry_id in (select entry_id from romaji where romaji = '" + term + "' limit 200) order by entry_id ASC";
-            //return await queryWork(query);
+            return queryWork2(await DBInfo.JconnAsync.QueryAsync<Super>(query, term, limit));
         }
 
-        public static async Task<List<SearchResult>> searchRomajiInexactAsync(string term, int limit) {
+        public static async Task<List<SearchResult>> searchRomajiInexactAsync(string term, int limit, bool useDoubleLike = false) {
             string param = "select * from super where entry_id in (select entry_id from romaji where romaji like ? AND romaji <> ? limit ?) order by rank ASC";
             return queryWork2(await DBInfo.JconnAsync.QueryAsync<Super>(param, term+"%", term, limit));
-
-            //string query = "select * from super where entry_id in (select entry_id from romaji where romaji like '" + term + "%' AND romaji <> '" + term + "' limit 200) order by entry_id ASC";
-            //return await queryWork(query);
         }
 
-        public static async Task<List<SearchResult>> searchKanaExactAsync(string term, int limit) {
+        public static async Task<List<SearchResult>> searchKanaExactAsync(string term, int limit, bool useDoubleLike = false) {
             string query = "select * from super where entry_id in (select entry_id from kana where kana = ? limit ?) order by rank ASC";
             return queryWork2(await DBInfo.JconnAsync.QueryAsync<Super>(query, term, limit));
-            //string query = "select * from super where entry_id in (select entry_id from kana where kana = '" + term + "' limit 200) order by entry_id ASC";
-            //return await queryWork(query);
         }
 
-        public static async Task<List<SearchResult>> searchKanaInexactAsync(string term, int limit) {
+        public static async Task<List<SearchResult>> searchKanaInexactAsync(string term, int limit, bool useDoubleLike = false) {
             string param = "select * from super where entry_id in (select entry_id from kana where kana like ? and kana <> ? limit ?) order by rank ASC";
             return queryWork2(await DBInfo.JconnAsync.QueryAsync<Super>(param, term+"%", term, limit));
-            //string query = "select * from super where entry_id in (select entry_id from kana where kana like '" + term + "%' and kana <> '" + term + "' limit 200) order by entry_id ASC";
-            //return await queryWork(query);
         }
 
-        public static async Task<List<SearchResult>> searchKanjiExactAsync(string term, int limit) {
+        public static async Task<List<SearchResult>> searchKanjiExactAsync(string term, int limit, bool useDoubleLike = false) {
             string param = "select * from super where entry_id in (select entry_id from kanji where kanji = ? limit ?) order by rank ASC";
             return queryWork2(await DBInfo.JconnAsync.QueryAsync<Super>(param, term, limit));
-            //string query = "select * from super where entry_id in (select entry_id from kanji where kanji = '" + term + "' limit 200) order by entry_id ASC";
-            //return await queryWork(query);
         }
 
-        public static async Task<List<SearchResult>> searchKanjiInexactAsync(string term, int limit) {
+        public static async Task<List<SearchResult>> searchKanjiInexactAsync(string term, int limit, bool useDoubleLike = false) {
             string param = "select * from super where entry_id in (select entry_id from kanji where kanji like ? and kanji <> ? limit ?) order by rank ASC";
-            return queryWork2(await DBInfo.JconnAsync.QueryAsync<Super>(param, term+"%", term, limit));
-            //string query = "select * from super where entry_id in (select entry_id from kanji where kanji like '" + term + "%' and kanji <> '" + term + "' limit 200) order by entry_id ASC";
-            //return await queryWork(query);
+            if (useDoubleLike) {
+                return queryWork2(await DBInfo.JconnAsync.QueryAsync<Super>(param, "%" + term + "%", term, limit));
+            }
+            else {
+                return queryWork2(await DBInfo.JconnAsync.QueryAsync<Super>(param, term + "%", term, limit));
+
+            }
         }
         #endregion
 

@@ -14,6 +14,8 @@ namespace JDictU.Model {
     public class SearchPageViewModel : INotifyPropertyChanged// : BaseViewModel
     {
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public static readonly SolidColorBrush Black = GetColorFromHexa("#00000000");
         public static readonly SolidColorBrush Grey = GetColorFromHexa("#FF131313");
         public static readonly SolidColorBrush HighlightedGreen = GetColorFromHexa("#FF91FAFF");
@@ -59,9 +61,19 @@ namespace JDictU.Model {
             }
             set {
                 _NoResults = value;
-                NotifyPropertyChanged();
+                OnPropertyChanged("NoResults");
             }
         }
+
+        private bool _keybykey;
+        public bool keybykey {
+            get { return _keybykey; }
+            set { _keybykey = value; OnPropertyChanged("keybykey"); }
+        }
+
+
+        public bool useDoubleLike = false;
+
 
         public ObservableCollection<SearchResult> Exacts = new ObservableCollection<SearchResult>(); 
         public ObservableCollection<SearchResult> Partials = new ObservableCollection<SearchResult>();
@@ -150,7 +162,7 @@ namespace JDictU.Model {
                 }
                 else { //if it didn't contain a space, then it can be found in either Romaji or Definitions, so we return both.
                     Debug.WriteLine("Ended in either a vowel, or a vowel + n, searching over both");
-
+                    
                     Task.Run(async () => {
                         var re = await SearchToolsAsync.searchRomajiExactAsync(searchText, limit);
                         updateUI(Exacts, re, sync);
@@ -209,10 +221,34 @@ namespace JDictU.Model {
 
 
                     Task.Run(async () => {
-                        var re = await SearchToolsAsync.searchKanjiInexactAsync(searchText, limit);
+                        var re = await SearchToolsAsync.searchKanjiInexactAsync(searchText, limit, useDoubleLike);
                         updateUI(Partials, re, sync);
                     });
 
+                    if(searchText.Length == 1) {
+                        Task.Run(async () => {
+                            var fromKanjiDict = await SearchToolsAsync.getKanji(searchText);
+                            List<SearchResult> lst = new List<SearchResult>();
+                            SearchResult sr = new SearchResult();
+                            sr.headerText = fromKanjiDict.literal + " [Kanji]";
+                            if(fromKanjiDict.meaning != "") {
+                                var splits = fromKanjiDict.meaning.Split('|');
+                                string deftext = "";
+                                foreach(string split in splits) {
+                                    deftext += split + ",";
+                                }
+                                deftext = deftext.Substring(0, deftext.Length - 1);
+                                sr.defText = deftext;
+                            }
+                            lst.Add(sr);
+                            //Need to package the returned Kanji to a SearchResult, then format it properly for display.
+                            //Need to re-investigate how SearchResults work. Does the Tag determine where you go? IF so, tag should be Kanji:kanji to indicate that we be taken to the kanjiresult page.
+                            if (fromKanjiDict != null) {
+                                updateUI(Exacts, lst, sync);
+                            }
+                        });
+                    }
+                    
 
 
                 }
@@ -237,14 +273,19 @@ namespace JDictU.Model {
             );
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
         // This method is called by the Set accessor of each property. 
         // The CallerMemberName attribute that is applied to the optional propertyName 
         // parameter causes the property name of the caller to be substituted as an argument. 
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "") {
             if (PropertyChanged != null) {
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+        protected void OnPropertyChanged(string name) {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (handler != null) {
+                handler(this, new PropertyChangedEventArgs(name));
             }
         }
 

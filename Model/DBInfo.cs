@@ -23,11 +23,13 @@ namespace JDictU.Model
         private const string userdata = "model\\userdata.db";
         private const string examples = "model\\examples.sqlite";
         private const string kradfile = "model\\kradfile-u.txt";
+        private const string kanji = "model\\kanji.sqlite";
         public static SQLiteAsyncConnection JconnAsync = null; //SQlite connect to Jaydict, filled in later
         public static SQLiteConnection Jconn = null;
         public static SQLiteAsyncConnection UconnAsync = null;
         public static SQLiteConnection Uconn = null;
         public static SQLiteAsyncConnection EconnAsync = null;
+        public static SQLiteAsyncConnection KconnAsync = null;
 
 
 
@@ -77,6 +79,19 @@ namespace JDictU.Model
                 var connectionString = new SQLiteConnectionString(jayDict, false);
                 var connectionWithLock = new SQLiteConnectionWithLock(new SQLitePlatformWinRT(), connectionString);
                 JconnAsync = new SQLiteAsyncConnection(() => connectionWithLock);
+            }
+        }
+
+        static async public void getKanjiAsync() {
+            await CopyDatabase(kanji, ApplicationData.Current.LocalFolder);
+            if (KconnAsync == null) {
+                var conFunction = new Func<SQLiteConnectionWithLock>(() =>
+                    new SQLiteConnectionWithLock(new SQLitePlatformWinRT(),
+                        new SQLiteConnectionString(kanji, false)));
+
+                var connectionString = new SQLiteConnectionString(kanji, false);
+                var connectionWithLock = new SQLiteConnectionWithLock(new SQLitePlatformWinRT(), connectionString);
+                KconnAsync = new SQLiteAsyncConnection(() => connectionWithLock);
             }
         }
 

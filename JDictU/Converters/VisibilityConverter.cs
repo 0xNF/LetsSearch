@@ -39,6 +39,54 @@ namespace JDictU{
             }
         }
 
+    public class VisibilityConverterListCount : BaseValueConverter {
+
+        //http://dotnet.dzone.com/articles/build-both-converters-windows
+        //http://stackoverflow.com/questions/11323169/converter-with-multiple-parameter
+        public override object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
+            if (value != null) {
+                int c = (int)value;
+                if (c > 0) {
+                    return Visibility.Visible;//visibility;
+                }
+                else {
+                    return Visibility.Collapsed;
+                }
+            }
+
+            return Visibility.Visible;
+        }
+
+        public override object ConvertBack(object value, Type targetType, object parameter,
+                           CultureInfo culture) {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class VisibilityConverterStringisEmptyString : BaseValueConverter {
+
+        //http://dotnet.dzone.com/articles/build-both-converters-windows
+        //http://stackoverflow.com/questions/11323169/converter-with-multiple-parameter
+        public override object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
+            if (value != null) {
+                string c = (string)value;
+                if (c != "") {
+                    return Visibility.Visible;//visibility;
+                }
+                else {
+                    return Visibility.Collapsed;
+                }
+            }
+
+            return Visibility.Visible;
+        }
+
+        public override object ConvertBack(object value, Type targetType, object parameter,
+                           CultureInfo culture) {
+            throw new NotImplementedException();
+        }
+    }
+
     public class VisibilityConverterListEmpty : BaseValueConverter {
 
         //http://dotnet.dzone.com/articles/build-both-converters-windows

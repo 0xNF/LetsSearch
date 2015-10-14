@@ -1,0 +1,333 @@
+﻿<Page
+    x:Class="JDictU.KanjiPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:JDictU"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+
+        <local:ColorBrushConverter x:Key="ColorBrushConverter"/>
+        <local:InverseColorBrushConverter x:Key="InverseColorBrushConverter"/>
+        <local:TrueIfListNotEmptyConverter x:Key="TrueIfListNotEmptyConverter"/>
+        <local:VisibilityConverterListCount x:Key="VisibilityConverter"/>
+        <local:VisibilityConverterStringisEmptyString x:Key="VisibilityConverterStringisEmptyString"/>
+        <ItemsPanelTemplate x:Key="GridViewItemsPanel">
+            <ItemsWrapGrid Orientation="Vertical" />
+        </ItemsPanelTemplate>
+
+        <SolidColorBrush x:Key="IceBlueBrush" Color="#FF91C3FF"/>
+        <SolidColorBrush x:Key="DullGreyBrush" Color="#FFCBC8C8"/>
+    </Page.Resources>
+
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="18*"/>
+            <RowDefinition Height="93*"/>
+            <RowDefinition Height="209*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Let's Search! - Kanji Result" FontSize="20" FontFamily="Segoe WP" Foreground="#FF91C3FF" FontWeight="Normal" Grid.Row="0" Margin="0,0,130,0" d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin"/>
+
+        <Viewbox Grid.Row="1" d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin">
+            <TextBlock x:Name="tb_literal" Foreground="{StaticResource IceBlueBrush}" Text="{Binding literal, FallbackValue='調'}"/>
+        </Viewbox>
+
+        <ScrollViewer x:Name="sv_kanjiInfo" Grid.Row="2">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100*"/>
+                    <ColumnDefinition Width="150*"/>
+                    <ColumnDefinition Width="100*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel x:Name="sp_left" Grid.Row="0" HorizontalAlignment="Left">
+                    <TextBlock Grid.Row="0" Text="Readings" Foreground="{StaticResource DullGreyBrush}" />
+                    <StackPanel x:Name="sp_ja_on" Visibility="{Binding readings_ja_on.Count, Converter={StaticResource VisibilityConverter}, FallbackValue='Collapsed'}">
+                        <TextBlock Foreground="{StaticResource DullGreyBrush}" Text="Ja-On" FontSize="14"/>
+                        <ItemsControl ItemsSource="{Binding readings_ja_on}">
+                            <ItemsPanelTemplate>
+                                <StackPanel/>
+                            </ItemsPanelTemplate>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding}" Margin="20,0,0,0"  Foreground="{StaticResource IceBlueBrush}" />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+
+                    <StackPanel x:Name="sp_ja_kun" Visibility="{Binding readings_ja_kun.Count, Converter={StaticResource VisibilityConverter}, FallbackValue='Collapsed'}">
+                        <TextBlock Foreground="{StaticResource DullGreyBrush}" Text="Ja-Kun" FontSize="14"/>
+                        <ItemsControl ItemsSource="{Binding readings_ja_kun}">
+                            <ItemsPanelTemplate>
+                                <StackPanel/>
+                            </ItemsPanelTemplate>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding}"  Margin="20,0,0,0"  Foreground="{StaticResource IceBlueBrush}" />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+
+                    <StackPanel x:Name="sp_korean_hangeul" Visibility="{Binding readings_hangeul_h.Count, Converter={StaticResource VisibilityConverter}, FallbackValue='Collapsed'}">
+                        <TextBlock Foreground="{StaticResource DullGreyBrush}" Text="Ko-Hangeul" FontSize="14"/>
+                        <ItemsControl ItemsSource="{Binding readings_hangeul_h}">
+                            <ItemsPanelTemplate>
+                                <StackPanel/>
+                            </ItemsPanelTemplate>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding}" Margin="20,0,0,0"  Foreground="{StaticResource IceBlueBrush}" />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+
+                    <StackPanel x:Name="sp_korean_romanized" Visibility="{Binding readings_hangeul_r.Count, Converter={StaticResource VisibilityConverter}, FallbackValue='Collapsed'}">
+                        <TextBlock Foreground="{StaticResource DullGreyBrush}" Text="Ko-Romanized" FontSize="14"/>
+                        <ItemsControl ItemsSource="{Binding readings_hangeul_r}">
+                            <ItemsPanelTemplate>
+                                <StackPanel/>
+                            </ItemsPanelTemplate>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding}" Margin="20,0,0,0"  Foreground="{StaticResource IceBlueBrush}" />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+
+                    <StackPanel x:Name="sp_chinese_pinyin" Visibility="{Binding readings_pinyin.Count, Converter={StaticResource VisibilityConverter}, FallbackValue='Collapsed'}">
+                        <TextBlock Foreground="{StaticResource DullGreyBrush}" Text="Cn-Pinyin" FontSize="14"/>
+                        <ItemsControl ItemsSource="{Binding readings_pinyin}">
+                            <ItemsPanelTemplate>
+                                <StackPanel/>
+                            </ItemsPanelTemplate>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding}" Margin="20,0,0,0"  Foreground="{StaticResource IceBlueBrush}" />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+
+                    <TextBlock Grid.Row="0" Text="Nanori" Foreground="{StaticResource DullGreyBrush}" />
+                    <StackPanel x:Name="sp_nanori" Visibility="{Binding nanori.Count, Converter={StaticResource VisibilityConverter}, FallbackValue='Collapsed'}">
+                        <ItemsControl ItemsSource="{Binding nanori}">
+                            <ItemsPanelTemplate>
+                                <StackPanel/>
+                            </ItemsPanelTemplate>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding}" Margin="20,0,0,0"  Foreground="{StaticResource IceBlueBrush}" />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+
+                    <StackPanel Visibility="{Binding radicalsForThisKanji.Count, Converter={StaticResource VisibilityConverter}}" >
+                        <TextBlock Text="Radical Elements" Foreground="{StaticResource DullGreyBrush}" HorizontalAlignment="Left"/>
+                    <ItemsControl ItemsSource="{Binding radicalsForThisKanji}" >
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"/>
+                        </ItemsPanelTemplate>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock  Foreground="{StaticResource IceBlueBrush}" Text="{Binding}" HorizontalAlignment="Center"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    </StackPanel>
+
+
+                </StackPanel>
+
+                    <StackPanel Grid.Column="1" >
+                        <Grid  d:LayoutOverrides="LeftMargin, RightMargin, LeftPosition, RightPosition">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="10*"/>
+                                <ColumnDefinition Width="10*"/>
+                                <ColumnDefinition Width="10*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="9*"/>
+                                <RowDefinition Height="17*"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Column="0" Grid.Row="0"  HorizontalAlignment="Center" Text="JLPT" Foreground="{StaticResource DullGreyBrush}" Margin="11,0,11.333,0" d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin"/>
+                            <TextBlock Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" Text="Grade" Foreground="{StaticResource DullGreyBrush}" Margin="5.667,0,6,0" d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin"/>
+                            <TextBlock Grid.Column="2"  Grid.Row="0" HorizontalAlignment="Center" Text="Freq" Foreground="{StaticResource DullGreyBrush}" Margin="11,0,11.333,0" d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin"/>
+
+                            <TextBlock Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" Text="{Binding jlpt}" Foreground="{StaticResource IceBlueBrush}" Margin="11,0,11.333,0" d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin"/>
+                            <TextBlock Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" Text="{Binding grade}" Foreground="{StaticResource IceBlueBrush}" Margin="5.667,0,6,0" d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin"/>
+                            <TextBlock Grid.Column="2"  Grid.Row="1" HorizontalAlignment="Center" Text="{Binding frequency}" Foreground="{StaticResource IceBlueBrush}" Margin="11,0,11.333,0" d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin"/>
+                        </Grid>
+
+                    <TextBlock Foreground="{StaticResource DullGreyBrush}" Text="Stroke Count" FontSize="14" HorizontalAlignment="Center"/>
+                    <TextBlock Foreground="{StaticResource IceBlueBrush}" Text="{Binding strokecount}" FontSize="14" HorizontalAlignment="Center"/>
+
+                    <StackPanel HorizontalAlignment="Center" Visibility="{Binding commonMiscounts.Count, Converter={StaticResource VisibilityConverter}}">
+                        <TextBlock Text="Common Miscounts: " FontSize="10" Foreground="{StaticResource DullGreyBrush}" HorizontalAlignment="Center"/>
+                        <StackPanel x:Name="sp_commonmiscounts">
+                            <ItemsControl ItemsSource="{Binding commonMiscounts}">
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal"/>
+                                </ItemsPanelTemplate>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock  Foreground="{StaticResource IceBlueBrush}" Text="{Binding}" FontSize="12" HorizontalAlignment="Center"/>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </StackPanel>
+
+
+                    <StackPanel x:Name="sp_radicals" HorizontalAlignment="Center" Visibility="{Binding radicals.Count, Converter={StaticResource VisibilityConverter}}">
+                        <TextBlock Foreground="{StaticResource DullGreyBrush}" Text="Radicals" FontSize="14" HorizontalAlignment="Center"/>
+                        <ItemsControl ItemsSource="{Binding radicals}">
+                            <ItemsPanelTemplate>
+                                <StackPanel/>
+                            </ItemsPanelTemplate>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock  Foreground="{StaticResource IceBlueBrush}">
+                                        <Run Text="{Binding radicalID}"/>
+                                        <Run Text=" : "/>
+                                        <Run Text="{Binding radicalType}"/>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>                        
+                    </StackPanel>                    
+
+                    <StackPanel x:Name="sp_dictionaryRefs" HorizontalAlignment="Center" Visibility="{Binding dictionaryRefs.Count, Converter={StaticResource VisibilityConverter}}">
+                        <TextBlock Foreground="{StaticResource DullGreyBrush}" Text="Dictionary References" FontSize="14" HorizontalAlignment="Center"/>
+                        <ItemsControl ItemsSource="{Binding dictionaryRefs}">
+                            <ItemsPanelTemplate>
+                                <StackPanel/>
+                            </ItemsPanelTemplate>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding}"  Foreground="{StaticResource IceBlueBrush}" />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+
+                    <StackPanel x:Name="sp_variants" HorizontalAlignment="Center" Visibility="{Binding variants.Count, Converter={StaticResource VisibilityConverter}}">
+                        <TextBlock Foreground="{StaticResource DullGreyBrush}" Text="Variants" FontSize="14" HorizontalAlignment="Center"/>
+                        <ItemsControl ItemsSource="{Binding variants}">
+                            <ItemsPanelTemplate>
+                                <StackPanel/>
+                            </ItemsPanelTemplate>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding}"  Foreground="{StaticResource IceBlueBrush}" />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+
+                    <StackPanel x:Name="sp_radname" HorizontalAlignment="Center" Visibility="{Binding radicalname, Converter={StaticResource VisibilityConverterStringisEmptyString}}">
+                        <TextBlock Foreground="{StaticResource DullGreyBrush}" Text="Radical Name" FontSize="14" HorizontalAlignment="Center"/>
+                        <TextBlock Foreground="{StaticResource IceBlueBrush}" Text="{Binding radicalname}" FontSize="14" HorizontalAlignment="Center"/>
+                    </StackPanel>
+
+                    <StackPanel x:Name="sp_dicnum" HorizontalAlignment="Center" Visibility="{Binding dic_num.Count, Converter={StaticResource VisibilityConverter}}">
+                        <TextBlock Foreground="{StaticResource DullGreyBrush}" Text="Dictionary References" FontSize="14" HorizontalAlignment="Center"/>
+                        <ItemsControl ItemsSource="{Binding dic_num}">
+                            <ItemsPanelTemplate>
+                                <StackPanel/>
+                            </ItemsPanelTemplate>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock  Foreground="{StaticResource IceBlueBrush}" FontSize="12">
+                                        <Run Text="{Binding kanjiId}"/>
+                                        <Run Text=" : "/>
+                                        <Run Text="{Binding dictionaryName}"/>
+                                    </TextBlock>                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+
+                    <StackPanel x:Name="sp_querycodes" HorizontalAlignment="Center" Visibility="{Binding query_codes.Count, Converter={StaticResource VisibilityConverter}}">
+                        <TextBlock Foreground="{StaticResource DullGreyBrush}" Text="Query Codes" FontSize="14" HorizontalAlignment="Center"/>
+                        <ItemsControl ItemsSource="{Binding query_codes}" HorizontalAlignment="Left">
+                            <ItemsPanelTemplate>
+                                <StackPanel/>
+                            </ItemsPanelTemplate>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock  Foreground="{StaticResource IceBlueBrush}" FontSize="12">
+                                        <Run Text="{Binding query_code}"/>
+                                        <Run Text=" : "/>
+                                        <Run Text="{Binding qc_type}"/>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+
+                    <StackPanel x:Name="sp_codepoints" HorizontalAlignment="Center" Visibility="{Binding codepoints.Count, Converter={StaticResource VisibilityConverter}}">
+                        <TextBlock Foreground="{StaticResource DullGreyBrush}" Text="Codepoints" FontSize="14" HorizontalAlignment="Center"/>
+                        <ItemsControl ItemsSource="{Binding codepoints}" HorizontalAlignment="Left">
+                            <ItemsPanelTemplate>
+                                <StackPanel/>
+                            </ItemsPanelTemplate>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock  Foreground="{StaticResource IceBlueBrush}" FontSize="12">
+                                        <Run Text="{Binding code}"/>
+                                        <Run Text=" : "/>
+                                        <Run Text="{Binding encoding}"/>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+
+
+
+
+
+                </StackPanel>        
+
+                <StackPanel x:Name="sp_right" Grid.Column="2" HorizontalAlignment="Right">
+                    <TextBlock Text="Meanings" Foreground="{StaticResource DullGreyBrush}" />
+                    <StackPanel x:Name="sp_meanings" Visibility="{Binding meanings.Count, Converter={StaticResource VisibilityConverter}, FallbackValue='Collapsed'}">
+                        <ItemsControl ItemsSource="{Binding meanings}" HorizontalAlignment="Left">
+                            <ItemsPanelTemplate>
+                                <StackPanel/>
+                            </ItemsPanelTemplate>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                     <TextBlock Text="{Binding}" Margin="0,0,20,0"  Foreground="{StaticResource IceBlueBrush}" TextWrapping="Wrap" HorizontalAlignment="Left"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
+
+    </Grid>
+
+    <Page.BottomAppBar>
+        <CommandBar>
+            <CommandBar.PrimaryCommands>
+                <AppBarButton Name="searchButton" Label="Search" Icon="Find" Click="goToSearch"/>
+            </CommandBar.PrimaryCommands>
+            <CommandBar.SecondaryCommands>
+                <AppBarButton Label="View history" Click="toHistory"/>
+                <AppBarButton Label="View favorites" Click="toFavorites"/>
+                <AppBarButton Label="Kanji Lookup" Click="toKanjiLookup"/> 
+                <AppBarButton Label="Search for words with this Kanji" Click="findThisKanji"/>
+            </CommandBar.SecondaryCommands>
+        </CommandBar>
+    </Page.BottomAppBar>
+    
+</Page>

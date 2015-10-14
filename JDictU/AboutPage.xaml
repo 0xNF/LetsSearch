@@ -40,18 +40,11 @@
                 <Image Source="Assets/Square150x150_IceBlue.png" />
             </Viewbox>
         </Grid>
-
-
-        <Grid x:Name="contentGrid" Grid.Row="2" HorizontalAlignment="Left" Background="Transparent">
-
-            <Grid.RowDefinitions>
-                <RowDefinition Height="38*"/>
-                <RowDefinition Height="48*"/>
-                <RowDefinition Height="68*"/>
-                <RowDefinition Height="68*"/>
-                <RowDefinition Height="70*"/>
-            </Grid.RowDefinitions>
-
+              
+          <ScrollViewer Grid.Row="2">
+            <StackPanel>
+                
+            
             <StackPanel Grid.Row="0">
                 <TextBlock Text="Version" Foreground="{StaticResource IceBlueBrush}" FontSize="30"/>
                 <TextBlock Text="{Binding version, FallbackValue='1.1.4'}" FontSize="20"/>
@@ -71,15 +64,18 @@
             <StackPanel Grid.Row="3">
                 <TextBlock Text="Resources" Foreground="{StaticResource IceBlueBrush}" FontSize="30"/>
                 <HyperlinkButton Content="EDICT by Jim Breen"  NavigateUri="http://www.edrdg.org/jmdict/edict_doc.html" Foreground="White"  FontSize="20"/>
-                <HyperlinkButton Content="Examples by the Tatoeba Project" NavigateUri="http://tatoeba.org/eng/" Foreground="White" FontSize="20"/>
+                    <HyperlinkButton Content="KANJIDIC2 by Jim Breen"  NavigateUri="http://www.edrdg.org/kanjidic/kanjd2index.html" Foreground="White"  FontSize="20"/>
+                    <HyperlinkButton Content="Examples by the Tatoeba Project" NavigateUri="http://tatoeba.org/eng/" Foreground="White" FontSize="20"/>
+                    <HyperlinkButton Content="Kradfile-u by Jim Rose as Kanji Cafe" NavigateUri="http://www.kanjicafe.com/kradfile_license.htm" Foreground="White" FontSize="20"/>
             </StackPanel>
 
             <StackPanel Grid.Row="4">
                 <TextBlock Text="Feedback" Foreground="{StaticResource IceBlueBrush}" FontSize="30"/>
                 <Button Content="Send us a message"  Click="openFeedback" Foreground="White" FontSize="20"/>
             </StackPanel>
+            </StackPanel>
 
-        </Grid>
+            </ScrollViewer>
 
     </Grid>
 
