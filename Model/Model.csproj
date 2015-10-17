@@ -132,6 +132,7 @@
     <Compile Include="DBInfo.cs" />
     <Compile Include="KanjiLookupPageModel.cs" />
     <Compile Include="KanjiPageModel.cs" />
+    <Compile Include="KanjiPageViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResultPageViewModel.cs" />
     <Compile Include="Search.cs" />

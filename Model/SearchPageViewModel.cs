@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading;
+using Windows.UI.Xaml;
 
 namespace JDictU.Model {
     public class SearchPageViewModel : INotifyPropertyChanged// : BaseViewModel
@@ -65,10 +66,22 @@ namespace JDictU.Model {
             }
         }
 
-        private bool _keybykey;
+        public Visibility visForDots { get; set; }
+        private bool _keybykey = false;
         public bool keybykey {
             get { return _keybykey; }
-            set { _keybykey = value; OnPropertyChanged("keybykey"); }
+            set {
+                _keybykey = value;
+                if (!_keybykey) {
+                    visForDots = Visibility.Collapsed;
+                }
+                else {
+                    visForDots = Visibility.Visible;
+                }
+                OnPropertyChanged("visForDots");
+
+                OnPropertyChanged("keybykey");
+            }
         }
 
 
@@ -82,10 +95,11 @@ namespace JDictU.Model {
         private List<SearchResult> _partialsFull = new List<SearchResult>();
 
         public SearchPageViewModel() {
-
+            visForDots = Visibility.Collapsed;
         }
 
         public void resetViewModel(){
+            visForDots = Visibility.Collapsed;
             Exacts.Clear();
             Partials.Clear();
             _exactsFull.Clear();

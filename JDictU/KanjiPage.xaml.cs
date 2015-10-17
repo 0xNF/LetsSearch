@@ -33,8 +33,12 @@ namespace JDictU {
 
         protected override void OnNavigatedTo(NavigationEventArgs e) {
             if(e.Parameter != null) {
-                string literal = e.Parameter as string;
-                view = new KanjiPageViewModel(literal);
+                if(e.Parameter.GetType() == typeof(string)) {
+                    string literal = e.Parameter as string;
+                    view = new KanjiPageViewModel(literal);
+                }else if(e.Parameter.GetType() == typeof(KanjiPageViewModel)) {
+                    view = e.Parameter as KanjiPageViewModel;
+                }    
                 this.DataContext = view;
             }
         }

@@ -53,6 +53,7 @@ namespace JDictU {
             }
             _viewmodel.pr = LoadingExamples;
             _viewmodel.getExamples(_viewmodel.MainKanji);
+            this.DataContext = _viewmodel;
             TextBlock_KanjiSpace.DataContext = _viewmodel;
             TextBlock_Translation.DataContext = _viewmodel;
             ItemControl_ExtraKanji.ItemsSource = _viewmodel.KanjiList;
@@ -437,6 +438,12 @@ namespace JDictU {
 
         private void goBack(object sender, RoutedEventArgs e) {
             
+        }
+
+        private void toKanjiFromResult(object sender, TappedRoutedEventArgs e) {
+            StackPanel s = sender as StackPanel;
+            KanjiPageViewModel kpvm = s.Tag as KanjiPageViewModel;
+            this.Frame.Navigate(typeof(KanjiPage), kpvm);
         }
     }
 }

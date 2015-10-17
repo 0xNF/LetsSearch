@@ -1,2 +1,2 @@
-MainPackage=C:\Users\0xnf\Documents\GitHubVisualStudio\JDictU\JDictU\bin\x64\Release\Upload\JDictU_1.1.4.0_x64.appx
-SymbolPackage=C:\Users\0xnf\Documents\GitHubVisualStudio\JDictU\JDictU\AppPackages\JDictU_1.1.4.0\JDictU_1.1.4.0_x64.appxsym
+MainPackage=C:\Users\0xnf\Documents\GitHubVisualStudio\JDictU\JDictU\bin\x64\Release\Upload\JDictU_1.1.6.0_x64.appx
+SymbolPackage=C:\Users\0xnf\Documents\GitHubVisualStudio\JDictU\JDictU\AppPackages\JDictU_1.1.6.0\JDictU_1.1.6.0_x64.appxsym

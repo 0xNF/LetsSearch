@@ -14,10 +14,10 @@
         <local:ColorBrushConverter x:Key="ColorBrushConverter"/>
         <local:InverseColorBrushConverter x:Key="InverseColorBrushConverter"/>
         <local:TrueIfListNotEmptyConverter x:Key="TrueIfListNotEmptyConverter"/>
+        <local:VisibilityConverterListCount x:Key="VisibilityConverter"/>
         <ItemsPanelTemplate x:Key="GridViewItemsPanel">
             <ItemsWrapGrid Orientation="Vertical" />
         </ItemsPanelTemplate>
-
         <SolidColorBrush x:Key="IceBlueBrush" Color="#FF91C3FF"/>
         <SolidColorBrush x:Key="DullGreyBrush" Color="#FFCBC8C8"/>
     </Page.Resources>
@@ -82,7 +82,7 @@
                             </ScrollViewer>
                             <!--</Grid>-->
                             <!-- Readings -->
-                            <TextBlock x:Name="TextBlock_Reading" TextWrapping="Wrap" Text="Reading" Foreground="{StaticResource DullGreyBrush}" Margin="7,0,-7,0"  FontSize="20"  FontFamily="Segoe WP"/>
+                            <TextBlock x:Name="TextBlock_Reading" TextWrapping="Wrap" Text="Reading" Foreground="{StaticResource DullGreyBrush}"  FontSize="20" Margin="7,0,-7,0"   FontFamily="Segoe WP"/>
                             <ScrollViewer x:Name="ScrollViewer_Readings" HorizontalScrollBarVisibility="Disabled" VerticalScrollMode="Disabled"  HorizontalScrollMode="Enabled" Margin="0,0,28,0">
                                 <ItemsControl x:Name="ItemControl_Readings">
                                     <ItemsControl.ItemsPanel>
@@ -157,6 +157,41 @@
                                     </ItemsControl.ItemTemplate>
                                 </ItemsControl>
                             </ScrollViewer>
+
+                            <StackPanel x:Name="sp_KanjiComponents" Visibility="{Binding KanjiComponents.Count, Converter={StaticResource VisibilityConverter}, FallbackValue='Collapsed'}">
+                                <TextBlock Foreground="{StaticResource DullGreyBrush}" Text="Kanji Components" FontSize="20" Margin="7,0,-7,0"  FontFamily="Segoe WP"/>
+                                <ItemsControl ItemsSource="{Binding KanjiComponents}">
+                                    <ItemsPanelTemplate>
+                                        <StackPanel/>
+                                    </ItemsPanelTemplate>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal" Tag="{Binding}" Tapped="toKanjiFromResult">
+                                                <TextBlock Text="{Binding literal}"  Foreground="{StaticResource IceBlueBrush}" FontSize="30"/>
+                                                <StackPanel Orientation="Vertical" Margin="0,0,0,28">
+                                                    <TextBlock FontSize="15">
+                                                        <Run Text="Stroke Count: " Foreground="{StaticResource DullGreyBrush}"/>
+                                                        <Run Text="{Binding strokecount}"/>
+                                                    </TextBlock>
+                                                    <TextBlock FontSize="15" Foreground="{StaticResource DullGreyBrush}" Text="Meanings: "/>
+                                                    <ItemsControl ItemsSource="{Binding meanings}">
+                                                        <ItemsPanelTemplate>
+                                                            <StackPanel Orientation="Horizontal"/>
+                                                        </ItemsPanelTemplate>
+                                                        <ItemsControl.ItemTemplate>
+                                                            <DataTemplate>
+                                                                <TextBlock Foreground="{StaticResource IceBlueBrush}" FontSize="15" Text="{Binding}"/>
+                                                            </DataTemplate>
+                                                        </ItemsControl.ItemTemplate>
+                                                    </ItemsControl>
+                                                </StackPanel>   
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </StackPanel>
+
+
                         </StackPanel>
                     </ScrollViewer>
                 </Grid>
