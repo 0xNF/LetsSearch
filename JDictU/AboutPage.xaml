@@ -34,7 +34,9 @@
             <RowDefinition Height="13*"/>
             <RowDefinition Height="142*"/>
         </Grid.RowDefinitions>
-        <TextBlock Text="Let's Search! - About"  FontSize="20" FontFamily="Segoe WP"  HorizontalAlignment="Left" Width="366" Foreground="#FF91C3FF"/>
+        <Viewbox HorizontalAlignment="Left" Width="366">
+            <TextBlock Text="Let's Search! - About"  FontSize="20" FontFamily="Segoe WP"  Foreground="#FF91C3FF"/>
+        </Viewbox>
         <Grid Grid.Row="1" HorizontalAlignment="Center" BorderBrush="Black" BorderThickness="0,0,0,2" Margin="73,0" >
             <Viewbox Grid.Column="0">
                 <Image Source="Assets/Square150x150_IceBlue.png" />
@@ -47,7 +49,7 @@
             
             <StackPanel Grid.Row="0">
                 <TextBlock Text="Version" Foreground="{StaticResource IceBlueBrush}" FontSize="30"/>
-                <TextBlock Text="{Binding version, FallbackValue='1.1.6'}" FontSize="20"/>
+                <TextBlock Text="{Binding version, FallbackValue='1.1.7'}" FontSize="20"/>
             </StackPanel>
 
             <StackPanel Grid.Row="1">

@@ -8,7 +8,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
-    xmlns:interaction="using:Microsoft.Xaml.Interactions"
+    xmlns:interactions="using:Microsoft.Xaml.Interactivity"
+    xmlns:behaviors="using:Template10.Behaviors"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core" 
     mc:Ignorable="d"
     RequestedTheme="Dark"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -79,8 +81,30 @@
                                             <RowDefinition Height="32*"/>
                                             <RowDefinition Height="32"/>
                                         </Grid.RowDefinitions>
-                                        <TextBlock Text="{Binding Path=headerText}" FontSize="30" FontFamily="Segoe WP" Grid.Row="0" Foreground="White" Margin="5,0,0,0"/>
-                                        <TextBlock Text="{Binding Path=defText}" FontSize="20" FontFamily="Segoe WP" Grid.Row="1" Foreground="#FFCBC8C8" Margin="5,0,0,0"/>
+                                        <TextBlock Text="{Binding Path=headerText}" FontSize="30" FontFamily="Segoe WP" Grid.Row="0" Foreground="White" Margin="5,0,0,0">
+                                                                               <interactions:Interaction.Behaviors>
+                                            <core:EventTriggerBehavior EventName="RightTapped">
+                                                <behaviors:OpenFlyoutAction/>
+                                            </core:EventTriggerBehavior>
+                                        </interactions:Interaction.Behaviors>
+                                    <FlyoutBase.AttachedFlyout>
+                                        <MenuFlyout>
+                                            <MenuFlyoutItem Text="Copy" Click="copyText" DataContext="{Binding headerText}"/>
+                                        </MenuFlyout>
+                                    </FlyoutBase.AttachedFlyout>
+                                        </TextBlock>
+                                        <TextBlock Text="{Binding Path=defText}" FontSize="20" FontFamily="Segoe WP" Grid.Row="1" Foreground="#FFCBC8C8" Margin="5,0,0,0">
+                                                                               <interactions:Interaction.Behaviors>
+                                            <core:EventTriggerBehavior EventName="RightTapped">
+                                                <behaviors:OpenFlyoutAction/>
+                                            </core:EventTriggerBehavior>
+                                        </interactions:Interaction.Behaviors>
+                                    <FlyoutBase.AttachedFlyout>
+                                        <MenuFlyout>
+                                            <MenuFlyoutItem Text="Copy" Click="copyText" DataContext="{Binding defText}"/>
+                                        </MenuFlyout>
+                                    </FlyoutBase.AttachedFlyout>
+                                        </TextBlock>
                                     </Grid>
                                 </ScrollViewer>
                             </DataTemplate>
@@ -106,8 +130,30 @@
                                             <RowDefinition Height="32*"/>
                                             <RowDefinition Height="32"/>
                                         </Grid.RowDefinitions>
-                                        <TextBlock Text="{Binding Path=headerText}" FontSize="30" FontFamily="Segoe WP" Grid.Row="0" Foreground="White" Margin="5,0,0,0"/>
-                                        <TextBlock Text="{Binding Path=defText}" FontSize="20" FontFamily="Segoe WP" Grid.Row="1" Foreground="#FFCBC8C8" Margin="5,0,0,0"/>
+                                        <TextBlock Text="{Binding Path=headerText}" FontSize="30" FontFamily="Segoe WP" Grid.Row="0" Foreground="White" Margin="5,0,0,0">
+                                                                               <interactions:Interaction.Behaviors>
+                                            <core:EventTriggerBehavior EventName="RightTapped">
+                                                <behaviors:OpenFlyoutAction/>
+                                            </core:EventTriggerBehavior>
+                                        </interactions:Interaction.Behaviors>
+                                    <FlyoutBase.AttachedFlyout>
+                                        <MenuFlyout>
+                                            <MenuFlyoutItem Text="Copy" Click="copyText" DataContext="{Binding headerText}"/>
+                                        </MenuFlyout>
+                                    </FlyoutBase.AttachedFlyout>
+                                        </TextBlock>
+                                        <TextBlock Text="{Binding Path=defText}" FontSize="20" FontFamily="Segoe WP" Grid.Row="1" Foreground="#FFCBC8C8" Margin="5,0,0,0">
+                                                                               <interactions:Interaction.Behaviors>
+                                            <core:EventTriggerBehavior EventName="RightTapped">
+                                                <behaviors:OpenFlyoutAction/>
+                                            </core:EventTriggerBehavior>
+                                        </interactions:Interaction.Behaviors>
+                                    <FlyoutBase.AttachedFlyout>
+                                        <MenuFlyout>
+                                            <MenuFlyoutItem Text="Copy" Click="copyText" DataContext="{Binding defText}"/>
+                                        </MenuFlyout>
+                                    </FlyoutBase.AttachedFlyout>
+                                        </TextBlock>
                                     </Grid>
                                 </ScrollViewer>
                             </DataTemplate>

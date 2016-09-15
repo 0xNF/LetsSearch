@@ -15,6 +15,8 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using JDictU.Model;
 using Windows.UI.Core;
+using System.ComponentModel;
+using Windows.ApplicationModel.DataTransfer;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
 
@@ -22,7 +24,10 @@ namespace JDictU {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class Result : Page {
+    public sealed partial class Result : Page, INotifyPropertyChanged {
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangingEventHandler PropertyChanging;
 
         private static ResultPageViewModel _viewmodel;
 
@@ -77,12 +82,19 @@ namespace JDictU {
 
         }
 
+
+       
+
+
+
+
         //sets the blocks according to Kana,Present,Polite booleans
         private void setConjugationBlocks() {
-            this.Block_FORMALTAB.Text = this.polite ? "Polite" : "Plain";
-            this.Block_KANATAB.Text = this.kana ? "Kana" : "Romaji";
-            this.Block_TENSETAB.Text = this.present ? "Present" : "Past";
-            this.Block_AGREEMENTTAB.Text = this.positive ? "Positive" : "Negative";
+
+            _viewmodel.formalText = this.polite ? "Polite" : "Plain";
+            _viewmodel.kanaText = this.kana ? "Kana" : "Romaji";
+            _viewmodel.tenseText = this.present ? "Present" : "Past";
+            _viewmodel.agreementText = this.positive ? "Positive" : "Negative";
 
             //Polite Present Positive Kana
             if (polite && present && positive && kana) {
@@ -441,9 +453,28 @@ namespace JDictU {
         }
 
         private void toKanjiFromResult(object sender, TappedRoutedEventArgs e) {
-            StackPanel s = sender as StackPanel;
+            FrameworkElement s = sender as FrameworkElement;
             KanjiPageViewModel kpvm = s.Tag as KanjiPageViewModel;
             this.Frame.Navigate(typeof(KanjiPage), kpvm);
+        }
+
+        private void copyText(object sender, RoutedEventArgs e) {
+            FrameworkElement tb = sender as FrameworkElement;
+            string text = (string)tb.DataContext;
+            DataPackage dp = new DataPackage();
+            dp.RequestedOperation = DataPackageOperation.Copy;
+            dp.SetText(text);
+            Clipboard.SetContent(dp);
+        }
+
+        private void copySentence(object sender, RoutedEventArgs e) {
+            FrameworkElement tb = sender as FrameworkElement;
+            var hws = tb.DataContext as HeadwordSentence;
+            var text = $"{hws.beforeForm}{hws.form}{hws.afterForm}";
+            DataPackage dp = new DataPackage();
+            dp.RequestedOperation = DataPackageOperation.Copy;
+            dp.SetText(text);
+            Clipboard.SetContent(dp);
         }
     }
 }

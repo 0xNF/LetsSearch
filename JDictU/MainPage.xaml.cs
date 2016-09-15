@@ -17,6 +17,7 @@ using System.Diagnostics;
 using Windows.System;
 using System.Threading.Tasks;
 using System.Threading;
+using Windows.ApplicationModel.DataTransfer;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -29,6 +30,8 @@ namespace JDictU
     {
         static SearchPageViewModel viewmodel { get; set; }
         private string oldText = "";
+
+        private bool ctrlDown { get; set; } = false;
         
 
         public MainPage() {
@@ -120,6 +123,21 @@ namespace JDictU
                     searchText = searchText.Replace("'", "''");
                 }
                 viewmodel.submitSearch(searchText, SynchronizationContext.Current);
+            }
+        }
+
+        internal void checkHotkeysUp(object sender, KeyRoutedEventArgs e) {
+            if(e.Key == VirtualKey.D && ctrlDown) {
+
+            }
+            else if(e.Key == VirtualKey.Control) {
+                ctrlDown = false;
+            }
+        }
+
+        internal void checkHotkeysDown(object sender, KeyRoutedEventArgs e) {
+            if(e.Key == VirtualKey.Control) {
+                ctrlDown = true;
             }
         }
 
@@ -258,5 +276,13 @@ namespace JDictU
         }
 
 
+        private void copyText(object sender, RoutedEventArgs e) {
+            FrameworkElement tb = sender as FrameworkElement;
+            string text = (string)tb.DataContext;
+            DataPackage dp = new DataPackage();
+            dp.RequestedOperation = DataPackageOperation.Copy;
+            dp.SetText(text);
+            Clipboard.SetContent(dp);
+        }
     }
 }

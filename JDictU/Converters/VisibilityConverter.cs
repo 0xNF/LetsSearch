@@ -39,6 +39,32 @@ namespace JDictU{
             }
         }
 
+    public class InverseVisibilityConverter : BaseValueConverter {
+
+        //http://dotnet.dzone.com/articles/build-both-converters-windows
+        //http://stackoverflow.com/questions/11323169/converter-with-multiple-parameter
+        public override object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
+            if (value != null && value is bool) {
+                var bValue = (bool)value;
+                if (bValue) {
+                    Debug.WriteLine("Vis was True, setting to Visiible :");
+                    return Visibility.Collapsed;//visibility;
+                }
+                else {
+                    Debug.WriteLine("Vis was False, setting to INvisivle :");
+                    return Visibility.Visible;
+                }
+            }
+
+            return null;
+        }
+
+        public override object ConvertBack(object value, Type targetType, object parameter,
+                           CultureInfo culture) {
+            throw new NotImplementedException();
+        }
+    }
+
     public class VisibilityConverterListCount : BaseValueConverter {
 
         //http://dotnet.dzone.com/articles/build-both-converters-windows

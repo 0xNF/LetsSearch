@@ -8,11 +8,15 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
 using JDictU.Model;
-
+using System.ComponentModel;
 
 namespace JDictU
 {
-    public class ResultPageViewModel {
+    public class ResultPageViewModel : INotifyPropertyChanged {
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangingEventHandler PropertyChanging;
+
         private SearchResult _sr { get; set; }
         private string _mainKanji;
         public string MainKanji {
@@ -34,7 +38,84 @@ namespace JDictU
         public ICollectionView hwsview { get; set; }
         public bool isFavorite { get; set; }
 
+
+        private bool m_hasExamples = false;
+        public bool hasExamples
+        {
+            get { return m_hasExamples; }
+            set
+            {
+                if (PropertyChanging != null)
+                    PropertyChanging(this, new PropertyChangingEventArgs("hasExamples"));
+                m_hasExamples = value;
+                if (PropertyChanged != null)
+                    PropertyChanged(this, new PropertyChangedEventArgs("hasExamples"));
+            }
+        }
+
+
         public ProgressRing pr { get; set; }
+
+
+        private string m_formalText = "Polite";
+        public string formalText
+        {
+            get { return m_formalText; }
+            set
+            {
+                if (PropertyChanging != null)
+                    PropertyChanging(this, new PropertyChangingEventArgs("formalText"));
+                m_formalText = value;
+                if (PropertyChanged != null)
+                    PropertyChanged(this, new PropertyChangedEventArgs("formalText"));
+            }
+        }
+
+
+        private string m_kanaText = "Kana";
+        public string kanaText
+        {
+            get { return m_kanaText; }
+            set
+            {
+                if (PropertyChanging != null)
+                    PropertyChanging(this, new PropertyChangingEventArgs("kanaText"));
+                m_kanaText = value;
+                if (PropertyChanged != null)
+                    PropertyChanged(this, new PropertyChangedEventArgs("kanaText"));
+            }
+        }
+
+
+        private string m_tenseText = "Present";
+        public string tenseText
+        {
+            get { return m_tenseText; }
+            set
+            {
+                if (PropertyChanging != null)
+                    PropertyChanging(this, new PropertyChangingEventArgs("tenseText"));
+                m_tenseText = value;
+                if (PropertyChanged != null)
+                    PropertyChanged(this, new PropertyChangedEventArgs("tenseText"));
+            }
+        }
+
+
+        private string m_agreementText = "Positive";
+        public string agreementText
+        {
+            get { return m_agreementText; }
+            set
+            {
+                if (PropertyChanging != null)
+                    PropertyChanging(this, new PropertyChangingEventArgs("agreementText"));
+                m_agreementText = value;
+                if (PropertyChanged != null)
+                    PropertyChanged(this, new PropertyChangedEventArgs("agreementText"));
+            }
+        }
+
 
         public ResultPageViewModel(SearchResult sr) {
             _sr = sr;
@@ -65,6 +146,7 @@ namespace JDictU
                 HWSList.Clear();
             }
             var hws = await SearchToolsAsync.getSentences(headword);
+            this.hasExamples = hws.Any() ? true : false;
             pr.IsActive = false;
             foreach (HeadwordSentence hw in hws) {
                 hw.form = hw.form != "" ? hw.form : hw.headword;

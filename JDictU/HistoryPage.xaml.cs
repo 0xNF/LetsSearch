@@ -34,8 +34,8 @@ namespace JDictU {
         }
 
 
-        protected override void OnNavigatedTo(NavigationEventArgs e) {
-            getHistory(fieldToOrderBy, direction);
+        protected override async void OnNavigatedTo(NavigationEventArgs e) {
+            await getHistory(fieldToOrderBy, direction);
         }
 
         private async Task getHistory(string field, string order) {

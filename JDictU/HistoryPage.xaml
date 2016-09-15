@@ -44,8 +44,7 @@
             <TextBlock Text="Search History" Margin="9,-7,0,0" FontSize="48" FontFamily="Segoe WP"  HorizontalAlignment="Left" Width="366" Foreground="#FF91C3FF"/>
         </StackPanel>
 
-        <Grid x:Name="grid_SearchBlock" Grid.Row="1">
-            
+        <Grid x:Name="grid_SearchBlock" Grid.Row="1">           
             
             
             <Grid.RowDefinitions>

@@ -1,1 +1,1 @@
-C:\Users\0xnf\Documents\GitHubVisualStudio\JDictU\JDictU\AppPackages\JDictU_1.1.6.0\JDictU_1.1.6.0_x86_x64_arm.appxbundle
+C:\Users\Djori\Documents\projects\JDictU\JDictU\AppPackages\JDictU_1.1.8.0\JDictU_1.1.8.0_x86_x64_arm.appxbundle

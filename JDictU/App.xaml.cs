@@ -42,6 +42,7 @@ namespace JDictU
             JDictU.Model.DBInfo.getKradfileAsync();
             JDictU.Model.DBInfo.getKanjiAsync();
             JDictU.Model.KanjiLookupPageModel.prepareModel();
+            
 
         }
 
@@ -61,6 +62,8 @@ namespace JDictU
 #endif
 
             Frame rootFrame = Window.Current.Content as Frame;
+            //rootFrame.KeyUp += checkGlobalHotkeysUp;
+            //rootFrame.KeyDown += checkGlobalHotkeysDown;
 
 
 
@@ -108,6 +111,7 @@ namespace JDictU
             // Ensure the current window is active
             Window.Current.Activate();
         }
+
 
         /// <summary>
         /// Invoked when Navigation to a certain page fails

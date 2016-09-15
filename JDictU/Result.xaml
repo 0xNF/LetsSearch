@@ -6,6 +6,9 @@
     xmlns:model="using:JDictU.Model"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:interactions="using:Microsoft.Xaml.Interactivity"
+    xmlns:behaviors="using:Template10.Behaviors"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -15,6 +18,7 @@
         <local:InverseColorBrushConverter x:Key="InverseColorBrushConverter"/>
         <local:TrueIfListNotEmptyConverter x:Key="TrueIfListNotEmptyConverter"/>
         <local:VisibilityConverterListCount x:Key="VisibilityConverter"/>
+        <local:InverseVisibilityConverter x:Key="boolVisibilityConverter"/>
         <ItemsPanelTemplate x:Key="GridViewItemsPanel">
             <ItemsWrapGrid Orientation="Vertical" />
         </ItemsPanelTemplate>
@@ -34,8 +38,19 @@
                         <AdaptiveTrigger MinWindowWidth="860"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="sv_conjugations.HorizontalAlignment" Value="Center"/>
+                        <Setter Target="sv_conjugations.HorizontalAlignment"  Value="Center"/>
                         <Setter Target="grid_conjugations.Width" Value="640"/>
+                        <Setter Target="grid_tensebuttons_phone.Visibility" Value="Collapsed"/>
+                        <Setter Target="grid_tensebuttons_tablet.Visibility" Value="Visible"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Phone">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowHeight="1"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="grid_tensebuttons_phone.Visibility" Value="Visible"/>
+                        <Setter Target="grid_tensebuttons_tablet.Visibility" Value="Collapsed"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
@@ -57,11 +72,16 @@
                                     <ColumnDefinition Width="3*"/>
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ScrollViewer x:Name="ScrollViewer_KanjiSpace" HorizontalScrollBarVisibility="Disabled" VerticalScrollMode="Disabled"  HorizontalScrollMode="Enabled"  Margin="0,10,0,-10" d:LayoutOverrides="TopMargin, BottomMargin">
+                                <ScrollViewer x:Name="ScrollViewer_KanjiSpace" HorizontalScrollBarVisibility="Disabled" VerticalScrollMode="Disabled"  HorizontalScrollMode="Enabled"  VerticalScrollBarVisibility="Hidden" Margin="0,10,0,-10" d:LayoutOverrides="TopMargin, BottomMargin">
                                     <TextBlock x:Name="TextBlock_KanjiSpace"  Margin="22,16,1,20"  FontSize="48" FontFamily="Segoe WP SemiLight" Foreground="{StaticResource IceBlueBrush}" Text="{Binding MainKanji, FallbackValue='error'}">
+                                   <interactions:Interaction.Behaviors>
+                                            <core:EventTriggerBehavior EventName="RightTapped">
+                                                <behaviors:OpenFlyoutAction/>
+                                            </core:EventTriggerBehavior>
+                                        </interactions:Interaction.Behaviors>
                                     <FlyoutBase.AttachedFlyout>
                                         <MenuFlyout>
-                                            <MenuFlyoutItem Name="Copy_KanjiSpace" Text="Copy" Click="highlight"/>
+                                            <MenuFlyoutItem Text="Copy" Click="copyText" DataContext="{Binding MainKanji}"/>
                                         </MenuFlyout>
                                     </FlyoutBase.AttachedFlyout>
                                     </TextBlock>
@@ -71,11 +91,16 @@
                                 </Viewbox>
 
                             </Grid>
-                            <ScrollViewer x:Name="ScrollViewer_Translation" HorizontalScrollBarVisibility="Disabled" VerticalScrollMode="Disabled"  HorizontalScrollMode="Enabled" HorizontalAlignment="Right" >
-                                <TextBlock x:Name="TextBlock_Translation" Margin="0,0,20,0" Foreground="{StaticResource IceBlueBrush}" TextWrapping="Wrap" Text="{Binding MainEnglish, FallbackValue='error'}" VerticalAlignment="Top" Height="60" FontSize="36" HorizontalAlignment="Right" TextAlignment="Right" FontFamily="Segoe WP">
+                            <ScrollViewer x:Name="ScrollViewer_Translation" HorizontalScrollBarVisibility="Auto" VerticalScrollMode="Disabled"  HorizontalScrollMode="Enabled" HorizontalAlignment="Right">
+                                <TextBlock x:Name="TextBlock_Translation" Margin="0,0,20,0" Foreground="{StaticResource IceBlueBrush}" TextWrapping="NoWrap" Text="{Binding MainEnglish, FallbackValue='error'}" VerticalAlignment="Top" Height="60" FontSize="36" HorizontalAlignment="Right" TextAlignment="Right" FontFamily="Segoe WP">
+                                    <interactions:Interaction.Behaviors>
+                                            <core:EventTriggerBehavior EventName="RightTapped">
+                                                <behaviors:OpenFlyoutAction/>
+                                            </core:EventTriggerBehavior>
+                                        </interactions:Interaction.Behaviors>
                                     <FlyoutBase.AttachedFlyout>
                                         <MenuFlyout>
-                                            <MenuFlyoutItem Name="Copy_Translation" Text="Copy" Click="highlight"/>
+                                            <MenuFlyoutItem Text="Copy" Click="copyText" DataContext="{Binding MainEnglish}"/>
                                         </MenuFlyout>
                                     </FlyoutBase.AttachedFlyout>
                                 </TextBlock>
@@ -83,7 +108,7 @@
                             <!--</Grid>-->
                             <!-- Readings -->
                             <TextBlock x:Name="TextBlock_Reading" TextWrapping="Wrap" Text="Reading" Foreground="{StaticResource DullGreyBrush}"  FontSize="20" Margin="7,0,-7,0"   FontFamily="Segoe WP"/>
-                            <ScrollViewer x:Name="ScrollViewer_Readings" HorizontalScrollBarVisibility="Disabled" VerticalScrollMode="Disabled"  HorizontalScrollMode="Enabled" Margin="0,0,28,0">
+                            <ScrollViewer x:Name="ScrollViewer_Readings" HorizontalScrollBarVisibility="Auto" VerticalScrollMode="Disabled"  VerticalScrollBarVisibility="Hidden" HorizontalScrollMode="Enabled" Margin="0,0,28,0">
                                 <ItemsControl x:Name="ItemControl_Readings">
                                     <ItemsControl.ItemsPanel>
                                         <ItemsPanelTemplate>
@@ -100,9 +125,31 @@
                                                     <RowDefinition Height="33*" />
                                                     <RowDefinition Height="41*" />
                                                 </Grid.RowDefinitions>
-                                                <TextBlock FontSize="20" Foreground="{StaticResource IceBlueBrush}" Text="{Binding Path=Item1}" Margin="0,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top"  Grid.Row="0"/>
+                                                <TextBlock FontSize="20" Foreground="{StaticResource IceBlueBrush}" Text="{Binding Path=Item1}" Margin="0,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top"  Grid.Row="0">
+                                               <interactions:Interaction.Behaviors>
+                                            <core:EventTriggerBehavior EventName="RightTapped">
+                                                <behaviors:OpenFlyoutAction/>
+                                            </core:EventTriggerBehavior>
+                                        </interactions:Interaction.Behaviors>
+                                    <FlyoutBase.AttachedFlyout>
+                                        <MenuFlyout>
+                                            <MenuFlyoutItem Text="Copy" Click="copyText" DataContext="{Binding Path=Item1}"/>
+                                        </MenuFlyout>
+                                    </FlyoutBase.AttachedFlyout>
+                                                </TextBlock>
                                                 <!-- ^ kana ^ -->
-                                                <TextBlock FontSize="20" Foreground="{StaticResource IceBlueBrush}" Text="{Binding Path=Item2}" Margin="0,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top"  Grid.Row="1"/>
+                                                <TextBlock FontSize="20" Foreground="{StaticResource IceBlueBrush}" Text="{Binding Path=Item2}" Margin="0,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top"  Grid.Row="1">
+                                                                               <interactions:Interaction.Behaviors>
+                                            <core:EventTriggerBehavior EventName="RightTapped">
+                                                <behaviors:OpenFlyoutAction/>
+                                            </core:EventTriggerBehavior>
+                                        </interactions:Interaction.Behaviors>
+                                    <FlyoutBase.AttachedFlyout>
+                                        <MenuFlyout>
+                                            <MenuFlyoutItem Text="Copy" Click="copyText" DataContext="{Binding Item2}"/>
+                                        </MenuFlyout>
+                                    </FlyoutBase.AttachedFlyout>
+                                                </TextBlock>
                                                 <!-- ^ romaji ^ -->
                                             </Grid>
                                         </DataTemplate>
@@ -111,7 +158,7 @@
                             </ScrollViewer>
                             <!-- Parts of Speech -->
                             <TextBlock x:Name="TextBlock_Properties" TextWrapping="Wrap" Text="Properties" FontSize="20" Foreground="{StaticResource DullGreyBrush}" Margin="7,0,-7,0" FontFamily="Segoe WP"/>
-                            <ScrollViewer x:Name="ScrollViewer_Properties" HorizontalScrollBarVisibility="Disabled" VerticalScrollMode="Disabled"  HorizontalScrollMode="Enabled" Margin="0,0,28,0">
+                            <ScrollViewer x:Name="ScrollViewer_Properties" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden" VerticalScrollMode="Auto"  HorizontalScrollMode="Enabled" Margin="0,0,28,0">
                                 <ItemsControl x:Name="ItemControl_Properties" >
                                     <ItemsControl.ItemsPanel>
                                         <ItemsPanelTemplate>
@@ -120,14 +167,25 @@
                                     </ItemsControl.ItemsPanel>
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
-                                            <TextBlock  Text="{Binding}" Foreground="{StaticResource IceBlueBrush}" FontSize="20"/>
+                                            <TextBlock  Text="{Binding}" Foreground="{StaticResource IceBlueBrush}" FontSize="20">
+                                                                           <interactions:Interaction.Behaviors>
+                                            <core:EventTriggerBehavior EventName="RightTapped">
+                                                <behaviors:OpenFlyoutAction/>
+                                            </core:EventTriggerBehavior>
+                                        </interactions:Interaction.Behaviors>
+                                    <FlyoutBase.AttachedFlyout>
+                                        <MenuFlyout>
+                                            <MenuFlyoutItem Text="Copy" Click="copyText" DataContext="{Binding}"/>
+                                        </MenuFlyout>
+                                    </FlyoutBase.AttachedFlyout>
+                                            </TextBlock>
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>
                                 </ItemsControl>
                             </ScrollViewer>
                             <!-- Extra Kanji -->
                             <TextBlock x:Name="TextBlock_ExtraKanji"  FontSize="20" TextWrapping="Wrap" Text="Alternative Kanji" Visibility="Visible" Foreground="{StaticResource DullGreyBrush}" Margin="7,0,-7,0" FontFamily="Segoe WP"/>
-                            <ScrollViewer x:Name="ScrollViewer_ExtraKanji" HorizontalScrollBarVisibility="Disabled" VerticalScrollMode="Disabled"  HorizontalScrollMode="Enabled" Margin="0,0,28,0">
+                            <ScrollViewer x:Name="ScrollViewer_ExtraKanji" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden" VerticalScrollMode="Auto"  HorizontalScrollMode="Enabled" Margin="0,0,28,0">
                                 <ItemsControl  x:Name="ItemControl_ExtraKanji">
                                     <ItemsControl.ItemsPanel>
                                         <ItemsPanelTemplate>
@@ -136,14 +194,25 @@
                                     </ItemsControl.ItemsPanel>
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate x:Name="Template_ExtraKanji">
-                                            <TextBlock Foreground="{StaticResource IceBlueBrush}" FontSize="20" Text="{Binding}"/>
+                                            <TextBlock Foreground="{StaticResource IceBlueBrush}" FontSize="20" Text="{Binding}">
+                                                                           <interactions:Interaction.Behaviors>
+                                            <core:EventTriggerBehavior EventName="RightTapped">
+                                                <behaviors:OpenFlyoutAction/>
+                                            </core:EventTriggerBehavior>
+                                        </interactions:Interaction.Behaviors>
+                                    <FlyoutBase.AttachedFlyout>
+                                        <MenuFlyout>
+                                            <MenuFlyoutItem Text="Copy" Click="copyText" DataContext="{Binding Binding}"/>
+                                        </MenuFlyout>
+                                    </FlyoutBase.AttachedFlyout>
+                                            </TextBlock>
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>
                                 </ItemsControl>
                             </ScrollViewer>
                             <!-- Extra Definitions -->
                             <TextBlock x:Name="TextBlock_AlternateDefs" FontSize="20" TextWrapping="Wrap" Text="Alternative Definitions" Foreground="{StaticResource DullGreyBrush}" Margin="7,0,-7,0" FontFamily="Segoe WP"/>
-                            <ScrollViewer x:Name="ScrollViewer_AltDefs" HorizontalScrollBarVisibility="Disabled" VerticalScrollMode="Disabled"  HorizontalScrollMode="Enabled" Margin="0,0,28,5">
+                            <ScrollViewer x:Name="ScrollViewer_AltDefs" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden" VerticalScrollMode="Auto"  HorizontalScrollMode="Enabled" Margin="0,0,28,5">
                                 <ItemsControl  x:Name="ItemControl_Definitions">
                                     <ItemsControl.ItemsPanel>
                                         <ItemsPanelTemplate>
@@ -152,27 +221,62 @@
                                     </ItemsControl.ItemsPanel>
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate x:Name="Template_ExtraDefinitions">
-                                            <TextBlock Foreground="{StaticResource IceBlueBrush}" FontSize="20" Text="{Binding}"/>
+                                            <TextBlock Foreground="{StaticResource IceBlueBrush}" FontSize="20" Text="{Binding}">
+                                                                           <interactions:Interaction.Behaviors>
+                                            <core:EventTriggerBehavior EventName="RightTapped">
+                                                <behaviors:OpenFlyoutAction/>
+                                            </core:EventTriggerBehavior>
+                                        </interactions:Interaction.Behaviors>
+                                    <FlyoutBase.AttachedFlyout>
+                                        <MenuFlyout>
+                                            <MenuFlyoutItem Text="Copy" Click="copyText" DataContext="{Binding }"/>
+                                        </MenuFlyout>
+                                    </FlyoutBase.AttachedFlyout>
+                                            </TextBlock>
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>
                                 </ItemsControl>
                             </ScrollViewer>
 
-                            <StackPanel x:Name="sp_KanjiComponents" Visibility="{Binding KanjiComponents.Count, Converter={StaticResource VisibilityConverter}, FallbackValue='Collapsed'}">
-                                <TextBlock Foreground="{StaticResource DullGreyBrush}" Text="Kanji Components" FontSize="20" Margin="7,0,-7,0"  FontFamily="Segoe WP"/>
-                                <ItemsControl ItemsSource="{Binding KanjiComponents}">
-                                    <ItemsPanelTemplate>
-                                        <StackPanel/>
-                                    </ItemsPanelTemplate>
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate>
-                                            <StackPanel Orientation="Horizontal" Tag="{Binding}" Tapped="toKanjiFromResult">
-                                                <TextBlock Text="{Binding literal}"  Foreground="{StaticResource IceBlueBrush}" FontSize="30"/>
-                                                <StackPanel Orientation="Vertical" Margin="0,0,0,28">
-                                                    <TextBlock FontSize="15">
+                            <TextBlock Foreground="{StaticResource DullGreyBrush}" Text="Kanji Components" FontSize="20" Margin="7,0,-7,0"  FontFamily="Segoe WP"/>
+                            <GridView x:Name="sp_KanjiComponents" Visibility="{Binding KanjiComponents.Count, Converter={StaticResource VisibilityConverter}, FallbackValue='Collapsed'}" ItemsSource="{Binding KanjiComponents}" VerticalContentAlignment="Top">
+                                <!--<GridView>
+                                    <ItemsWrapGrid Orientation="Horizontal"/>
+                                </GridView>-->
+                                <GridView.ItemContainerStyle>
+                                    <Style TargetType="GridViewItem">
+                                        <Setter Property="VerticalAlignment" Value="Top"/>
+                                        <Setter Property="VerticalContentAlignment" Value="Top"/>
+                                    </Style>
+                                </GridView.ItemContainerStyle>
+                                <GridView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid VerticalAlignment="Top">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="*"/>
+                                            </Grid.RowDefinitions>
+                                            <TextBlock Text="{Binding literal}"  Foreground="{StaticResource IceBlueBrush}" FontSize="30" Grid.Row="0" Tapped="toKanjiFromResult" Tag="{Binding}">
+                                                                           <interactions:Interaction.Behaviors>
+                                            <core:EventTriggerBehavior EventName="RightTapped">
+                                                <behaviors:OpenFlyoutAction/>
+                                            </core:EventTriggerBehavior>
+                                        </interactions:Interaction.Behaviors>
+                                    <FlyoutBase.AttachedFlyout>
+                                        <MenuFlyout>
+                                            <MenuFlyoutItem Text="Copy" Click="copyText" DataContext="{Binding literal}"/>
+                                        </MenuFlyout>
+                                    </FlyoutBase.AttachedFlyout>
+                                            </TextBlock>
+
+                                            <TextBlock FontSize="15" Grid.Row="1">
                                                         <Run Text="Stroke Count: " Foreground="{StaticResource DullGreyBrush}"/>
                                                         <Run Text="{Binding strokecount}"/>
-                                                    </TextBlock>
+                                            </TextBlock>
+
+                                            <StackPanel Orientation="Vertical" Tag="{Binding}" Tapped="toKanjiFromResult" Grid.Row="2">
+                                                <StackPanel Orientation="Vertical" Margin="0,0,0,28">
                                                     <TextBlock FontSize="15" Foreground="{StaticResource DullGreyBrush}" Text="Meanings: "/>
                                                     <ItemsControl ItemsSource="{Binding meanings}">
                                                         <ItemsPanelTemplate>
@@ -180,16 +284,27 @@
                                                         </ItemsPanelTemplate>
                                                         <ItemsControl.ItemTemplate>
                                                             <DataTemplate>
-                                                                <TextBlock Foreground="{StaticResource IceBlueBrush}" FontSize="15" Text="{Binding}"/>
+                                                                <TextBlock Foreground="{StaticResource IceBlueBrush}" FontSize="15" Text="{Binding}">
+                                                                                           <interactions:Interaction.Behaviors>
+                                            <core:EventTriggerBehavior EventName="RightTapped">
+                                                <behaviors:OpenFlyoutAction/>
+                                            </core:EventTriggerBehavior>
+                                        </interactions:Interaction.Behaviors>
+                                    <FlyoutBase.AttachedFlyout>
+                                        <MenuFlyout>
+                                            <MenuFlyoutItem Text="Copy" Click="copyText" DataContext="{Binding}"/>
+                                        </MenuFlyout>
+                                    </FlyoutBase.AttachedFlyout>
+                                                                </TextBlock>
                                                             </DataTemplate>
                                                         </ItemsControl.ItemTemplate>
                                                     </ItemsControl>
-                                                </StackPanel>   
+                                                </StackPanel>
                                             </StackPanel>
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
-                            </StackPanel>
+                                        </Grid> 
+                                    </DataTemplate>
+                                </GridView.ItemTemplate>
+                            </GridView>
 
 
                         </StackPanel>
@@ -208,24 +323,35 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="238*"/>
                         <RowDefinition Height="353*"/>
-                    </Grid.RowDefinitions>     
-                    <StackPanel Grid.Row="0">
+                    </Grid.RowDefinitions>
+                    <ScrollViewer>
+                        <StackPanel Grid.Row="0">
                         <TextBlock TextWrapping="Wrap" Text="Conjugations" FontSize="48" Foreground="{StaticResource DullGreyBrush}" HorizontalAlignment="Center" Margin="0,0,0,10"/>
-                        <TextBlock x:Name="TextBlock_DictionaryForm" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding pronounciationKana, FallbackValue='Pronounciation_Kana'}" Foreground="{StaticResource IceBlueBrush}" VerticalAlignment="Top" TextAlignment="Center" FontSize="28" Margin="0,0,0,10">
-                        <FlyoutBase.AttachedFlyout>
-                            <MenuFlyout>
-                                <MenuFlyoutItem Name="Copy_DictionaryForm" Text="Copy" Click="highlight"/>
-                            </MenuFlyout>
-                        </FlyoutBase.AttachedFlyout>
+                            <TextBlock x:Name="TextBlock_DictionaryForm" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding pronounciationKana, FallbackValue='Pronounciation_Kana'}" Foreground="{StaticResource IceBlueBrush}" VerticalAlignment="Top" TextAlignment="Center" FontSize="28" Margin="0,0,0,10">
+                                <interactions:Interaction.Behaviors>
+                                            <core:EventTriggerBehavior EventName="RightTapped">
+                                                <behaviors:OpenFlyoutAction/>
+                                            </core:EventTriggerBehavior>
+                                        </interactions:Interaction.Behaviors>
+                                    <FlyoutBase.AttachedFlyout>
+                                        <MenuFlyout>
+                                            <MenuFlyoutItem Text="Copy" Click="copyText" DataContext="{Binding pronounciationKana}"/>
+                                        </MenuFlyout>
+                                    </FlyoutBase.AttachedFlyout>
                         </TextBlock>
                         <TextBlock x:Name="TextBlock_SoundGuide" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding pronounciationRomaji, FallbackValue='Pronounciation_Romaji'}" Foreground="{StaticResource IceBlueBrush}" VerticalAlignment="Top" Width="346" TextAlignment="Center" FontSize="24">
-                        <FlyoutBase.AttachedFlyout>
-                            <MenuFlyout>
-                                <MenuFlyoutItem Name="Copy_SoundGuide" Text="Copy" Click="highlight"/>
-                            </MenuFlyout>
-                        </FlyoutBase.AttachedFlyout>
+                           <interactions:Interaction.Behaviors>
+                                            <core:EventTriggerBehavior EventName="RightTapped">
+                                                <behaviors:OpenFlyoutAction/>
+                                            </core:EventTriggerBehavior>
+                                        </interactions:Interaction.Behaviors>
+                                    <FlyoutBase.AttachedFlyout>
+                                        <MenuFlyout>
+                                            <MenuFlyoutItem Text="Copy" Click="copyText" DataContext="{Binding pronounciationRomaji}"/>
+                                        </MenuFlyout>
+                                    </FlyoutBase.AttachedFlyout>
                         </TextBlock>
-                        <Grid  Margin="0,20,0,0" MaxWidth="640">
+                        <Grid x:Name="grid_tensebuttons_tablet" Margin="0,20,0,0" MaxWidth="640" Visibility="Visible">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="183*"/>
                                 <ColumnDefinition Width="181*"/>
@@ -234,13 +360,28 @@
                                 <RowDefinition Height="30"/>
                                 <RowDefinition Height="30"/>
                             </Grid.RowDefinitions>
-                            <TextBlock x:Name="Block_FORMALTAB" Grid.Column="1" Grid.Row="0" TextWrapping="Wrap" Text="Plain" VerticalAlignment="Top"  TextAlignment="Center" FontSize="24"  Tapped="switchFormality" Foreground="{StaticResource DullGreyBrush}" />
-                            <TextBlock x:Name="Block_KANATAB" Grid.Column="0"  Grid.Row="0" TextWrapping="Wrap" Text="Romaji" VerticalAlignment="Top"  TextAlignment="Center" FontSize="24"  Tapped="switchAlphabet" Foreground="{StaticResource DullGreyBrush}" />
-                            <TextBlock x:Name="Block_TENSETAB" Grid.Column="0" Grid.Row="1" TextWrapping="Wrap" Text="Present" VerticalAlignment="Top"  TextAlignment="Center" FontSize="24"  Tapped="switchTense" Foreground="{StaticResource DullGreyBrush}" />
-                            <TextBlock x:Name="Block_AGREEMENTTAB" Grid.Column="1" Grid.Row="1"  TextWrapping="Wrap" Text="Positive" VerticalAlignment="Top" TextAlignment="Center" FontSize="24"  Tapped="switchAgreement" Foreground="{StaticResource DullGreyBrush}"/>
+                                <TextBlock x:Name="Block_FORMALTAB" Grid.Column="1" Grid.Row="0" TextWrapping="Wrap" Text="{Binding formalText}" VerticalAlignment="Top"  TextAlignment="Center" FontSize="24"  Tapped="switchFormality" Foreground="{StaticResource DullGreyBrush}" />
+                                <TextBlock x:Name="Block_KANATA" Grid.Column="0"  Grid.Row="0" TextWrapping="Wrap" Text="{Binding kanaText}" VerticalAlignment="Top"  TextAlignment="Center" FontSize="24"  Tapped="switchAlphabet" Foreground="{StaticResource DullGreyBrush}" />
+                                <TextBlock x:Name="Block_TENSETAB" Grid.Column="0" Grid.Row="1" TextWrapping="Wrap" Text="{Binding tenseText}" VerticalAlignment="Top"  TextAlignment="Center" FontSize="24"  Tapped="switchTense" Foreground="{StaticResource DullGreyBrush}" />
+                                <TextBlock x:Name="Block_AGREEMENTTAB" Grid.Column="1" Grid.Row="1"  TextWrapping="Wrap" Text="{Binding agreementText}" VerticalAlignment="Top" TextAlignment="Center" FontSize="24"  Tapped="switchAgreement" Foreground="{StaticResource DullGreyBrush}"/>
                         </Grid>
-                    </StackPanel>
-                    <ScrollViewer x:Name="sv_conjugations" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1">
+
+                            <Grid x:Name="grid_tensebuttons_phone" Margin="0,10,0,0" MaxWidth="640" Visibility="Collapsed">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="183*"/>
+                                    <ColumnDefinition Width="183*"/>
+                                    <ColumnDefinition Width="183*"/>
+                                    <ColumnDefinition Width="181*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock x:Name="Block_FORMALTAB_phone"  Grid.Column="0" TextWrapping="Wrap" Text="{Binding formalText}" VerticalAlignment="Top"  TextAlignment="Center" FontSize="16"  Tapped="switchFormality" Foreground="{StaticResource DullGreyBrush}" />
+                                <TextBlock x:Name="Block_KANATAB_phone" Grid.Column="1" TextWrapping="Wrap" Text="{Binding kanaText}" VerticalAlignment="Top"  TextAlignment="Center" FontSize="16"  Tapped="switchAlphabet" Foreground="{StaticResource DullGreyBrush}" />
+                                <TextBlock x:Name="Block_TENSETAB_phone" Grid.Column="2" TextWrapping="Wrap" Text="{Binding tenseText}" VerticalAlignment="Top"  TextAlignment="Center" FontSize="16"  Tapped="switchTense" Foreground="{StaticResource DullGreyBrush}" />
+                                <TextBlock x:Name="Block_AGREEMENTTAB_phone"  Grid.Column="3"  TextWrapping="Wrap" Text="{Binding agreementText}" VerticalAlignment="Top" TextAlignment="Center" FontSize="16"  Tapped="switchAgreement" Foreground="{StaticResource DullGreyBrush}"/>
+                            </Grid>
+                        </StackPanel>
+                    </ScrollViewer>
+
+                    <ScrollViewer x:Name="sv_conjugations" VerticalAlignment="Top" Grid.Row="1" HorizontalAlignment="Center">
                         <Grid x:Name="grid_conjugations" HorizontalAlignment="Left"  Height="590" VerticalAlignment="Bottom" MaxWidth="640">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="135"/>
@@ -258,115 +399,165 @@
                                 <RowDefinition Height="47*"/>
                                 <RowDefinition Height="170*"/>
                             </Grid.RowDefinitions>
-                            <TextBlock x:Name="Block_Indicative_Label" Text="Indicative:" FontSize="20"  HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="93" Grid.Row="0" Grid.Column="0" Height="27" Margin="0,9,0,0" Foreground="{StaticResource DullGreyBrush}" />
-                            <TextBlock x:Name="Block_Presumptive_Label" FontSize="20" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Presumptive:" VerticalAlignment="Top" Width="119" Grid.Row="1" Grid.Column="0" Height="27" Margin="0,8.333,0,0" Foreground="{StaticResource DullGreyBrush}" />
-                            <TextBlock x:Name="Block_Imperative_Label" FontSize="20" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Imperative:" VerticalAlignment="Top" Width="109" Grid.Row="2" Grid.Column="0" Height="27" Margin="0,7.667,0,0" Foreground="{StaticResource DullGreyBrush}" />
+                            <TextBlock x:Name="Block_Indicative_Label" Text="Indicative:" FontSize="20"  HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="93" Grid.Row="0" Grid.Column="0" Height="27" Foreground="{StaticResource DullGreyBrush}" />
+                            <TextBlock x:Name="Block_Presumptive_Label" FontSize="20" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Presumptive:" VerticalAlignment="Top" Width="119" Grid.Row="1" Grid.Column="0" Height="27" Foreground="{StaticResource DullGreyBrush}" />
+                            <TextBlock x:Name="Block_Imperative_Label" FontSize="20" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Imperative:" VerticalAlignment="Top" Width="109" Grid.Row="2" Grid.Column="0" Height="27" Foreground="{StaticResource DullGreyBrush}" />
                             <TextBlock x:Name="Block_Provisional_Label"  FontSize="20" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Provisional:" VerticalAlignment="Top" Width="109" Grid.Row="3" Grid.Column="0" Height="27" Foreground="{StaticResource DullGreyBrush}" />
-                            <TextBlock x:Name="Block_Conditional_Label" FontSize="20" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Conditional:" VerticalAlignment="Top" Width="109" Grid.Row="4" Grid.Column="0" Height="27" Foreground="{StaticResource DullGreyBrush}" Margin="0,0.333,0,0"/>
-                            <TextBlock x:Name="Block_Potential_Label" FontSize="20" Text="Potential:" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="93" Grid.Row="4"  Grid.Column="0" Height="27" Foreground="{StaticResource DullGreyBrush}" Margin="0,46.333,0,0" Grid.RowSpan="2"/>
-                            <TextBlock x:Name="Block_Causative_Label" FontSize="20" Text="Causative:" HorizontalAlignment="Left" TextWrapping="Wrap" Width="93" Grid.Row="6"  Grid.Column="0" Margin="0,0,0,11.667" Foreground="{StaticResource DullGreyBrush}"/>
-                            <TextBlock x:Name="Block_Progressive_Label" FontSize="20" Text="Progressive:" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="109" Grid.Row="7" Grid.Column="0" Height="27" Foreground="{StaticResource DullGreyBrush}" Margin="0,0.333,0,0"/>
-                            <TextBlock x:Name="Block_Passive_Label" FontSize="20" Text="Passive:"  HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="93" Grid.Row="8" Grid.Column="0" Height="27" Margin="0,9.167,0,0" Foreground="{StaticResource DullGreyBrush}" />
-                            <TextBlock x:Name="Block_Chau_Label" FontSize="20" Text="Chau:"  HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="93" Grid.Row="9" Grid.Column="0" Height="27" Margin="0,8.833,0,0" Foreground="{StaticResource DullGreyBrush}" />
+                            <TextBlock x:Name="Block_Conditional_Label" FontSize="20" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Conditional:" VerticalAlignment="Top" Width="109" Grid.Row="4" Grid.Column="0" Height="27" Foreground="{StaticResource DullGreyBrush}"/>
+                            <TextBlock x:Name="Block_Potential_Label" FontSize="20" Text="Potential:" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="93" Grid.Row="5"  Grid.Column="0" Height="27" Foreground="{StaticResource DullGreyBrush}"/>
+                            <TextBlock x:Name="Block_Causative_Label" FontSize="20" Text="Causative:" HorizontalAlignment="Left" TextWrapping="Wrap" Width="93" Grid.Row="6"  Grid.Column="0" Foreground="{StaticResource DullGreyBrush}"/>
+                            <TextBlock x:Name="Block_Progressive_Label" FontSize="20" Text="Progressive:" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="109" Grid.Row="7" Grid.Column="0" Height="27" Foreground="{StaticResource DullGreyBrush}"/>
+                            <TextBlock x:Name="Block_Passive_Label" FontSize="20" Text="Passive:"  HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="93" Grid.Row="8" Grid.Column="0" Height="27"  Foreground="{StaticResource DullGreyBrush}" />
+                            <TextBlock x:Name="Block_Chau_Label" FontSize="20" Text="Chau:"  HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="93" Grid.Row="9" Grid.Column="0" Height="27" Foreground="{StaticResource DullGreyBrush}" />
 
 
-                            <ScrollViewer Grid.Row="0" Grid.Column="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollMode="Disabled"  HorizontalScrollMode="Enabled">
+                            <ScrollViewer Grid.Row="0" Grid.Column="1" HorizontalScrollBarVisibility="Hidden" VerticalScrollMode="Disabled"  HorizontalScrollMode="Enabled" VerticalScrollBarVisibility="Disabled">
                                 <TextBlock x:Name="TextBlock_IndicativeForm" FontSize="20" HorizontalAlignment="Right" Margin="0,8,0,0" TextWrapping="Wrap" Text="{Binding}" VerticalAlignment="Top" TextAlignment="Right" Height="27" Foreground="{StaticResource IceBlueBrush}">
-                            <FlyoutBase.AttachedFlyout>
-                                <MenuFlyout>
-                                    <MenuFlyoutItem Name="Copy_IndicativeForm" Text="Copy" Click="highlight"/>
-                                </MenuFlyout>
-                            </FlyoutBase.AttachedFlyout>
+                                                           <interactions:Interaction.Behaviors>
+                                            <core:EventTriggerBehavior EventName="RightTapped">
+                                                <behaviors:OpenFlyoutAction/>
+                                            </core:EventTriggerBehavior>
+                                        </interactions:Interaction.Behaviors>
+                                    <FlyoutBase.AttachedFlyout>
+                                        <MenuFlyout>
+                                            <MenuFlyoutItem Text="Copy" Click="copyText" DataContext="{Binding}"/>
+                                        </MenuFlyout>
+                                    </FlyoutBase.AttachedFlyout>
                                 </TextBlock>
                             </ScrollViewer>
 
-                            <ScrollViewer Grid.Row="1" Grid.Column="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollMode="Disabled"  HorizontalScrollMode="Enabled">
+                            <ScrollViewer Grid.Row="1" Grid.Column="1" HorizontalScrollBarVisibility="Hidden" VerticalScrollMode="Disabled"  HorizontalScrollMode="Enabled" VerticalScrollBarVisibility="Disabled">
                                 <TextBlock x:Name="TextBlock_PresumptiveForm" FontSize="20" HorizontalAlignment="Right" Margin="0,8,0,0" TextWrapping="Wrap" Text="{Binding}" VerticalAlignment="Top"  TextAlignment="Right"   Height="27" Foreground="{StaticResource IceBlueBrush}">
-                            <FlyoutBase.AttachedFlyout>
-                                <MenuFlyout>
-                                    <MenuFlyoutItem Name="Copy_Presumptive"  Text="Copy" Click="highlight"/>
-                                </MenuFlyout>
-                            </FlyoutBase.AttachedFlyout>
+                                                               <interactions:Interaction.Behaviors>
+                                            <core:EventTriggerBehavior EventName="RightTapped">
+                                                <behaviors:OpenFlyoutAction/>
+                                            </core:EventTriggerBehavior>
+                                        </interactions:Interaction.Behaviors>
+                                    <FlyoutBase.AttachedFlyout>
+                                        <MenuFlyout>
+                                            <MenuFlyoutItem Text="Copy" Click="copyText" DataContext="{Binding}"/>
+                                        </MenuFlyout>
+                                    </FlyoutBase.AttachedFlyout>
                                 </TextBlock>
                             </ScrollViewer>
 
-                            <ScrollViewer Grid.Row="2" Grid.Column="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollMode="Disabled"  HorizontalScrollMode="Enabled">
+                            <ScrollViewer Grid.Row="2" Grid.Column="1" HorizontalScrollBarVisibility="Hidden" VerticalScrollMode="Disabled"  HorizontalScrollMode="Enabled" VerticalScrollBarVisibility="Disabled" >
                                 <TextBlock x:Name="TextBlock_ImperativeForm" FontSize="20" HorizontalAlignment="Right" Margin="0,8,0,0" TextWrapping="Wrap" Text="{Binding}" VerticalAlignment="Top"  TextAlignment="Right"   Height="27" Foreground="{StaticResource IceBlueBrush}">
-                            <FlyoutBase.AttachedFlyout>
-                                <MenuFlyout>
-                                    <MenuFlyoutItem Name="Copy_ImperativeForm"  Text="Copy" Click="highlight"/>
-                                </MenuFlyout>
-                            </FlyoutBase.AttachedFlyout>
+                                                           <interactions:Interaction.Behaviors>
+                                            <core:EventTriggerBehavior EventName="RightTapped">
+                                                <behaviors:OpenFlyoutAction/>
+                                            </core:EventTriggerBehavior>
+                                        </interactions:Interaction.Behaviors>
+                                    <FlyoutBase.AttachedFlyout>
+                                        <MenuFlyout>
+                                            <MenuFlyoutItem Text="Copy" Click="copyText" DataContext="{Binding}"/>
+                                        </MenuFlyout>
+                                    </FlyoutBase.AttachedFlyout>
                                 </TextBlock>
                             </ScrollViewer>
 
-                            <ScrollViewer Grid.Row="3" Grid.Column="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollMode="Disabled"  HorizontalScrollMode="Enabled">
+                            <ScrollViewer Grid.Row="3" Grid.Column="1" HorizontalScrollBarVisibility="Hidden" VerticalScrollMode="Disabled"  HorizontalScrollMode="Enabled" VerticalScrollBarVisibility="Disabled">
                                 <TextBlock x:Name="TextBlock_ProvisionalForm" FontSize="20" HorizontalAlignment="Right" Margin="0,8,0,0" TextWrapping="Wrap" Text="{Binding}" VerticalAlignment="Top"  TextAlignment="Right"   Height="27" Foreground="{StaticResource IceBlueBrush}">
-                               <FlyoutBase.AttachedFlyout>
-                                <MenuFlyout>
-                                    <MenuFlyoutItem Name="Copy_ProvisionalForm" Text="Copy" Click="highlight"/>
-                                </MenuFlyout>
-                            </FlyoutBase.AttachedFlyout>
+                                                           <interactions:Interaction.Behaviors>
+                                            <core:EventTriggerBehavior EventName="RightTapped">
+                                                <behaviors:OpenFlyoutAction/>
+                                            </core:EventTriggerBehavior>
+                                        </interactions:Interaction.Behaviors>
+                                    <FlyoutBase.AttachedFlyout>
+                                        <MenuFlyout>
+                                            <MenuFlyoutItem Text="Copy" Click="copyText" DataContext="{Binding}"/>
+                                        </MenuFlyout>
+                                    </FlyoutBase.AttachedFlyout>
                                 </TextBlock>
                             </ScrollViewer>
 
-                            <ScrollViewer Grid.Row="4" Grid.Column="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollMode="Disabled"  HorizontalScrollMode="Enabled">
+                            <ScrollViewer Grid.Row="4" Grid.Column="1" HorizontalScrollBarVisibility="Hidden" VerticalScrollMode="Disabled"  HorizontalScrollMode="Enabled" VerticalScrollBarVisibility="Disabled">
                                 <TextBlock x:Name="TextBlock_ConditionalForm" FontSize="20" HorizontalAlignment="Right" Margin="0,8,0,0" TextWrapping="Wrap" Text="{Binding}" VerticalAlignment="Top"  TextAlignment="Right"  Height="27" Foreground="{StaticResource IceBlueBrush}">
-                            <FlyoutBase.AttachedFlyout>
-                                <MenuFlyout>
-                                    <MenuFlyoutItem Name="Copy_ConditionalForm" Text="Copy" Click="highlight"/>
-                                </MenuFlyout>
-                            </FlyoutBase.AttachedFlyout>
+                                                            <interactions:Interaction.Behaviors>
+                                            <core:EventTriggerBehavior EventName="RightTapped">
+                                                <behaviors:OpenFlyoutAction/>
+                                            </core:EventTriggerBehavior>
+                                        </interactions:Interaction.Behaviors>
+                                    <FlyoutBase.AttachedFlyout>
+                                        <MenuFlyout>
+                                            <MenuFlyoutItem Text="Copy" Click="copyText" DataContext="{Binding}"/>
+                                        </MenuFlyout>
+                                    </FlyoutBase.AttachedFlyout>
                                 </TextBlock>
                             </ScrollViewer>
 
-                            <ScrollViewer Grid.Row="5" Grid.Column="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollMode="Disabled"  HorizontalScrollMode="Enabled">
+                            <ScrollViewer Grid.Row="5" Grid.Column="1" HorizontalScrollBarVisibility="Hidden" VerticalScrollMode="Disabled"  HorizontalScrollMode="Enabled" VerticalScrollBarVisibility="Disabled">
                                 <TextBlock x:Name="TextBlock_PotentialForm" FontSize="20" HorizontalAlignment="Right" Margin="0,8,0,0" TextWrapping="Wrap" Text="{Binding}" VerticalAlignment="Top" TextAlignment="Right"  Height="27" Foreground="{StaticResource IceBlueBrush}">
-                            <FlyoutBase.AttachedFlyout>
-                                <MenuFlyout>
-                                    <MenuFlyoutItem Name="Copy_Potential" Text="Copy" Click="highlight"/>
-                                </MenuFlyout>
-                            </FlyoutBase.AttachedFlyout>
+                                                           <interactions:Interaction.Behaviors>
+                                            <core:EventTriggerBehavior EventName="RightTapped">
+                                                <behaviors:OpenFlyoutAction/>
+                                            </core:EventTriggerBehavior>
+                                        </interactions:Interaction.Behaviors>
+                                    <FlyoutBase.AttachedFlyout>
+                                        <MenuFlyout>
+                                            <MenuFlyoutItem Text="Copy" Click="copyText" DataContext="{Binding}"/>
+                                        </MenuFlyout>
+                                    </FlyoutBase.AttachedFlyout>
                                 </TextBlock>
                             </ScrollViewer>
 
-                            <ScrollViewer Grid.Row="6" Grid.Column="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollMode="Disabled"  HorizontalScrollMode="Enabled">
+                            <ScrollViewer Grid.Row="6" Grid.Column="1" HorizontalScrollBarVisibility="Hidden" VerticalScrollMode="Disabled"  HorizontalScrollMode="Enabled" VerticalScrollBarVisibility="Disabled">
                                 <TextBlock x:Name="TextBlock_CausativeForm" FontSize="20" HorizontalAlignment="Right" Margin="0,8,0,0" TextWrapping="Wrap" Text="{Binding}" VerticalAlignment="Top" TextAlignment="Right" Height="27" Foreground="{StaticResource IceBlueBrush}">
-                            <FlyoutBase.AttachedFlyout>
-                                <MenuFlyout>
-                                    <MenuFlyoutItem Name="Copy_Causative" Text="Copy" Click="highlight"/>
-                                </MenuFlyout>
-                            </FlyoutBase.AttachedFlyout>
+                                                           <interactions:Interaction.Behaviors>
+                                            <core:EventTriggerBehavior EventName="RightTapped">
+                                                <behaviors:OpenFlyoutAction/>
+                                            </core:EventTriggerBehavior>
+                                        </interactions:Interaction.Behaviors>
+                                    <FlyoutBase.AttachedFlyout>
+                                        <MenuFlyout>
+                                            <MenuFlyoutItem Text="Copy" Click="copyText" DataContext="{Binding}"/>
+                                        </MenuFlyout>
+                                    </FlyoutBase.AttachedFlyout>
                                 </TextBlock>
                             </ScrollViewer>
 
-                            <ScrollViewer Grid.Row="7" Grid.Column="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollMode="Disabled"  HorizontalScrollMode="Enabled">
+                            <ScrollViewer Grid.Row="7" Grid.Column="1" HorizontalScrollBarVisibility="Hidden" VerticalScrollMode="Disabled"  HorizontalScrollMode="Enabled" VerticalScrollBarVisibility="Disabled">
                                 <TextBlock x:Name="TextBlock_ProgressiveForm" FontSize="20" HorizontalAlignment="Right" Margin="0,8,0,0" TextWrapping="Wrap" Text="{Binding}" VerticalAlignment="Top" TextAlignment="Right"  Height="27" Foreground="{StaticResource IceBlueBrush}">
-                              <FlyoutBase.AttachedFlyout>
-                                <MenuFlyout>
-                                    <MenuFlyoutItem Name="Copy_Progressive" Text="Copy" Click="highlight"/>
-                                </MenuFlyout>
-                            </FlyoutBase.AttachedFlyout>
+                                                              <interactions:Interaction.Behaviors>
+                                            <core:EventTriggerBehavior EventName="RightTapped">
+                                                <behaviors:OpenFlyoutAction/>
+                                            </core:EventTriggerBehavior>
+                                        </interactions:Interaction.Behaviors>
+                                    <FlyoutBase.AttachedFlyout>
+                                        <MenuFlyout>
+                                            <MenuFlyoutItem Text="Copy" Click="copyText" DataContext="{Binding}"/>
+                                        </MenuFlyout>
+                                    </FlyoutBase.AttachedFlyout>
                                 </TextBlock>
                             </ScrollViewer>
 
-                            <ScrollViewer Grid.Row="8" Grid.Column="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollMode="Disabled"  HorizontalScrollMode="Enabled">
+                            <ScrollViewer Grid.Row="8" Grid.Column="1" HorizontalScrollBarVisibility="Hidden" VerticalScrollMode="Disabled"  HorizontalScrollMode="Enabled" VerticalScrollBarVisibility="Disabled">
                                 <TextBlock x:Name="TextBlock_PassiveForm" FontSize="20" HorizontalAlignment="Right" Margin="0,8,0,0" TextWrapping="Wrap" Text="{Binding}" VerticalAlignment="Top"  TextAlignment="Right"  Height="27" Foreground="{StaticResource IceBlueBrush}">
-                                  <FlyoutBase.AttachedFlyout>
-                                <MenuFlyout>
-                                    <MenuFlyoutItem Name="Copy_Passive" Text="Copy" Click="highlight"/>
-                                </MenuFlyout>
-                            </FlyoutBase.AttachedFlyout>
+                                                           <interactions:Interaction.Behaviors>
+                                            <core:EventTriggerBehavior EventName="RightTapped">
+                                                <behaviors:OpenFlyoutAction/>
+                                            </core:EventTriggerBehavior>
+                                        </interactions:Interaction.Behaviors>
+                                    <FlyoutBase.AttachedFlyout>
+                                        <MenuFlyout>
+                                            <MenuFlyoutItem Text="Copy" Click="copyText" DataContext="{Binding}"/>
+                                        </MenuFlyout>
+                                    </FlyoutBase.AttachedFlyout>
                                 </TextBlock>
                             </ScrollViewer>
 
-                            <ScrollViewer Grid.Row="9" Grid.Column="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollMode="Disabled"  HorizontalScrollMode="Enabled">
+                            <ScrollViewer Grid.Row="9" Grid.Column="1" HorizontalScrollBarVisibility="Hidden" VerticalScrollMode="Disabled"  HorizontalScrollMode="Enabled" VerticalScrollBarVisibility="Disabled">
                                 <TextBlock x:Name="TextBlock_ChauForm" FontSize="20" HorizontalAlignment="Right" Margin="0,8,0,0" TextWrapping="Wrap" Text="{Binding}" VerticalAlignment="Top" TextAlignment="Right" Height="27" Foreground="{StaticResource IceBlueBrush}">
-                                  <FlyoutBase.AttachedFlyout>
-                                <MenuFlyout>
-                                    <MenuFlyoutItem Name="Copy_Chau" Text="Copy" Click="highlight"/>
-                                </MenuFlyout>
-                            </FlyoutBase.AttachedFlyout>
+                                                           <interactions:Interaction.Behaviors>
+                                            <core:EventTriggerBehavior EventName="RightTapped">
+                                                <behaviors:OpenFlyoutAction/>
+                                            </core:EventTriggerBehavior>
+                                        </interactions:Interaction.Behaviors>
+                                    <FlyoutBase.AttachedFlyout>
+                                        <MenuFlyout>
+                                            <MenuFlyoutItem Text="Copy" Click="copyText" DataContext="{Binding}"/>
+                                        </MenuFlyout>
+                                    </FlyoutBase.AttachedFlyout>
                                 </TextBlock>
                             </ScrollViewer>
 
@@ -387,34 +578,82 @@
                     <Viewbox>
                         <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="Examples" VerticalAlignment="Top" Foreground="{StaticResource DullGreyBrush}"/>
                     </Viewbox>
-                    <ItemsControl x:Name="ItemControl_Examples" Grid.Row="1" Background="Transparent">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollMode="Disabled">
-                                    <StackPanel Orientation="Vertical" MinWidth="{Binding ActualWidth, ElementName=ItemControl_Examples}" >
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="Sense:" FontSize="20"/>
-                                            <TextBlock Text="{Binding sensenumber, FallbackValue='1'}" Foreground="{Binding Path=verified, Converter={StaticResource ColorBrushConverter}}" Margin="10,0,0,0" FontSize="20"/>
-                                        </StackPanel>
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="Form:" FontSize="20"/>
-                                            <TextBlock Text="{Binding form, FallbackValue='漢字フォーム'}" Foreground="{Binding Path=verified, Converter={StaticResource ColorBrushConverter}}" Margin="10,0,10,0" FontSize="20"/>
-                                            <TextBlock Text="Reading:" FontSize="20"/>
-                                            <TextBlock Text="{Binding reading, FallbackValue='かんじフォーム'}" Foreground="{Binding Path=verified, Converter={StaticResource ColorBrushConverter}}" Margin="10,0,0,0" FontSize="20"/>
-                                        </StackPanel>
-                                        <StackPanel Orientation="Vertical">
-                                            <TextBlock FontSize="20"><Run 
+                    <Viewbox HorizontalAlignment="Center" Grid.Row="1" VerticalAlignment="Top" MaxWidth="150" Visibility="{Binding hasExamples, Converter={StaticResource boolVisibilityConverter}}">
+                        <TextBlock Text="No Examples"/>
+                    </Viewbox>
+                    <ScrollViewer Grid.Row="1" Background="Transparent">
+                        <ItemsControl x:Name="ItemControl_Examples">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollMode="Disabled">
+                                        <StackPanel Orientation="Vertical" MinWidth="{Binding ActualWidth, ElementName=ItemControl_Examples}" >
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="Sense:" FontSize="20"/>
+                                                <TextBlock Text="{Binding sensenumber, FallbackValue='1'}" Foreground="{Binding Path=verified, Converter={StaticResource ColorBrushConverter}}" Margin="10,0,0,0" FontSize="20"/>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="Form:" FontSize="20"/>
+                                                <TextBlock Text="{Binding form, FallbackValue='漢字フォーム'}" Foreground="{Binding Path=verified, Converter={StaticResource ColorBrushConverter}}" Margin="10,0,10,0" FontSize="20">
+                                                                                                               <interactions:Interaction.Behaviors>
+                                            <core:EventTriggerBehavior EventName="RightTapped">
+                                                <behaviors:OpenFlyoutAction/>
+                                            </core:EventTriggerBehavior>
+                                        </interactions:Interaction.Behaviors>
+                                    <FlyoutBase.AttachedFlyout>
+                                        <MenuFlyout>
+                                            <MenuFlyoutItem Text="Copy" Click="copyText" DataContext="{Binding form}"/>
+                                        </MenuFlyout>
+                                    </FlyoutBase.AttachedFlyout>
+                                                </TextBlock>
+                                                <TextBlock Text="Reading:" FontSize="20"/>
+                                                <TextBlock Text="{Binding reading, FallbackValue='かんじフォーム'}" Foreground="{Binding Path=verified, Converter={StaticResource ColorBrushConverter}}" Margin="10,0,0,0" FontSize="20">
+                                                                                                               <interactions:Interaction.Behaviors>
+                                            <core:EventTriggerBehavior EventName="RightTapped">
+                                                <behaviors:OpenFlyoutAction/>
+                                            </core:EventTriggerBehavior>
+                                        </interactions:Interaction.Behaviors>
+                                    <FlyoutBase.AttachedFlyout>
+                                        <MenuFlyout>
+                                            <MenuFlyoutItem Text="Copy" Click="copyText"  DataContext="{Binding reading}"/>
+                                        </MenuFlyout>
+                                    </FlyoutBase.AttachedFlyout>
+                                                </TextBlock>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Vertical">
+                                                <TextBlock FontSize="20"><Run 
                                                             Text="{Binding beforeForm, FallbackValue='日本語'}" Foreground="{Binding Path=verified, Converter={StaticResource ColorBrushConverter}}"/><Run 
                                                             Text="{Binding form, FallbackValue='の'}" Foreground="{Binding Path=verified, Converter={StaticResource InverseColorBrushConverter}}"/><Run
                                                             Text="{Binding afterForm, FallbackValue='文'}" Foreground="{Binding Path=verified, Converter={StaticResource ColorBrushConverter}}"/>
-                                            </TextBlock>
-                                            <TextBlock Text="{Binding sentenceeng, FallbackValue='English Sentence'}" Foreground="{Binding Path=verified, Converter={StaticResource ColorBrushConverter}}" FontSize="20"/>
+                                                                                                               <interactions:Interaction.Behaviors>
+                                            <core:EventTriggerBehavior EventName="RightTapped">
+                                                <behaviors:OpenFlyoutAction/>
+                                            </core:EventTriggerBehavior>
+                                        </interactions:Interaction.Behaviors>
+                                    <FlyoutBase.AttachedFlyout>
+                                        <MenuFlyout>
+                                            <MenuFlyoutItem Text="Copy" Click="copySentence"  DataContext="{Binding}"/>
+                                        </MenuFlyout>
+                                    </FlyoutBase.AttachedFlyout>
+                                                </TextBlock>
+                                                <TextBlock Text="{Binding sentenceeng, FallbackValue='English Sentence'}" Foreground="{Binding Path=verified, Converter={StaticResource ColorBrushConverter}}" FontSize="20">
+                                                                                                               <interactions:Interaction.Behaviors>
+                                            <core:EventTriggerBehavior EventName="RightTapped">
+                                                <behaviors:OpenFlyoutAction/>
+                                            </core:EventTriggerBehavior>
+                                        </interactions:Interaction.Behaviors>
+                                    <FlyoutBase.AttachedFlyout>
+                                        <MenuFlyout>
+                                            <MenuFlyoutItem Text="Copy" Click="copyText"  DataContext="{Binding sentenceeng}"/>
+                                        </MenuFlyout>
+                                    </FlyoutBase.AttachedFlyout>
+                                                </TextBlock>
+                                            </StackPanel>
                                         </StackPanel>
-                                    </StackPanel>
-                                </ScrollViewer>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
+                                    </ScrollViewer>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
                 </Grid>
             </PivotItem>
         </Pivot>

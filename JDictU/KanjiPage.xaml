@@ -5,6 +5,9 @@
     xmlns:local="using:JDictU"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:interactions="using:Microsoft.Xaml.Interactivity"
+    xmlns:behaviors="using:Template10.Behaviors"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     mc:Ignorable="d">
 
     <Page.Resources>
@@ -33,7 +36,18 @@
         <TextBlock Text="Let's Search! - Kanji Result" FontSize="20" FontFamily="Segoe WP" Foreground="#FF91C3FF" FontWeight="Normal" Grid.Row="0" Margin="0,0,130,0" d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin"/>
 
         <Viewbox Grid.Row="1" d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin">
-            <TextBlock x:Name="tb_literal" Foreground="{StaticResource IceBlueBrush}" Text="{Binding literal, FallbackValue='調'}"/>
+            <TextBlock x:Name="tb_literal" Foreground="{StaticResource IceBlueBrush}" Text="{Binding literal, FallbackValue='調'}">
+                                                   <interactions:Interaction.Behaviors>
+                                            <core:EventTriggerBehavior EventName="RightTapped">
+                                                <behaviors:OpenFlyoutAction/>
+                                            </core:EventTriggerBehavior>
+                                        </interactions:Interaction.Behaviors>
+                                    <FlyoutBase.AttachedFlyout>
+                                        <MenuFlyout>
+                                            <MenuFlyoutItem Text="Copy" Click="copyText" DataContext="{Binding literal}"/>
+                                        </MenuFlyout>
+                                    </FlyoutBase.AttachedFlyout>
+            </TextBlock>
         </Viewbox>
 
         <ScrollViewer x:Name="sv_kanjiInfo" Grid.Row="2">
@@ -53,7 +67,18 @@
                             </ItemsPanelTemplate>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding}" Margin="20,0,0,0"  Foreground="{StaticResource IceBlueBrush}" />
+                                    <TextBlock Text="{Binding}" Margin="20,0,0,0"  Foreground="{StaticResource IceBlueBrush}" >
+                                                                           <interactions:Interaction.Behaviors>
+                                            <core:EventTriggerBehavior EventName="RightTapped">
+                                                <behaviors:OpenFlyoutAction/>
+                                            </core:EventTriggerBehavior>
+                                        </interactions:Interaction.Behaviors>
+                                    <FlyoutBase.AttachedFlyout>
+                                        <MenuFlyout>
+                                            <MenuFlyoutItem Text="Copy" Click="copyText" DataContext="{Binding}"/>
+                                        </MenuFlyout>
+                                    </FlyoutBase.AttachedFlyout>
+                                    </TextBlock>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
@@ -67,7 +92,18 @@
                             </ItemsPanelTemplate>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding}"  Margin="20,0,0,0"  Foreground="{StaticResource IceBlueBrush}" />
+                                    <TextBlock Text="{Binding}"  Margin="20,0,0,0"  Foreground="{StaticResource IceBlueBrush}">
+                                                                           <interactions:Interaction.Behaviors>
+                                            <core:EventTriggerBehavior EventName="RightTapped">
+                                                <behaviors:OpenFlyoutAction/>
+                                            </core:EventTriggerBehavior>
+                                        </interactions:Interaction.Behaviors>
+                                    <FlyoutBase.AttachedFlyout>
+                                        <MenuFlyout>
+                                            <MenuFlyoutItem Text="Copy" Click="copyText" DataContext="{Binding}"/>
+                                        </MenuFlyout>
+                                    </FlyoutBase.AttachedFlyout>
+                                    </TextBlock>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
@@ -81,7 +117,18 @@
                             </ItemsPanelTemplate>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding}" Margin="20,0,0,0"  Foreground="{StaticResource IceBlueBrush}" />
+                                    <TextBlock Text="{Binding}" Margin="20,0,0,0"  Foreground="{StaticResource IceBlueBrush}" >
+                                                                           <interactions:Interaction.Behaviors>
+                                            <core:EventTriggerBehavior EventName="RightTapped">
+                                                <behaviors:OpenFlyoutAction/>
+                                            </core:EventTriggerBehavior>
+                                        </interactions:Interaction.Behaviors>
+                                    <FlyoutBase.AttachedFlyout>
+                                        <MenuFlyout>
+                                            <MenuFlyoutItem Text="Copy" Click="copyText" DataContext="{Binding}"/>
+                                        </MenuFlyout>
+                                    </FlyoutBase.AttachedFlyout>
+                                    </TextBlock>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
@@ -95,7 +142,18 @@
                             </ItemsPanelTemplate>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding}" Margin="20,0,0,0"  Foreground="{StaticResource IceBlueBrush}" />
+                                    <TextBlock Text="{Binding}" Margin="20,0,0,0"  Foreground="{StaticResource IceBlueBrush}" >
+                                                                           <interactions:Interaction.Behaviors>
+                                            <core:EventTriggerBehavior EventName="RightTapped">
+                                                <behaviors:OpenFlyoutAction/>
+                                            </core:EventTriggerBehavior>
+                                        </interactions:Interaction.Behaviors>
+                                    <FlyoutBase.AttachedFlyout>
+                                        <MenuFlyout>
+                                            <MenuFlyoutItem Text="Copy" Click="copyText" DataContext="{Binding}"/>
+                                        </MenuFlyout>
+                                    </FlyoutBase.AttachedFlyout>
+                                    </TextBlock>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
@@ -109,7 +167,18 @@
                             </ItemsPanelTemplate>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding}" Margin="20,0,0,0"  Foreground="{StaticResource IceBlueBrush}" />
+                                    <TextBlock Text="{Binding}" Margin="20,0,0,0"  Foreground="{StaticResource IceBlueBrush}">
+                                                                           <interactions:Interaction.Behaviors>
+                                            <core:EventTriggerBehavior EventName="RightTapped">
+                                                <behaviors:OpenFlyoutAction/>
+                                            </core:EventTriggerBehavior>
+                                        </interactions:Interaction.Behaviors>
+                                    <FlyoutBase.AttachedFlyout>
+                                        <MenuFlyout>
+                                            <MenuFlyoutItem Text="Copy" Click="copyText" DataContext="{Binding}"/>
+                                        </MenuFlyout>
+                                    </FlyoutBase.AttachedFlyout>
+                                    </TextBlock>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
@@ -123,7 +192,18 @@
                             </ItemsPanelTemplate>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding}" Margin="20,0,0,0"  Foreground="{StaticResource IceBlueBrush}" />
+                                    <TextBlock Text="{Binding}" Margin="20,0,0,0"  Foreground="{StaticResource IceBlueBrush}">
+                                                                           <interactions:Interaction.Behaviors>
+                                            <core:EventTriggerBehavior EventName="RightTapped">
+                                                <behaviors:OpenFlyoutAction/>
+                                            </core:EventTriggerBehavior>
+                                        </interactions:Interaction.Behaviors>
+                                    <FlyoutBase.AttachedFlyout>
+                                        <MenuFlyout>
+                                            <MenuFlyoutItem Text="Copy" Click="copyText" DataContext="{Binding}"/>
+                                        </MenuFlyout>
+                                    </FlyoutBase.AttachedFlyout>
+                                    </TextBlock>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
@@ -137,7 +217,18 @@
                         </ItemsPanelTemplate>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock  Foreground="{StaticResource IceBlueBrush}" Text="{Binding}" HorizontalAlignment="Center"/>
+                                    <TextBlock  Foreground="{StaticResource IceBlueBrush}" Text="{Binding}" HorizontalAlignment="Center">
+                                                                           <interactions:Interaction.Behaviors>
+                                            <core:EventTriggerBehavior EventName="RightTapped">
+                                                <behaviors:OpenFlyoutAction/>
+                                            </core:EventTriggerBehavior>
+                                        </interactions:Interaction.Behaviors>
+                                    <FlyoutBase.AttachedFlyout>
+                                        <MenuFlyout>
+                                            <MenuFlyoutItem Text="Copy" Click="copyText" DataContext="{Binding}"/>
+                                        </MenuFlyout>
+                                    </FlyoutBase.AttachedFlyout>
+                                    </TextBlock>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
@@ -212,7 +303,18 @@
                             </ItemsPanelTemplate>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding}"  Foreground="{StaticResource IceBlueBrush}" />
+                                    <TextBlock Text="{Binding}"  Foreground="{StaticResource IceBlueBrush}">
+                                                                           <interactions:Interaction.Behaviors>
+                                            <core:EventTriggerBehavior EventName="RightTapped">
+                                                <behaviors:OpenFlyoutAction/>
+                                            </core:EventTriggerBehavior>
+                                        </interactions:Interaction.Behaviors>
+                                    <FlyoutBase.AttachedFlyout>
+                                        <MenuFlyout>
+                                            <MenuFlyoutItem Text="Copy" Click="copyText" DataContext="{Binding}"/>
+                                        </MenuFlyout>
+                                    </FlyoutBase.AttachedFlyout>
+                                    </TextBlock>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
@@ -226,7 +328,18 @@
                             </ItemsPanelTemplate>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding}"  Foreground="{StaticResource IceBlueBrush}" />
+                                    <TextBlock Text="{Binding}"  Foreground="{StaticResource IceBlueBrush}">
+                                                                           <interactions:Interaction.Behaviors>
+                                            <core:EventTriggerBehavior EventName="RightTapped">
+                                                <behaviors:OpenFlyoutAction/>
+                                            </core:EventTriggerBehavior>
+                                        </interactions:Interaction.Behaviors>
+                                    <FlyoutBase.AttachedFlyout>
+                                        <MenuFlyout>
+                                            <MenuFlyoutItem Text="Copy" Click="copyText" DataContext="{Binding}"/>
+                                        </MenuFlyout>
+                                    </FlyoutBase.AttachedFlyout>
+                                    </TextBlock>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
@@ -234,7 +347,18 @@
 
                     <StackPanel x:Name="sp_radname" HorizontalAlignment="Center" Visibility="{Binding radicalname, Converter={StaticResource VisibilityConverterStringisEmptyString}}">
                         <TextBlock Foreground="{StaticResource DullGreyBrush}" Text="Radical Name" FontSize="14" HorizontalAlignment="Center"/>
-                        <TextBlock Foreground="{StaticResource IceBlueBrush}" Text="{Binding radicalname}" FontSize="14" HorizontalAlignment="Center"/>
+                        <TextBlock Foreground="{StaticResource IceBlueBrush}" Text="{Binding radicalname}" FontSize="14" HorizontalAlignment="Center">
+                                                               <interactions:Interaction.Behaviors>
+                                            <core:EventTriggerBehavior EventName="RightTapped">
+                                                <behaviors:OpenFlyoutAction/>
+                                            </core:EventTriggerBehavior>
+                                        </interactions:Interaction.Behaviors>
+                                    <FlyoutBase.AttachedFlyout>
+                                        <MenuFlyout>
+                                            <MenuFlyoutItem Text="Copy" Click="copyText" DataContext="{Binding radicalname}"/>
+                                        </MenuFlyout>
+                                    </FlyoutBase.AttachedFlyout>
+                        </TextBlock>
                     </StackPanel>
 
                     <StackPanel x:Name="sp_dicnum" HorizontalAlignment="Center" Visibility="{Binding dic_num.Count, Converter={StaticResource VisibilityConverter}}">
@@ -305,7 +429,18 @@
                             </ItemsPanelTemplate>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                     <TextBlock Text="{Binding}" Margin="0,0,20,0"  Foreground="{StaticResource IceBlueBrush}" TextWrapping="Wrap" HorizontalAlignment="Left"/>
+                                    <TextBlock Text="{Binding}" Margin="0,0,20,0"  Foreground="{StaticResource IceBlueBrush}" TextWrapping="Wrap" HorizontalAlignment="Left">
+                                                                           <interactions:Interaction.Behaviors>
+                                            <core:EventTriggerBehavior EventName="RightTapped">
+                                                <behaviors:OpenFlyoutAction/>
+                                            </core:EventTriggerBehavior>
+                                        </interactions:Interaction.Behaviors>
+                                    <FlyoutBase.AttachedFlyout>
+                                        <MenuFlyout>
+                                            <MenuFlyoutItem Text="Copy" Click="copyText" DataContext="{Binding}"/>
+                                        </MenuFlyout>
+                                    </FlyoutBase.AttachedFlyout>
+                                    </TextBlock>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>

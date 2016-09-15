@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -63,6 +64,14 @@ namespace JDictU {
 
         private void findThisKanji(object sender, RoutedEventArgs e) {
             this.Frame.Navigate(typeof(MainPage), "kanji:" + view.literal);
+        }
+        private void copyText(object sender, RoutedEventArgs e) {
+            FrameworkElement tb = sender as FrameworkElement;
+            string text = (string)tb.DataContext;
+            DataPackage dp = new DataPackage();
+            dp.RequestedOperation = DataPackageOperation.Copy;
+            dp.SetText(text);
+            Clipboard.SetContent(dp);
         }
     }
 }
