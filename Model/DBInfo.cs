@@ -50,7 +50,8 @@ namespace JDictU.Model
                     await databaseFile.CopyAsync(loc, culledFile, NameCollisionOption.FailIfExists);
                 }
                 catch(Exception e) {
-                    Debug.WriteLine("Already existed, everything is OK");                }
+                    Debug.WriteLine("Already existed, everything is OK");
+                }
             }
             catch(System.Exception e) {
                 Debug.WriteLine("Error loading...");
