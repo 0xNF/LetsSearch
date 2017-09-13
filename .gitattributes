@@ -58,3 +58,4 @@
 #*.rtf   diff=astextplain
 #*.RTF   diff=astextplain
 ./Model/JayDictFIXED3.db filter=lfs diff=lfs merge=lfs -text
+Model/JayDictFIXED3.db filter=lfs diff=lfs merge=lfs -text
