@@ -19,7 +19,7 @@ namespace JDictU.Model
 
 
     public class DBInfo {
-        private const string jayDict = "model\\JayDictFIXED3.db";
+        private const string jayDict = "model\\JayDictFIXED4.db";
         private const string userdata = "model\\userdata.db";
         private const string examples = "model\\examples.sqlite";
         private const string kradfile = "model\\kradfile-u.txt";

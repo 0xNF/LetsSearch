@@ -167,6 +167,11 @@
       <Version>1.0.111</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="JayDictFIXED4.db">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
