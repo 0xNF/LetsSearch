@@ -21,14 +21,12 @@ namespace JDictU.Model
     public class DBInfo {
         private const string jayDict = "model\\JayDictFIXED4.db";
         private const string userdata = "model\\userdata.db";
-        //private const string examples = "model\\examples.sqlite";
         private const string kradfile = "model\\kradfile-u.txt";
         private const string kanji = "model\\kanji.sqlite";
         public static SQLiteAsyncConnection JconnAsync = null; //SQlite connect to Jaydict, filled in later
         public static SQLiteConnection Jconn = null;
         public static SQLiteAsyncConnection UconnAsync = null;
         public static SQLiteConnection Uconn = null;
-        //public static SQLiteAsyncConnection EconnAsync = null;
         public static SQLiteAsyncConnection KconnAsync = null;
 
 
@@ -99,25 +97,6 @@ namespace JDictU.Model
         static async public void getKradfileAsync() {
             await CopyDatabase(kradfile, ApplicationData.Current.LocalFolder);
         }
-
-        //static async public void getExamplesAsync() {
-        //    await CopyDatabase(examples, ApplicationData.Current.LocalFolder);
-        //    try {
-        //        if (EconnAsync == null) {
-        //            var conFunction = new Func<SQLiteConnectionWithLock>(() =>
-        //                new SQLiteConnectionWithLock(new SQLitePlatformWinRT(),
-        //                    new SQLiteConnectionString(examples, false)));
-
-        //            var connectionString = new SQLiteConnectionString(examples, false);
-        //            var connectionWithLock = new SQLiteConnectionWithLock(new SQLitePlatformWinRT(), connectionString);
-        //            EconnAsync = new SQLiteAsyncConnection(() => connectionWithLock);
-        //        }
-        //    }
-        //    catch(SQLite.Net.SQLiteException sle) {
-        //        Debug.WriteLine(sle);
-        //    }
-        //}
-
 
         static public void getJayDict() {
             //return Jconn ?? (Jconn = new SQLiteConnection(jayDict));
