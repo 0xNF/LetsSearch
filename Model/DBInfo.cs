@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-
 using Windows.Storage;
 using System.Diagnostics;
 using Windows.ApplicationModel;
@@ -12,6 +11,7 @@ using Windows.UI.Xaml;
 using SQLite.Net;
 using SQLite.Net.Async;
 using SQLite.Net.Platform.WinRT;
+//using System.Data.
 
 
 namespace JDictU.Model

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.705
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JDictU", "JDictU\JDictU.csproj", "{531E3C04-FE0E-4B25-B5B8-AE8ED6334B9C}"
 EndProject
@@ -20,6 +20,8 @@ Global
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{531E3C04-FE0E-4B25-B5B8-AE8ED6334B9C}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{531E3C04-FE0E-4B25-B5B8-AE8ED6334B9C}.Debug|Any CPU.Build.0 = Debug|x86
+		{531E3C04-FE0E-4B25-B5B8-AE8ED6334B9C}.Debug|Any CPU.Deploy.0 = Debug|x86
 		{531E3C04-FE0E-4B25-B5B8-AE8ED6334B9C}.Debug|ARM.ActiveCfg = Debug|ARM
 		{531E3C04-FE0E-4B25-B5B8-AE8ED6334B9C}.Debug|ARM.Build.0 = Debug|ARM
 		{531E3C04-FE0E-4B25-B5B8-AE8ED6334B9C}.Debug|ARM.Deploy.0 = Debug|ARM
@@ -58,5 +60,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7E3C3091-9116-4303-AC73-9098540415F3}
 	EndGlobalSection
 EndGlobal
