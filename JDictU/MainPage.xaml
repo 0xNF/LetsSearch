@@ -81,29 +81,32 @@
                                             <RowDefinition Height="32*"/>
                                             <RowDefinition Height="32"/>
                                         </Grid.RowDefinitions>
-                                        <TextBlock Text="{Binding Path=headerText}" FontSize="30" FontFamily="Segoe WP" Grid.Row="0" Foreground="White" Margin="5,0,0,0">
-                                                                               <interactions:Interaction.Behaviors>
-                                            <core:EventTriggerBehavior EventName="RightTapped">
-                                                <behaviors:OpenFlyoutAction/>
-                                            </core:EventTriggerBehavior>
-                                        </interactions:Interaction.Behaviors>
-                                    <FlyoutBase.AttachedFlyout>
-                                        <MenuFlyout>
-                                            <MenuFlyoutItem Text="Copy" Click="copyText" DataContext="{Binding headerText}"/>
-                                        </MenuFlyout>
-                                    </FlyoutBase.AttachedFlyout>
-                                        </TextBlock>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Path=headerText}" FontSize="30" FontFamily="Segoe WP" Grid.Row="0" Foreground="White" Margin="5,0,0,0">
+                                            <interactions:Interaction.Behaviors>
+                                                <core:EventTriggerBehavior EventName="RightTapped">
+                                                    <behaviors:OpenFlyoutAction/>
+                                                </core:EventTriggerBehavior>
+                                            </interactions:Interaction.Behaviors>
+                                            <FlyoutBase.AttachedFlyout>
+                                                <MenuFlyout>
+                                                    <MenuFlyoutItem Text="Copy" Click="copyText" DataContext="{Binding headerText}"/>
+                                                </MenuFlyout>
+                                            </FlyoutBase.AttachedFlyout>
+                                            </TextBlock>
+                                            <TextBlock Text="{Binding Path=exampleText}" FontSize="10" FontFamily=" Segoe WP" Grid.Row="0" Grid.Column="1" Foreground="White"/>
+                                        </StackPanel>
                                         <TextBlock Text="{Binding Path=defText}" FontSize="20" FontFamily="Segoe WP" Grid.Row="1" Foreground="#FFCBC8C8" Margin="5,0,0,0">
-                                        <interactions:Interaction.Behaviors>
-                                            <core:EventTriggerBehavior EventName="RightTapped">
-                                                <behaviors:OpenFlyoutAction/>
-                                            </core:EventTriggerBehavior>
-                                        </interactions:Interaction.Behaviors>
-                                    <FlyoutBase.AttachedFlyout>
-                                        <MenuFlyout>
-                                            <MenuFlyoutItem Text="Copy" Click="copyText" DataContext="{Binding defText}"/>
-                                        </MenuFlyout>
-                                    </FlyoutBase.AttachedFlyout>
+                                            <interactions:Interaction.Behaviors>
+                                                <core:EventTriggerBehavior EventName="RightTapped">
+                                                    <behaviors:OpenFlyoutAction/>
+                                                </core:EventTriggerBehavior>
+                                            </interactions:Interaction.Behaviors>
+                                            <FlyoutBase.AttachedFlyout>
+                                                <MenuFlyout>
+                                                    <MenuFlyoutItem Text="Copy" Click="copyText" DataContext="{Binding defText}"/>
+                                                </MenuFlyout>
+                                            </FlyoutBase.AttachedFlyout>
                                         </TextBlock>
                                     </Grid>
                                 </ScrollViewer>
@@ -130,20 +133,23 @@
                                             <RowDefinition Height="32*"/>
                                             <RowDefinition Height="32"/>
                                         </Grid.RowDefinitions>
-                                        <TextBlock Text="{Binding Path=headerText}" FontSize="30" FontFamily="Segoe WP" Grid.Row="0" Foreground="White" Margin="5,0,0,0">
-                                                                               <interactions:Interaction.Behaviors>
-                                            <core:EventTriggerBehavior EventName="RightTapped">
-                                                <behaviors:OpenFlyoutAction/>
-                                            </core:EventTriggerBehavior>
-                                        </interactions:Interaction.Behaviors>
-                                    <FlyoutBase.AttachedFlyout>
-                                        <MenuFlyout>
-                                            <MenuFlyoutItem Text="Copy" Click="copyText" DataContext="{Binding headerText}"/>
-                                        </MenuFlyout>
-                                    </FlyoutBase.AttachedFlyout>
-                                        </TextBlock>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Path=headerText}" FontSize="30" FontFamily="Segoe WP" Grid.Row="0" Foreground="White" Margin="5,0,0,0">
+                                            <interactions:Interaction.Behaviors>
+                                                <core:EventTriggerBehavior EventName="RightTapped">
+                                                    <behaviors:OpenFlyoutAction/>
+                                                </core:EventTriggerBehavior>
+                                            </interactions:Interaction.Behaviors>
+                                            <FlyoutBase.AttachedFlyout>
+                                                <MenuFlyout>
+                                                    <MenuFlyoutItem Text="Copy" Click="copyText" DataContext="{Binding headerText}"/>
+                                                </MenuFlyout>
+                                            </FlyoutBase.AttachedFlyout>
+                                            </TextBlock>
+                                            <TextBlock Text="{Binding Path=exampleText}" FontSize="10" FontFamily=" Segoe WP" Grid.Row="0" Grid.Column="1" Foreground="White"/>
+                                        </StackPanel>
                                         <TextBlock Text="{Binding Path=defText}" FontSize="20" FontFamily="Segoe WP" Grid.Row="1" Foreground="#FFCBC8C8" Margin="5,0,0,0">
-                                                                               <interactions:Interaction.Behaviors>
+                                            <interactions:Interaction.Behaviors>
                                             <core:EventTriggerBehavior EventName="RightTapped">
                                                 <behaviors:OpenFlyoutAction/>
                                             </core:EventTriggerBehavior>

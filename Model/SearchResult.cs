@@ -20,6 +20,7 @@ namespace JDictU.Model
         //Note for data binding - {get;set;} needs to be attached to each property that you would like to expose to the xaml
         public string headerText {get;set;}
         public string defText {get;set;}
+        public string exampleText { get; set; }
         //internal use only data
         public int entry_id { get; set; }
 
@@ -62,6 +63,7 @@ namespace JDictU.Model
             this.defText = getDefinitionString();
             this.example_total = et;
             this.example_verified = ev;
+            this.exampleText = getExampleCounts();
         }
 
         /// <summary>
@@ -76,6 +78,7 @@ namespace JDictU.Model
             this.entry_id = 0;
             this.example_total = 0;
             this.example_verified = 0;
+            this.exampleText = getExampleCounts();
         }
 
         /// <summary>
@@ -99,6 +102,7 @@ namespace JDictU.Model
             this.defText = getDefinitionString();
             this.example_total = s.example_total;
             this.example_verified = s.example_verified;
+            this.exampleText = getExampleCounts();
         }
 
         public static SearchResult createDebugSR() {
@@ -137,9 +141,23 @@ namespace JDictU.Model
         }
 
         public string getTitleString() {
-            string text = (this.kanji.Count == 1 && this.kanji[0] == "") ? this.getKanaString() : (this.getKanjiString() + " [" + this.getKanaString() + "]");
-            return text;
+            if (this.kanji.All(x => String.IsNullOrWhiteSpace(x))) {
+                return $"{this.getKanaString()}";
+            } else {
+                return $"{this.getKanjiString()} [{this.getKanaString()}]";
+            }
         }
+
+        public string getExampleCounts() {
+            if (this.example_verified > 0) {
+                return $"{this.example_verified}/{Math.Min(this.example_total, 10)}";
+            }
+            else if (this.example_total > 0) {
+                return $"{Math.Min(this.example_total, 10)}";
+            }else {
+                return "";
+            }
+       }
 
         public override string ToString() {
             string text = (this.kanji.Count == 1 && this.kanji[0] == "") ? this.getKanaString() : (this.getKanjiString() + " [" + this.getKanaString() + "]");
