@@ -94,7 +94,7 @@
                                     </FlyoutBase.AttachedFlyout>
                                         </TextBlock>
                                         <TextBlock Text="{Binding Path=defText}" FontSize="20" FontFamily="Segoe WP" Grid.Row="1" Foreground="#FFCBC8C8" Margin="5,0,0,0">
-                                                                               <interactions:Interaction.Behaviors>
+                                        <interactions:Interaction.Behaviors>
                                             <core:EventTriggerBehavior EventName="RightTapped">
                                                 <behaviors:OpenFlyoutAction/>
                                             </core:EventTriggerBehavior>

@@ -14,6 +14,8 @@ namespace JDictU.Model
         internal List<string> romaji { get; set; }
         internal List<string> definitions { get; set; }
         internal List<string> pos { get; set; }
+        internal int example_total { get; set; }
+        internal int example_verified { get; set; }
 
         //Note for data binding - {get;set;} needs to be attached to each property that you would like to expose to the xaml
         public string headerText {get;set;}
@@ -22,13 +24,13 @@ namespace JDictU.Model
         public int entry_id { get; set; }
 
         /// <summary>
-        /// 4 argument constructor, does not have a list of PoS associated
+        /// 6 argument constructor, does not have a list of PoS associated
         /// </summary>
         /// <param name="kj">List of Kanji</param>
         /// <param name="ka">List of Kana:Romaji</param>
         /// <param name="def">List of Definitions</param>
         /// <param name="id">entry_id</param>
-        public SearchResult(List<string> kj, List<string> ka, List<string> def, int id) {
+        public SearchResult(List<string> kj, List<string> ka, List<string> def, int id, int et, int ev) {
             kanji = kj;
             kana = StringTools.stringFromKanaMap(ka, 0);
             definitions = def;
@@ -37,17 +39,19 @@ namespace JDictU.Model
             romaji = StringTools.stringFromKanaMap(ka, 1);
             headerText = getTitleString();
             defText = getDefinitionString();
+            this.example_total = et;
+            this.example_verified = ev;
         }
 
         /// <summary>
-        /// 5 argument constructor, includes PoS
+        /// 7 argument constructor, includes PoS
         /// </summary>
         /// <param name="kj">List of Kanji</param>
         /// <param name="ka">List of Kana:Romaji</param>
         /// <param name="def">List of Definitions</param>
         /// <param name="func">List of PoS</param>
         /// <param name="id">entry_id</param>
-        public SearchResult(List<string> kj, List<string> ka, List<string> def, List<string> func, int id) {
+        public SearchResult(List<string> kj, List<string> ka, List<string> def, List<string> func, int id, int et, int ev) {
             this.kanji = kj;
             this.kana = StringTools.stringFromKanaMap(ka, 0);
             this.definitions = def;
@@ -56,6 +60,8 @@ namespace JDictU.Model
             this.pos = func;
             this.headerText = getTitleString();
             this.defText = getDefinitionString();
+            this.example_total = et;
+            this.example_verified = ev;
         }
 
         /// <summary>
@@ -68,10 +74,35 @@ namespace JDictU.Model
             this.definitions = new List<string>();
             this.pos = new List<string>();
             this.entry_id = 0;
+            this.example_total = 0;
+            this.example_verified = 0;
+        }
+
+        /// <summary>
+        /// Takes a Super directly from the db and turns it into a Search Result
+        /// </summary>
+        /// <param name="s"></param>
+        public SearchResult(Super s) {
+            var kj = StringTools.splitBar(s.kanji);
+            var ka = StringTools.splitBar(s.kana_map);
+            var defs = StringTools.splitBar(s.definition);
+            var pos = StringTools.splitBar(s.pos);
+
+
+            this.kanji = kj;
+            this.kana = StringTools.stringFromKanaMap(ka, 0);
+            this.definitions = defs;
+            this.entry_id = s.entry_id;
+            this.romaji = StringTools.stringFromKanaMap(ka, 1);
+            this.pos = pos;
+            this.headerText = getTitleString();
+            this.defText = getDefinitionString();
+            this.example_total = s.example_total;
+            this.example_verified = s.example_verified;
         }
 
         public static SearchResult createDebugSR() {
-            return new SearchResult(new List<String>() { "月", "火", "水", "木", "金", "土", "日" }, new List<String>() { "げつ:getsu", "か:ka", "すい:sui", "もく:moku", "きん:kin", "ど:do", "にち:nichi" }, new List<String>() { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" }, 00000);
+            return new SearchResult(new List<String>() { "月", "火", "水", "木", "金", "土", "日" }, new List<String>() { "げつ:getsu", "か:ka", "すい:sui", "もく:moku", "きん:kin", "ど:do", "にち:nichi" }, new List<String>() { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" }, 00000, 0, 0);
         }
 
         /** Produces a string of all the romaji **/
@@ -116,7 +147,7 @@ namespace JDictU.Model
         }
 
         public string ToStringDebug() {
-            return "Kanji: " + kanji + ", Kana: " + kana + "Romaji: " + romaji + ", Def: " + definitions + ", Id: " + entry_id;
+            return $"Kanji: {kanji}, Kana: {kana}, Romaji: {romaji}, Def: {definitions}, example_total: {example_total}, example_verified: {example_verified}, Id: {entry_id}";
         }
 
         public List<Tuple<string, string>> getKanaRomaMap() {

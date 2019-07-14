@@ -335,6 +335,10 @@ namespace JDictU.Model {
         public string pos { get; set; }
         [Column("rank")]
         public int rank { get; set; }
+        [Column("example_total")]
+        public int example_total { get; set; }
+        [Column("example_verified")]
+        public int example_verified { get; set; }
     }
 
 

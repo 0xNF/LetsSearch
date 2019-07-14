@@ -16,7 +16,8 @@ namespace JDictU.Model
             List<Super> super = DBInfo.Jconn.Query<Super>("select * from super where entry_id = ?", entryID);
             if (super.Count != 0) {
                 Super s = super[0];
-                return new SearchResult(StringTools.splitBar(s.kanji), StringTools.splitBar(s.kana_map), StringTools.splitBar(s.definition), StringTools.splitBar(s.pos), s.entry_id);
+                return new SearchResult(s);
+                //return new SearchResult(StringTools.splitBar(s.kanji), StringTools.splitBar(s.kana_map), StringTools.splitBar(s.definition), StringTools.splitBar(s.pos), s.entry_id, s.example_total, s.example_verified);
             }
             return new SearchResult();
         }
@@ -29,23 +30,27 @@ namespace JDictU.Model
             string def = "select * from super where entry_id in (select entry_id from definitions_eng where definition like '" + term + "%' order by definition limit 100) order by entry_id ASC";
 
             //Dictionaries to put specific results into
-            Dictionary<int, List<List<string>>> def_exact = new Dictionary<int, List<List<string>>>();
-            Dictionary<int, List<List<string>>> def_partial = new Dictionary<int, List<List<string>>>();
+            // <entry_id, (text_elements, example_total, example_verified)>
+            Dictionary<int, Super> def_exact = new Dictionary<int, Super>();
+            Dictionary<int, Super> def_partial = new Dictionary<int, Super>();
 
             //List of combined results for both Romaji and Definitions
             List<Super> definitions = DBInfo.Jconn.Query<Super>(def);
             //comb over the Combined results and add the results to their own dictionary entry
             foreach (Super c in definitions) {
                 List<string> returnfromDefs = StringTools.splitBar(c.definition);
+                //var t = new Tuple<List<List<string>>, int, int>(new List<List<string>> { returnfromDefs, StringTools.splitBar(c.kana_map), StringTools.splitBar(c.kanji), StringTools.splitBar(c.pos) }, c.example_total, c.example_verified);
                 if (returnfromDefs.Any(s => s.Equals(term, StringComparison.OrdinalIgnoreCase))) { //Come back to this when database has spaces in defs. getting just "term%" won't ever return "%term%":  || s.Equals("to " + term, StringComparison.OrdinalIgnoreCase))){
-                    def_exact.Add(c.entry_id, new List<List<string>>() { returnfromDefs, StringTools.splitBar(c.kana_map), StringTools.splitBar(c.kanji), StringTools.splitBar(c.pos) });
+                    def_exact.Add(c.entry_id, c);
                 }
                 else {
-                    def_partial.Add(c.entry_id, new List<List<string>>() { returnfromDefs, StringTools.splitBar(c.kana_map), StringTools.splitBar(c.kanji), StringTools.splitBar(c.pos) });
+                    //def_partial.Add(c.entry_id, new List<List<string>>() { returnfromDefs, StringTools.splitBar(c.kana_map), StringTools.splitBar(c.kanji), StringTools.splitBar(c.pos) });
+                    def_partial.Add(c.entry_id, c);
                 }
             }
-            var srExact = neoSR_super(def_exact);
-            var srInexact = neoSR_super(def_partial);
+            var srExact = def_exact.Select(x => new SearchResult(x.Value)).ToList();
+            var srInexact = def_partial.Select(x => new SearchResult(x.Value)).ToList();
+            //var srInexact = neoSR_super(def_partial);
             return Tuple.Create<List<SearchResult>, List<SearchResult>>(srExact, srInexact);
         }
 
@@ -149,20 +154,16 @@ namespace JDictU.Model
 
 
         private static List<SearchResult> queryWork(string query) {
-            Dictionary<int, List<List<string>>> resultDictionary = new Dictionary<int, List<List<string>>>();
+            Dictionary<int, Super> resultDictionary = new Dictionary<int, Super>();
             List<Super> resultSupers = DBInfo.Jconn.Query<Super>(query);
-
-            foreach (Super s in resultSupers) {
-                resultDictionary.Add(s.entry_id, new List<List<string>>() { StringTools.splitBar(s.definition), StringTools.splitBar(s.kana_map), StringTools.splitBar(s.kanji), StringTools.splitBar(s.pos) });
-            }
-            return neoSR_super(resultDictionary);
+            return resultSupers.Select(x => new SearchResult(x)).ToList();
         }
 
 
         /** SUPER returns a 2 lists of search results for a given term, exact matches and partial matches. Type is given by the enumeration searchType **/
         public static Tuple<List<SearchResult>, List<SearchResult>> fetchResults_Unicode_super(string term, int type) {
             Tuple<List<SearchResult>, List<SearchResult>> rets = Tuple.Create(new List<SearchResult>(), new List<SearchResult>());
-            //format is {exact, partial}            
+            //format is {exact, partial}
             if (type == 0) {
                 //return over romaji
                 var romaExact = searchRomajiExact(term);
@@ -182,22 +183,6 @@ namespace JDictU.Model
                 rets = Tuple.Create(kanjiExact, kanjiIPartial);
             }
             return rets;
-        }
-
-
-        private static List<SearchResult> neoSR_super(Dictionary<int, List<List<string>>> dicts) {
-
-            Dictionary<int, List<List<string>>> match = new Dictionary<int, List<List<string>>>();
-
-            foreach (KeyValuePair<int, List<List<string>>> kvp in dicts) {
-                //kanji, kana, definition, pos
-                match.Add(kvp.Key, new List<List<string>>() { kvp.Value[0], kvp.Value[1], kvp.Value[2], kvp.Value[3] });
-            }
-            List<SearchResult> lsr = new List<SearchResult>();
-            foreach (int eid in match.Keys) {
-                lsr.Add(new SearchResult(match[eid][2], match[eid][1], match[eid][0], match[eid][3], eid));
-            }
-            return lsr;
         }
 
     }
