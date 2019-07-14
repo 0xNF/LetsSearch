@@ -507,6 +507,10 @@ namespace JDictU.Model
             return hiraOrKata == "hiragana" ? fromRomaToHiragana(marker + form) : fromRomaToKatakana(marker + form);
         }
 
+        public static void conjAuxSuru(Verb v) {
+            conjIrreg(v);
+        }
+
 
         public static void conjReg1(Verb v) {
 
@@ -1329,14 +1333,14 @@ namespace JDictU.Model
                 v.teRomaji = v.infinitiveRomaji + "shite";
 
                 //Chau - Present - Romaji
-                v.Present_Plain_Positive_Romaji_Chau = "shichau";
-                v.Present_Polite_Positive_Romaji_Chau = "shichaimasu";
+                v.Present_Plain_Positive_Romaji_Chau = v.infinitiveRomaji + "shichau";
+                v.Present_Polite_Positive_Romaji_Chau = v.infinitiveRomaji + "shichaimasu";
                 v.Present_Plain_Negative_Romaji_Chau = "n/a";
                 v.Present_Polite_Negative_Romaji_Chau = "n/a";
 
                 //Chau - Past - Romaji
-                v.Past_Plain_Positive_Romaji_Chau = "shichatta";
-                v.Past_Polite_Positive_Romaji_Chau =  "shichaimashita";
+                v.Past_Plain_Positive_Romaji_Chau = v.infinitiveKana + "shichatta";
+                v.Past_Polite_Positive_Romaji_Chau = v.infinitiveKana + "shichaimashita";
                 v.Past_Plain_Negative_Romaji_Chau = "n/a";
                 v.Past_Polite_Negative_Romaji_Chau = "n/a";
 
@@ -1502,14 +1506,14 @@ namespace JDictU.Model
                 else {
 
                     //Chau - Present - Kana
-                    v.Present_Plain_Positive_Kana_Chau = "しちゃう";
-                    v.Present_Polite_Positive_Kana_Chau = "しちます";
+                    v.Present_Plain_Positive_Kana_Chau = v.infinitiveKana+  "しちゃう";
+                    v.Present_Polite_Positive_Kana_Chau = v.infinitiveKana + "しちいます";
                     v.Present_Plain_Negative_Kana_Chau = "n/a";
                     v.Present_Polite_Negative_Kana_Chau = "n/a";
 
                     //Chau - Past - Kana
-                    v.Past_Plain_Positive_Kana_Chau = "しちゃた";
-                    v.Past_Polite_Positive_Kana_Chau = "しちゃいました";
+                    v.Past_Plain_Positive_Kana_Chau = v.infinitiveKana + "しちゃった";
+                    v.Past_Polite_Positive_Kana_Chau = v.infinitiveKana + "しちゃいました";
                     v.Past_Plain_Negative_Kana_Chau = "n/a";
                     v.Past_Polite_Negative_Kana_Chau = "n/a";
 

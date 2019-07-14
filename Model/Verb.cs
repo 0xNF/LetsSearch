@@ -181,7 +181,8 @@ namespace JDictU.Model
         public enum type {
             Godan,
             Ichidan,
-            Irregular
+            Irregular,
+            AuxSuru,
         };
 
         public static Verb makeVerb(SearchResult sr) {
@@ -190,7 +191,10 @@ namespace JDictU.Model
 
         private static Verb conjugate(SearchResult sr) {
             var v = new Verb(sr);
-            if (v.verbtype == type.Godan) {
+            if(v.verbtype == type.AuxSuru) {
+                Conjugator.conjAuxSuru(v);
+            }
+            else if (v.verbtype == type.Godan) {
                 Conjugator.conjReg1(v);
             }
             else if (v.verbtype == type.Ichidan) {
@@ -203,9 +207,12 @@ namespace JDictU.Model
         }
 
 
-
         public Verb(SearchResult sr) {
             foreach (string pos in sr.pos) {
+                if (pos.Contains("noun or participle which takes the aux. verb suru")) {
+                    verbtype = type.AuxSuru;
+                    break;
+                }
                 if (pos.Contains("Godan verb")) {
                     verbtype = type.Godan;
                     break;
@@ -224,6 +231,10 @@ namespace JDictU.Model
             dictionary = krm.Item1; //TODO assumption is that the first kana is the dictionary form
             baseRoma = krm.Item2;
             entry_id = sr.entry_id;
+            if(verbtype == type.AuxSuru) {
+                dictionary += "する";
+                baseRoma += "suru";
+            }
             stemKana = dictionary.Substring(0, dictionary.Length - 1); //takes off る
             endMarkerKana = dictionary.Last().ToString();//.Substring(stemKana.Length-1);
             if (endMarkerKana == "う" || endMarkerKana == "ウ") {
