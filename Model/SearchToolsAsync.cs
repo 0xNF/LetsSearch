@@ -11,7 +11,7 @@ using Windows.Foundation;
 
 namespace JDictU.Model
 {
-    class SearchToolsAsync
+    public class SearchToolsAsync
     {
 
     
@@ -30,6 +30,12 @@ namespace JDictU.Model
         //NYI TODO
         public static async Task terminateSearch() {
             
+        }
+
+        public static async Task<List<KanjiDict>> getAllKanji() {
+            string q = "SELECT * FROM kanji;";
+            List<KanjiDict> kanj = await DBInfo.KconnAsync.QueryAsync<KanjiDict>(q);
+            return kanj;
         }
 
         public static async Task<KanjiDict> getKanji(string literal) {

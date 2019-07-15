@@ -11,16 +11,15 @@
     <Page.Resources>
         <model:KanjiLookupPageModel x:Key="klpm"/>
         <SolidColorBrush x:Key="IceBlueBuBrush" Color="#FF91C3FF"/>
-        <!--<Style TargetType="ListBoxItem">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate>
-                        <TextBlock Foreground="{Binding Path=color}"  Text="{Binding Path=message}"/>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
+        <local:ToKanjiObjectConverter x:Key="tkosconverter"/>
+        <local:ToUpDownConverter x:Key="updownconverter"/>
+        <CollectionViewSource
+                x:Key="CVSKanjiOrder"
+                x:Name="CVSKanjiOrder"
+                Source="{x:Bind view.KanjiByOrder, Mode=OneWay}"
+                IsSourceGrouped="True"
+                />
 
-        </Style>-->
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">       
@@ -39,7 +38,7 @@
                         <RowDefinition Height="250*"/>
                     </Grid.RowDefinitions>
 
-                    <GridView x:Name="gv_kanjiResults" Grid.Row="0" ItemsSource="{Binding matchingKanji}" BorderBrush="DarkGray" BorderThickness="2" ItemClick="searchThisKanji" IsItemClickEnabled="True">
+                    <GridView x:Name="gv_kanjiResults" Grid.Row="0" ItemsSource="{x:Bind view.matchingKanji, Mode=OneWay}" BorderBrush="DarkGray" BorderThickness="2" ItemClick="searchThisKanji" IsItemClickEnabled="True">
                         
 
                     </GridView>
@@ -328,7 +327,69 @@
                         
                     </ScrollViewer>
                 </Grid>
-            </PivotItem>            
+            </PivotItem>
+            <PivotItem>
+                <PivotItem.Header>
+                    <TextBlock Text="Kanji by Ordering" Foreground="{StaticResource IceBlueBuBrush}"/>
+                </PivotItem.Header>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <ComboBox
+                        x:Name="cb_OrderType" 
+                        Header="Group By"
+                        Grid.Row="0" Grid.Column="0"
+                        ItemsSource="{x:Bind view.KanjiOrders}"
+                        SelectedItem="{x:Bind view.SelectedKanjiGroup, Mode=TwoWay, Converter={StaticResource tkosconverter}}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate x:DataType="model:KanjiOrderingSelect">
+                                <TextBlock Text="{x:Bind Key}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+
+                    <ComboBox
+                        x:Name="cb_UpDown" 
+                        Header="Order By"
+                        Grid.Row="0" Grid.Column="1"
+                        ItemsSource="{x:Bind view.Sortings}"
+                        SelectedItem="{x:Bind view.UpDown, Mode=TwoWay, Converter={StaticResource updownconverter}}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate x:DataType="model:AscendingDescending">
+                                <TextBlock Text="{x:Bind Key}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+
+                    <GridView 
+                        Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="99"
+                        ItemsSource="{x:Bind CVSKanjiOrder.View, Mode=OneWay}">
+                        <GridView.Resources>
+                            <DataTemplate x:Key="LVGroupHeader" x:DataType="model:KanjiGrouping">
+                                <TextBlock
+                            Text="{x:Bind Key}" 
+                            Foreground="White"/>
+                            </DataTemplate>
+                        </GridView.Resources>
+                        <GridView.GroupStyle>
+                            <GroupStyle HeaderTemplate="{StaticResource LVGroupHeader}"/>
+                        </GridView.GroupStyle>
+                        <GridView.ItemTemplate>
+                            <DataTemplate x:DataType="model:KanjiDict">
+                                <TextBlock Text="{x:Bind literal}" Foreground="White"/>
+                            </DataTemplate>
+                        </GridView.ItemTemplate>
+                    </GridView>
+                </Grid>
+            </PivotItem>
+            
         </Pivot>
         
     </Grid>

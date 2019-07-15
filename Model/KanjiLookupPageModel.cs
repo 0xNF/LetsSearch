@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
 
 namespace JDictU.Model {
+
     public class KanjiLookupPageModel {
 
         private const string kradfile = "kradfile-u.txt";
@@ -362,9 +364,7 @@ namespace JDictU.Model {
         }
 
 
-
         public KanjiLookupPageModel() {
-            
         }
 
         public static async Task prepareModel() {

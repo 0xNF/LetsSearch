@@ -34,7 +34,7 @@ namespace JDictU {
         public KanjiLookupPage() {
             this.InitializeComponent();
             view = new KanjiLookupPageViewModel(this.lb_1,this.lb_2,this.lb_3,this.lb_4,this.lb_5,this.lb_6,this.lb_7,this.lb_8,this.lb_9,this.lb_10,this.lb_11,this.lb_12,this.lb_13,this.lb_14, this.lb_17);
-            this.DataContext = view;
+            //this.DataContext = view;
         }
 
 

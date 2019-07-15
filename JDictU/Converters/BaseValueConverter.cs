@@ -2,10 +2,9 @@
 using System.Globalization;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
-using JDictU.Model;
 using Windows.UI.Xaml.Data;
 
-namespace JDictU{
+namespace JDictU {
     public abstract class BaseValueConverter : IValueConverter {
         public abstract object Convert(object value, Type targetType,
                                        object parameter, CultureInfo culture);
@@ -14,13 +13,21 @@ namespace JDictU{
 
         public object Convert(object value, Type targetType, object parameter,
                               string language) {
-            return Convert(value, targetType, parameter, new CultureInfo(language));
+            CultureInfo ci = CultureInfo.CurrentCulture;
+            if(!String.IsNullOrEmpty(language)) {
+                ci = new CultureInfo(language);
+            }
+            return Convert(value, targetType, parameter, ci);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter,
                                   string language) {
+            CultureInfo ci = CultureInfo.CurrentCulture;
+            if (!String.IsNullOrEmpty(language)) {
+                ci = new CultureInfo(language);
+            }
             return ConvertBack(value, targetType, parameter,
-                               new CultureInfo(language));
+                               ci);
         }
-    }    
+    }
 }

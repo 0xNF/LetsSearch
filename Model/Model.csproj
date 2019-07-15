@@ -122,9 +122,12 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AscendingDescending.cs" />
     <Compile Include="Conjugator.cs" />
     <Compile Include="DBInfo.cs" />
+    <Compile Include="KanjiGrouping.cs" />
     <Compile Include="KanjiLookupPageModel.cs" />
+    <Compile Include="KanjiOrderingSelect.cs" />
     <Compile Include="KanjiPageModel.cs" />
     <Compile Include="KanjiPageViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
