@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 
-namespace JDictU {
+namespace JDictU.Model {
 
     /// <summary>
     /// An ObservableCollection that has AddRange and DeleteRange methods.

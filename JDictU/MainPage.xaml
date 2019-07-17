@@ -74,15 +74,15 @@
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
-                            <DataTemplate x:Name="Template_ExactMatches">
-                                <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollMode="Disabled" >
-                                    <Grid Height="68" MinWidth="{Binding ActualHeight, ElementName=ScrollViewer_Searches}" Background="{Binding Source={StaticResource SearchPageViewModel}, Path=CurrentColor}" Tag="{Binding}" Tapped="resultClicked" >
+                            <DataTemplate x:DataType="model:SearchResult" x:Name="Template_ExactMatches">
+                                <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollMode="Disabled">
+                                    <Grid Height="68" MinWidth="{Binding ActualHeight, ElementName=ScrollViewer_Searches}" Background="{Binding Source={StaticResource SearchPageViewModel}, Path=CurrentColor}" Tag="{x:Bind}" Tapped="resultClicked" >
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="32*"/>
                                             <RowDefinition Height="32"/>
                                         </Grid.RowDefinitions>
                                         <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="{Binding Path=headerText}" FontSize="30" FontFamily="Segoe WP" Grid.Row="0" Foreground="White" Margin="5,0,0,0">
+                                            <TextBlock Text="{x:Bind headerText}" FontSize="30" FontFamily="Segoe WP" Grid.Row="0" Foreground="White" Margin="5,0,0,0">
                                             <interactions:Interaction.Behaviors>
                                                 <core:EventTriggerBehavior EventName="RightTapped">
                                                     <behaviors:OpenFlyoutAction/>
@@ -90,13 +90,13 @@
                                             </interactions:Interaction.Behaviors>
                                             <FlyoutBase.AttachedFlyout>
                                                 <MenuFlyout>
-                                                    <MenuFlyoutItem Text="Copy" Click="copyText" DataContext="{Binding headerText}"/>
+                                                    <MenuFlyoutItem Text="Copy" Click="copyText" DataContext="{x:Bind headerText}"/>
                                                 </MenuFlyout>
                                             </FlyoutBase.AttachedFlyout>
                                             </TextBlock>
-                                            <TextBlock Text="{Binding Path=exampleText}" FontSize="10" FontFamily=" Segoe WP" Grid.Row="0" Grid.Column="1" Foreground="White"/>
+                                            <TextBlock Text="{x:Bind exampleText}" FontSize="10" FontFamily=" Segoe WP" Grid.Row="0" Grid.Column="1" Foreground="White"/>
                                         </StackPanel>
-                                        <TextBlock Text="{Binding Path=defText}" FontSize="20" FontFamily="Segoe WP" Grid.Row="1" Foreground="#FFCBC8C8" Margin="5,0,0,0">
+                                        <TextBlock Text="{x:Bind defText}" FontSize="20" FontFamily="Segoe WP" Grid.Row="1" Foreground="#FFCBC8C8" Margin="5,0,0,0">
                                             <interactions:Interaction.Behaviors>
                                                 <core:EventTriggerBehavior EventName="RightTapped">
                                                     <behaviors:OpenFlyoutAction/>
@@ -104,7 +104,7 @@
                                             </interactions:Interaction.Behaviors>
                                             <FlyoutBase.AttachedFlyout>
                                                 <MenuFlyout>
-                                                    <MenuFlyoutItem Text="Copy" Click="copyText" DataContext="{Binding defText}"/>
+                                                    <MenuFlyoutItem Text="Copy" Click="copyText" DataContext="{x:Bind defText}"/>
                                                 </MenuFlyout>
                                             </FlyoutBase.AttachedFlyout>
                                         </TextBlock>
@@ -126,15 +126,15 @@
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
-                            <DataTemplate x:Name="Template_InexactMatches">
+                            <DataTemplate x:DataType="model:SearchResult" x:Name="Template_InexactMatches">
                                 <ScrollViewer  HorizontalScrollBarVisibility="Hidden" VerticalScrollMode="Disabled">
-                                    <Grid Height="68" MinWidth="{Binding ActualHeight, ElementName=ScrollViewer_Searches}" Background="{Binding Source={StaticResource SearchPageViewModel}, Path=CurrentColor}" Tag="{Binding}" Tapped="resultClicked">
+                                    <Grid Height="68" MinWidth="{Binding ActualHeight, ElementName=ScrollViewer_Searches}" Background="{Binding Source={StaticResource SearchPageViewModel}, Path=CurrentColor}" Tag="{x:Bind}" Tapped="resultClicked">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="32*"/>
                                             <RowDefinition Height="32"/>
                                         </Grid.RowDefinitions>
                                         <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="{Binding Path=headerText}" FontSize="30" FontFamily="Segoe WP" Grid.Row="0" Foreground="White" Margin="5,0,0,0">
+                                            <TextBlock Text="{x:Bind headerText}" FontSize="30" FontFamily="Segoe WP" Grid.Row="0" Foreground="White" Margin="5,0,0,0">
                                             <interactions:Interaction.Behaviors>
                                                 <core:EventTriggerBehavior EventName="RightTapped">
                                                     <behaviors:OpenFlyoutAction/>
@@ -142,13 +142,13 @@
                                             </interactions:Interaction.Behaviors>
                                             <FlyoutBase.AttachedFlyout>
                                                 <MenuFlyout>
-                                                    <MenuFlyoutItem Text="Copy" Click="copyText" DataContext="{Binding headerText}"/>
+                                                    <MenuFlyoutItem Text="Copy" Click="copyText" DataContext="{x:Bind headerText}"/>
                                                 </MenuFlyout>
                                             </FlyoutBase.AttachedFlyout>
                                             </TextBlock>
-                                            <TextBlock Text="{Binding Path=exampleText}" FontSize="10" FontFamily=" Segoe WP" Grid.Row="0" Grid.Column="1" Foreground="White"/>
+                                            <TextBlock Text="{x:Bind exampleText}" FontSize="10" FontFamily=" Segoe WP" Grid.Row="0" Grid.Column="1" Foreground="White"/>
                                         </StackPanel>
-                                        <TextBlock Text="{Binding Path=defText}" FontSize="20" FontFamily="Segoe WP" Grid.Row="1" Foreground="#FFCBC8C8" Margin="5,0,0,0">
+                                        <TextBlock Text="{x:Bind defText}" FontSize="20" FontFamily="Segoe WP" Grid.Row="1" Foreground="#FFCBC8C8" Margin="5,0,0,0">
                                             <interactions:Interaction.Behaviors>
                                             <core:EventTriggerBehavior EventName="RightTapped">
                                                 <behaviors:OpenFlyoutAction/>
@@ -156,7 +156,7 @@
                                         </interactions:Interaction.Behaviors>
                                     <FlyoutBase.AttachedFlyout>
                                         <MenuFlyout>
-                                            <MenuFlyoutItem Text="Copy" Click="copyText" DataContext="{Binding defText}"/>
+                                            <MenuFlyoutItem Text="Copy" Click="copyText" DataContext="{x:Bind defText}"/>
                                         </MenuFlyout>
                                     </FlyoutBase.AttachedFlyout>
                                         </TextBlock>
@@ -174,10 +174,8 @@
                     <TextBlock x:Name="NoResults" Text="No Results" Margin="20,50,0,0" Foreground="#FFCBC8C8" Visibility="Collapsed"
                                Width="173" FontSize="36"/>
                     <TextBlock x:Name="EndOfResults" Text="End of Results" Margin="20,20,0,0" Foreground="#FFCBC8C8" Width="225" FontSize="36" Visibility="Collapsed" />
-                    <!--Visibility="{Binding SearchComplete, Converter={StaticResource VisibilityConverter}, ConverterParameter={Binding Source={StaticResource SearchPageViewModel}, Path=SearchComplete}}"-->
                 </StackPanel>
             </ScrollViewer>
-            <!--</StackPanel>-->
         </Grid>
 
         <!--End Results Panel-->

@@ -10,10 +10,13 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using Windows.UI.Xaml;
+using System.Linq;
 
 namespace JDictU.Model {
     public class SearchPageViewModel : INotifyPropertyChanged// : BaseViewModel
     {
+
+        private const int DISPLAY_LIMIT = 150;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -88,8 +91,8 @@ namespace JDictU.Model {
         public bool useDoubleLike = false;
 
 
-        public ObservableCollection<SearchResult> Exacts = new ObservableCollection<SearchResult>(); 
-        public ObservableCollection<SearchResult> Partials = new ObservableCollection<SearchResult>();
+        public ResettableObservableCollection<SearchResult> Exacts = new ResettableObservableCollection<SearchResult>(); 
+        public ResettableObservableCollection<SearchResult> Partials = new ResettableObservableCollection<SearchResult>();
 
         private List<SearchResult> _exactsFull = new List<SearchResult>();
         private List<SearchResult> _partialsFull = new List<SearchResult>();
@@ -109,50 +112,15 @@ namespace JDictU.Model {
             ProgressBarActive = false;
         }
 
-
-        //unused
-        private void addToPartial(IAsyncResult result) {
-            List<SearchResult> srl = (List<SearchResult>)result.AsyncState;
-            foreach (SearchResult sr in srl) {
-                Partials.Add(sr);
-            }
-        }
-
-
-        //unused
-        private void addToExact(IAsyncResult result) {
-            List<SearchResult> srl = (List<SearchResult>)result.AsyncState;
-            foreach(SearchResult sr in srl){
-                Exacts.Add(sr);
-            }
-        }
-
-        //Still need logic to do in chunks of 25
-        //Reverse forloop necessary because .removeAt() will update the count of the list.
-        private async void transferToList(ObservableCollection<SearchResult> to, List<SearchResult> from) {
-            //if (!SearchComplete) {
-                for (int i = from.Count - 1; i >= 0 && to.Count < 150; i--) {                    
-                    SearchResult sr = from[i];
-                    to.Add(sr);
-                    //from.RemoveAt(i);
-                }
-            //}
-        }
-
-        private async void updateUI(ObservableCollection<SearchResult> to, List<SearchResult> from, SynchronizationContext sync) {
-
+        private async void updateUI(ResettableObservableCollection<SearchResult> to, List<SearchResult> from, SynchronizationContext sync) {
             sync.Post(new SendOrPostCallback(o => {
-
-                for(int i = 0; i < from.Count && to.Count < 150; i++) {
-                    SearchResult sr = from[i];
-                    to.Add(sr);
-                }        
-
+                int takecount = DISPLAY_LIMIT - to.Count;
+                to.AddRange(from.Take(takecount));
             }), from);
 
         }
 
-        public void submitSearch(string searchText, SynchronizationContext sync, int limit=150) {
+        public void submitSearch(string searchText, SynchronizationContext sync, int limit=DISPLAY_LIMIT) {
             if (!SearchComplete) {
                 Debug.WriteLine("Search still in progress");
                 return; 
@@ -160,7 +128,7 @@ namespace JDictU.Model {
             resetViewModel();
             ProgressBarActive = true;
             SearchComplete = false;
-            if(limit >= 150) { //this means that it was a search by enter, not by typing
+            if(limit >= DISPLAY_LIMIT) { //this means that it was a search by enter, not by typing
                 UserData.insertIntoSearchHistory(searchText);
             }
             if (!StringTools.ContainsUnicodeCharacter(searchText)) {  //If it does not contain any unicode, limit searching to either Romaji or Definitions
@@ -182,23 +150,16 @@ namespace JDictU.Model {
                         updateUI(Exacts, re, sync);
                     });
 
-
-
                     Task.Run(async () => {
                         var re = await SearchToolsAsync.searchRomajiInexactAsync(searchText, limit);
                         updateUI(Partials, re, sync);
                     });
-
 
                     Task.Run(async () => {
                         var re = await SearchToolsAsync.searchEnglishAsync(searchText, limit);
                         updateUI(Exacts, re.Item1, sync);
                         updateUI(Partials, re.Item2, sync);
                     });
-                    
-
-
-
                 }
             }
             else {
