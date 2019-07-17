@@ -258,16 +258,16 @@
                                                 <RowDefinition Height="*"/>
                                             </Grid.RowDefinitions>
                                             <TextBlock Text="{Binding literal}"  Foreground="{StaticResource IceBlueBrush}" FontSize="30" Grid.Row="0" Tapped="toKanjiFromResult" Tag="{Binding}">
-                                                                           <interactions:Interaction.Behaviors>
-                                            <core:EventTriggerBehavior EventName="RightTapped">
-                                                <behaviors:OpenFlyoutAction/>
-                                            </core:EventTriggerBehavior>
-                                        </interactions:Interaction.Behaviors>
-                                    <FlyoutBase.AttachedFlyout>
-                                        <MenuFlyout>
-                                            <MenuFlyoutItem Text="Copy" Click="copyText" DataContext="{Binding literal}"/>
-                                        </MenuFlyout>
-                                    </FlyoutBase.AttachedFlyout>
+                                                <interactions:Interaction.Behaviors>
+                                                    <core:EventTriggerBehavior EventName="RightTapped">
+                                                        <behaviors:OpenFlyoutAction/>
+                                                    </core:EventTriggerBehavior>
+                                                </interactions:Interaction.Behaviors>
+                                                <FlyoutBase.AttachedFlyout>
+                                                    <MenuFlyout>
+                                                        <MenuFlyoutItem Text="Copy" Click="copyText" DataContext="{Binding literal}"/>
+                                                    </MenuFlyout>
+                                                </FlyoutBase.AttachedFlyout>
                                             </TextBlock>
 
                                             <TextBlock FontSize="15" Grid.Row="1">
