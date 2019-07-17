@@ -32,7 +32,7 @@ namespace JDictU
         private string oldText = "";
 
         private bool ctrlDown { get; set; } = false;
-        
+        private bool altDown { get; set; } = false;
 
         public MainPage() {
 
@@ -127,17 +127,27 @@ namespace JDictU
         }
 
         internal void checkHotkeysUp(object sender, KeyRoutedEventArgs e) {
-            if(e.Key == VirtualKey.D && ctrlDown) {
+            if ((e.Key == VirtualKey.D && altDown)
+                || (e.Key == VirtualKey.E && ctrlDown)
+                ) {
+                // highlight search
+                this.TextBox_Search.Focus(Windows.UI.Xaml.FocusState.Keyboard);
+            }
+            if (e.Key == VirtualKey.D && ctrlDown) {
 
             }
-            else if(e.Key == VirtualKey.Control) {
+            else if (e.Key == VirtualKey.Control) {
                 ctrlDown = false;
+            } else if (e.Key == VirtualKey.Menu) {
+                altDown = false;
             }
         }
 
         internal void checkHotkeysDown(object sender, KeyRoutedEventArgs e) {
             if(e.Key == VirtualKey.Control) {
                 ctrlDown = true;
+            }else if(e.Key == VirtualKey.Menu) {
+                altDown = true;
             }
         }
 

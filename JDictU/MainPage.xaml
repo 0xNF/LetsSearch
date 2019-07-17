@@ -24,7 +24,7 @@
     </Page.Resources>
 
 
-    <Grid x:Name="LayoutRoot" Background="Transparent" Margin="0,10,0,10">
+    <Grid x:Name="LayoutRoot" Background="Transparent" Margin="0,10,0,10" KeyUp="checkHotkeysUp" KeyDown="checkHotkeysDown">
         <!--Defs-->
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" MinHeight="92"/>
