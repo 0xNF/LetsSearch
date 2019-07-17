@@ -137,7 +137,7 @@ namespace JDictU
             if (HWSList == null) {
                 HWSList = new ObservableCollection<HeadwordSentence>();
 
-                //TODO this is experimental as taken from http://stackoverflow.com/questions/16372822/wpf-binding-observablecollection-with-converter
+                /* Taken from http://stackoverflow.com/questions/16372822/wpf-binding-observablecollection-with-converter */
                 var viewSource = new CollectionViewSource { Source = HWSList };
                 //Get the ICollectionView and set Filter
                 hwsview = viewSource.View;

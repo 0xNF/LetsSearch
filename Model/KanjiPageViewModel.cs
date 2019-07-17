@@ -45,10 +45,6 @@ namespace JDictU {
         public ObservableCollection<string> radicalsForThisKanji { get; set; }
 
 
-
-        //TODO
-        //Also! KanjiPage should have a Search For Words Using This Kanji feature, take to Mainpage, do search on [kanji and %kanji%]
-
         private string _literal;
         public string literal {
             get { return _literal; }
