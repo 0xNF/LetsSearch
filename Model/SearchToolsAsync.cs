@@ -56,7 +56,11 @@ namespace JDictU.Model {
             List<SearchResult> def_exact = new List<SearchResult>();
             List<SearchResult> def_partial = new List<SearchResult>();
             //List of combined results for both Romaji and Definitions
-            List<Super> definitions = await DBInfo.JconnAsync.QueryAsync<Super>(def, term+"%", limit);
+            string t = term + "%";
+            if (useDoubleLike) {
+                t = "%" + t + "%";
+            }
+            List<Super> definitions = await DBInfo.JconnAsync.QueryAsync<Super>(def, t, limit);
             //comb over the Combined results and add the results to their own dictionary entry
             foreach (Super c in definitions) {
                 List<string> returnfromDefs = StringTools.splitBar(c.definition);
@@ -80,7 +84,11 @@ namespace JDictU.Model {
 
         public static async Task<List<SearchResult>> searchRomajiInexactAsync(string term, int limit, bool useDoubleLike = false) {
             string param = "SELECT * FROM super WHERE entry_id in (SELECT entry_id FROM romaji WHERE romaji like ? AND romaji <> ? limit ?) ORDER BY example_verified DESC, example_total DESC, Rank ASC";
-            return queryWork2(await DBInfo.JconnAsync.QueryAsync<Super>(param, term+"%", term, limit));
+            string t = term + "%";
+            if (useDoubleLike) {
+                t = "%" + t + "%";
+            }
+            return queryWork2(await DBInfo.JconnAsync.QueryAsync<Super>(param, t, term, limit));
         }
 
         public static async Task<List<SearchResult>> searchKanaExactAsync(string term, int limit, bool useDoubleLike = false) {
@@ -90,7 +98,11 @@ namespace JDictU.Model {
 
         public static async Task<List<SearchResult>> searchKanaInexactAsync(string term, int limit, bool useDoubleLike = false) {
             string param = "SELECT * FROM super WHERE entry_id in (SELECT entry_id FROM kana WHERE kana like ? and kana <> ? limit ?) ORDER BY example_verified DESC, example_total DESC, Rank ASC";
-            return queryWork2(await DBInfo.JconnAsync.QueryAsync<Super>(param, term+"%", term, limit));
+            string t = term + "%";
+            if (useDoubleLike) {
+                t = "%" + t + "%";
+            }
+            return queryWork2(await DBInfo.JconnAsync.QueryAsync<Super>(param, t, term, limit));
         }
 
         public static async Task<List<SearchResult>> searchKanjiExactAsync(string term, int limit, bool useDoubleLike = false) {
@@ -100,13 +112,11 @@ namespace JDictU.Model {
 
         public static async Task<List<SearchResult>> searchKanjiInexactAsync(string term, int limit, bool useDoubleLike = false) {
             string param = "SELECT * FROM super WHERE entry_id in (SELECT entry_id FROM kanji WHERE kanji like ? and kanji <> ? limit ?) ORDER BY example_verified DESC, example_total DESC, Rank ASC";
+            string t = term + "%";
             if (useDoubleLike) {
-                return queryWork2(await DBInfo.JconnAsync.QueryAsync<Super>(param, "%" + term + "%", term, limit));
+                t = "%" + t + "%";
             }
-            else {
-                return queryWork2(await DBInfo.JconnAsync.QueryAsync<Super>(param, term + "%", term, limit));
-
-            }
+            return queryWork2(await DBInfo.JconnAsync.QueryAsync<Super>(param, t, term, limit));
         }
         #endregion
 
