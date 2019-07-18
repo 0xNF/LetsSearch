@@ -69,29 +69,26 @@
         </Grid>
 
 
-        <ScrollViewer Grid.Row="2">
-            <ItemsControl  x:Name="ItemsControl_History" ItemsSource="{Binding history}">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel Orientation="Vertical"/>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate x:Name="Template_History">
-                        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollMode="Disabled">
-                            <Grid HorizontalAlignment="Left" Tag="{Binding Path=id}" Tapped="searchThis">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="19*"/>
-                                    <RowDefinition Height="19*"/>
-                                </Grid.RowDefinitions>
-                                <TextBlock Grid.Row="0" HorizontalAlignment="Left" FontFamily="Segoe WP" FontSize="20" Margin="10,0,0,0" TextWrapping="Wrap" Text="{Binding Path=search_query, FallbackValue='error'}" VerticalAlignment="Top" />
-                                <TextBlock Grid.Row="1" TextAlignment="Right" HorizontalAlignment="Right" FontFamily="Segoe WP" FontSize="20" TextWrapping="Wrap" Text="{Binding Path=search_date, Converter={StaticResource DateConverter}, FallbackValue='error'}" VerticalAlignment="Top" />
-                            </Grid>
-                        </ScrollViewer>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </ScrollViewer>
+        <ListView 
+            HorizontalAlignment="Stretch"
+            Grid.Row="2"
+            ItemsSource="{x:Bind history}" 
+            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+            ScrollViewer.HorizontalScrollMode="Disabled">
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="model:History">
+                    <Grid HorizontalAlignment="Left" Tag="{x:Bind id}" Tapped="searchThis" Background="Transparent">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="250"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" HorizontalAlignment="Left" FontFamily="Segoe WP" FontSize="20" Margin="10,0,0,0" TextWrapping="Wrap" Text="{x:Bind search_query, FallbackValue='error'}" VerticalAlignment="Top" />
+                        <TextBlock Grid.Column="2" TextAlignment="Right" HorizontalAlignment="Right" FontFamily="Segoe WP" FontSize="20" TextWrapping="Wrap" Text="{x:Bind search_date, Converter={StaticResource DateConverter}, FallbackValue='error'}" VerticalAlignment="Top" />
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 
     <Page.BottomAppBar>

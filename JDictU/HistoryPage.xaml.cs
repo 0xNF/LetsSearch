@@ -11,8 +11,13 @@ using JDictU.Model;
 namespace JDictU {
     public sealed partial class HistoryPage : Page {
 
+        enum SortOrder {
+            ASC = 0,
+            DESC = 1
+        }
+
         private static string fieldToOrderBy = "search_date";
-        private static string direction = "DESC";
+        private static SortOrder direction = SortOrder.DESC;
 
         public ResettableObservableCollection<History> history { get; } = new ResettableObservableCollection<History>();
 
@@ -23,13 +28,19 @@ namespace JDictU {
 
 
         protected override async void OnNavigatedTo(NavigationEventArgs e) {
-            await getHistory(fieldToOrderBy);
+            await getHistory();
         }
 
-        private async Task getHistory(string field) {
+        private async Task getHistory() {
             history.Clear();
             changeArrow();
-            var res = await Task.Run(() => UserData.retrieveSearchHistory(field, direction));
+            string d = "ASC";
+            if(direction  == SortOrder.ASC) {
+                d = "ASC";
+            } else {
+                d = "DESC";
+            }
+            var res = await Task.Run(() => UserData.retrieveSearchHistory(fieldToOrderBy, d));
             history.AddRange(res);
         }
 
@@ -37,7 +48,7 @@ namespace JDictU {
             if (fieldToOrderBy == "search_query") {
                 //Setting SearchTermSort
                 Image_SearchTermSort.Symbol = Symbol.Up;
-                SearchTermSort_Icon_Rotation.Rotation = direction == "DESC" ? 180 : 0;
+                SearchTermSort_Icon_Rotation.Rotation = direction == SortOrder.DESC ? 180 : 0;
 
                 //Fixing the DateTermSort
                 this.Image_DateTermSort.Symbol = Symbol.Sort;
@@ -46,7 +57,7 @@ namespace JDictU {
             else {
                 //Setting DateTermSort
                 Image_DateTermSort.Symbol = Symbol.Up;
-                DateTermSort_Icon_Rotation.Rotation = direction == "DESC" ? 180 : 0;
+                DateTermSort_Icon_Rotation.Rotation = direction == SortOrder.DESC ? 180 : 0;
 
                 //Fixing the SearchTermSort
                 this.Image_SearchTermSort.Symbol = Symbol.Sort;
@@ -56,12 +67,23 @@ namespace JDictU {
 
         private void searchChangeSort(object sender, TappedRoutedEventArgs e) {
             fieldToOrderBy = "search_query";
-            getHistory("search_query").ConfigureAwait(false);
+            if (direction == SortOrder.DESC) {
+                direction = SortOrder.ASC;
+            } else {
+                direction = SortOrder.DESC;
+            }
+            getHistory().ConfigureAwait(false);
         }
 
         private void dateChangeSort(object sender, TappedRoutedEventArgs e) {
             fieldToOrderBy = "search_date";
-            getHistory("search_date").ConfigureAwait(false);
+            if (direction == SortOrder.DESC) {
+                direction = SortOrder.ASC;
+            }
+            else {
+                direction = SortOrder.DESC;
+            }
+            getHistory().ConfigureAwait(false);
         }
 
         private void searchThis(object sender, TappedRoutedEventArgs e) {
@@ -78,7 +100,7 @@ namespace JDictU {
         //Deleting history
         private async Task clearHistoryHelper() {
             await UserData.clearHistory();
-            await getHistory(fieldToOrderBy);
+            await getHistory();
         }
 
         private async void clearHistory(IUICommand u) {

@@ -100,7 +100,7 @@ namespace JDictU.Model {
         /** Retrieves records from Search **/
         public static async Task<List<History>> retrieveSearchHistory(string order, string dir) {
             //TryCatch takes place at location of method call
-            string q = $"SELECT * FROM history ORDER BY ?";
+            string q = $"SELECT * FROM history ORDER BY {order}";
             if (dir == "ASC") {
                 q += " ASC";
             } else {

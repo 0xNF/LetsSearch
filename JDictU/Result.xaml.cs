@@ -67,12 +67,6 @@ namespace JDictU {
 
         }
 
-
-       
-
-
-
-
         //sets the blocks according to Kana,Present,Polite booleans
         private void setConjugationBlocks() {
 
