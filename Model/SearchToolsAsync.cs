@@ -8,7 +8,14 @@ namespace JDictU.Model {
     public class SearchToolsAsync
     {
 
-    
+        public enum SearchType {
+            English = 0,
+            Romaji = 1,
+            Kana = 2,
+            Kanji = 3
+        }
+
+
         #region Async versions
         public static SearchResult returnSearchResultByEntryIDAsync(int entryID) {
             var task = DBInfo.JconnAsync.QueryAsync<Super>("SELECT * FROM super WHERE entry_id = ?", entryID);
@@ -123,107 +130,6 @@ namespace JDictU.Model {
         private static List<SearchResult> queryWork2(List<Super> supers) {
             return supers.Select(x => new SearchResult(x)).ToList();
         }
-
-        private static async Task<List<SearchResult>> queryWork(string query, int limit=75) {
-            Dictionary<int, List<List<string>>> resultDictionary = new Dictionary<int, List<List<string>>>();
-            List<Super> resultSupers = await DBInfo.JconnAsync.QueryAsync<Super>(query);
-            return resultSupers.Select(x => new SearchResult(x)).ToList();
-        }
-
-        /** SUPER returns a 2 lists of search results for a given term, exact matches and partial matches. Type IS given by the enumeration searchType **/
-        public static async Task<Tuple<List<SearchResult>, List<SearchResult>>> fetchResults_Unicode_superAsync(string term, int type, int limit=75) {
-            Tuple<List<SearchResult>, List<SearchResult>> rets = Tuple.Create(new List<SearchResult>(), new List<SearchResult>());
-            //format IS {exact, partial}
-            if (type == 0) {
-                //return over romaji
-                var romaExact = await searchRomajiExactAsync(term, limit);
-                var romaPartial = await searchRomajiInexactAsync(term, limit);
-                rets = Tuple.Create(romaExact, romaPartial);
-            }
-            else if (type == 1) {
-                //return over kana
-                var kanaExact = await searchKanaExactAsync(term, limit);
-                var kanaPartial = await searchKanaInexactAsync(term, limit);
-                rets = Tuple.Create(kanaExact, kanaPartial);
-            }
-            else if (type == 2) {
-                //return over kanji
-                var kanjiExact = await searchKanjiExactAsync(term, limit);
-                var kanjiIPartial = await searchKanjiInexactAsync(term, limit);
-                rets = Tuple.Create(kanjiExact, kanjiIPartial);
-            }
-            return rets;
-        }
-
-        #region tableSearches
-        /** searches through the Kanji table and returns a list of Kanji entries matching the given entry_id **/
-        public async static Task<List<string>> searchKanjiByIDAsync(int entryID) {
-            AsyncTableQuery<Kanji> retQuery = DBInfo.JconnAsync.Table<Kanji>().Where(x => x.entry_id == entryID);
-            List<string> rets = new List<string>();
-            var retlist = await retQuery.ToListAsync();
-            foreach (Kanji d in retlist) {
-                if (!rets.Contains(d.kanji)) {
-                    rets.Add(d.kanji);
-                }
-            }
-            return rets;
-        }
-
-        /** searches through the Definitions table and returns a list of Definition entries matching the given entry_id **/
-        public async static Task<List<string>> searchDefinitionsByID(int entryID) {
-            AsyncTableQuery<Definitions_eng> retQuery = DBInfo.JconnAsync.Table<Definitions_eng>().Where(x => x.entry_id == entryID);
-            List<string> rets = new List<string>();
-            var retlist = await retQuery.ToListAsync();
-            foreach (Definitions_eng d in retlist) {
-                if (!rets.Contains(d.definition)) {
-                    rets.Add(d.definition);
-                }
-            }
-            return rets;
-        }
-
-        /** searches through the Kana table and returns a list of Kana entries matching the given entry_id **/
-        public async static Task<List<string>> searchKanaByID(int entryID) {
-            AsyncTableQuery<Kana> retQuery = DBInfo.JconnAsync.Table<Kana>().Where(x => x.entry_id == entryID);
-            //return returnKana.ToList();
-            List<string> rets = new List<string>();
-            var retlist = await retQuery.ToListAsync();
-            foreach (Kana k in retlist) {
-                if (!rets.Contains(k.kana)) {
-                    rets.Add(k.kana);
-                }
-            }
-            return rets;
-        }
-
-        /** searches through the Romaji table and returns a list of Romaji entries matching the given entry_id **/
-       public async static Task<List<string>> searchRomajiByID(int entryID) {
-            AsyncTableQuery<Romaji> retQuery = DBInfo.JconnAsync.Table<Romaji>().Where(x => x.entry_id == entryID);
-            // return returnRomaji.ToList();
-            List<string> rets = new List<string>();
-            var retlist = await retQuery.ToListAsync();
-            foreach (Romaji r in retlist) {
-                if (!rets.Contains(r.romaji)) {
-                    rets.Add(r.romaji);
-                }
-            }
-            return rets;
-        }
-
-       /** Returns a list of Parts of Speech(text only) FROM functions matching the given EntryID **/
-       public async static Task<List<string>> searchPoSByIdAsync(int entryId) {
-           AsyncTableQuery<Functions> retQuery = DBInfo.JconnAsync.Table<Functions>().Where(x => x.entry_id == entryId);
-           List<string> rets = new List<string>();
-           List<Functions> retlist = await retQuery.ToListAsync();
-           foreach (Functions F in retlist) {
-               if (!rets.Contains(F.pos)) {
-                   rets.Add(F.pos);
-               }
-           }
-           return rets;
-       }
-
-        #endregion
 
     }
 }
