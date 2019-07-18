@@ -51,7 +51,7 @@ namespace JDictU.Model {
 
 
         public static async Task<Tuple<List<SearchResult>, List<SearchResult>>> searchEnglishAsync(string term, int limit = 75, bool useDoubleLike = false) {
-            string def = "SELECT * FROM super WHERE entry_id in (SELECT entry_id FROM definitions_eng WHERE definition like ? order by definition limit ?) ORDER BY example_verified DESC, example_total DESC, Rank ASC";
+            string def = "SELECT * FROM super WHERE entry_id in (SELECT entry_id FROM definitions_eng WHERE definition LIKE ? ORDER BY definition LIMIT ?) ORDER BY example_verified DESC, example_total DESC, Rank ASC";
             //Dictionaries to put specific results into
             List<SearchResult> def_exact = new List<SearchResult>();
             List<SearchResult> def_partial = new List<SearchResult>();
@@ -78,12 +78,12 @@ namespace JDictU.Model {
         }
 
         public static async Task<List<SearchResult>> searchRomajiExactAsync(string term, int limit,bool useDoubleLike = false) {
-            string query = "SELECT * FROM super WHERE entry_id in (SELECT entry_id FROM romaji WHERE romaji = ? limit ?) ORDER BY example_verified DESC, example_total DESC, Rank ASC";
+            string query = "SELECT * FROM super WHERE entry_id in (SELECT entry_id FROM romaji WHERE romaji = ? LIMIT ?) ORDER BY example_verified DESC, example_total DESC, Rank ASC";
             return queryWork2(await DBInfo.JconnAsync.QueryAsync<Super>(query, term, limit));
         }
 
         public static async Task<List<SearchResult>> searchRomajiInexactAsync(string term, int limit, bool useDoubleLike = false) {
-            string param = "SELECT * FROM super WHERE entry_id in (SELECT entry_id FROM romaji WHERE romaji like ? AND romaji <> ? limit ?) ORDER BY example_verified DESC, example_total DESC, Rank ASC";
+            string param = "SELECT * FROM super WHERE entry_id in (SELECT entry_id FROM romaji WHERE romaji LIKE ? AND romaji <> ? LIMIT ?) ORDER BY example_verified DESC, example_total DESC, Rank ASC";
             string t = term + "%";
             if (useDoubleLike) {
                 t = "%" + t + "%";
@@ -92,12 +92,12 @@ namespace JDictU.Model {
         }
 
         public static async Task<List<SearchResult>> searchKanaExactAsync(string term, int limit, bool useDoubleLike = false) {
-            string query = "SELECT * FROM super WHERE entry_id in (SELECT entry_id FROM kana WHERE kana = ? limit ?) ORDER BY example_verified DESC, example_total DESC, Rank ASC";
+            string query = "SELECT * FROM super WHERE entry_id in (SELECT entry_id FROM kana WHERE kana = ? LIMIT ?) ORDER BY example_verified DESC, example_total DESC, Rank ASC";
             return queryWork2(await DBInfo.JconnAsync.QueryAsync<Super>(query, term, limit));
         }
 
         public static async Task<List<SearchResult>> searchKanaInexactAsync(string term, int limit, bool useDoubleLike = false) {
-            string param = "SELECT * FROM super WHERE entry_id in (SELECT entry_id FROM kana WHERE kana like ? and kana <> ? limit ?) ORDER BY example_verified DESC, example_total DESC, Rank ASC";
+            string param = "SELECT * FROM super WHERE entry_id in (SELECT entry_id FROM kana WHERE kana LIKE ? AND kana <> ? LIMIT ?) ORDER BY example_verified DESC, example_total DESC, Rank ASC";
             string t = term + "%";
             if (useDoubleLike) {
                 t = "%" + t + "%";
@@ -106,12 +106,12 @@ namespace JDictU.Model {
         }
 
         public static async Task<List<SearchResult>> searchKanjiExactAsync(string term, int limit, bool useDoubleLike = false) {
-            string param = "SELECT * FROM super WHERE entry_id in (SELECT entry_id FROM kanji WHERE kanji = ? limit ?) ORDER BY example_verified DESC, example_total DESC, Rank ASC";
+            string param = "SELECT * FROM super WHERE entry_id in (SELECT entry_id FROM kanji WHERE kanji = ? LIMIT ?) ORDER BY example_verified DESC, example_total DESC, Rank ASC";
             return queryWork2(await DBInfo.JconnAsync.QueryAsync<Super>(param, term, limit));
         }
 
         public static async Task<List<SearchResult>> searchKanjiInexactAsync(string term, int limit, bool useDoubleLike = false) {
-            string param = "SELECT * FROM super WHERE entry_id in (SELECT entry_id FROM kanji WHERE kanji like ? and kanji <> ? limit ?) ORDER BY example_verified DESC, example_total DESC, Rank ASC";
+            string param = "SELECT * FROM super WHERE entry_id in (SELECT entry_id FROM kanji WHERE kanji LIKE ? AND kanji <> ? LIMIT ?) ORDER BY example_verified DESC, example_total DESC, Rank ASC";
             string t = term + "%";
             if (useDoubleLike) {
                 t = "%" + t + "%";
