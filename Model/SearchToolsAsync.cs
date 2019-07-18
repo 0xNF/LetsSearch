@@ -23,7 +23,7 @@ namespace JDictU.Model {
 
         //NYI TODO
         public static async Task terminateSearch() {
-            
+            await Task.CompletedTask;
         }
 
         public static async Task<List<KanjiDict>> getAllKanji() {

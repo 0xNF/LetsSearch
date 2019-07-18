@@ -37,11 +37,9 @@ namespace JDictU {
             get { return m_hasExamples; }
             set
             {
-                if (PropertyChanging != null)
-                    PropertyChanging(this, new PropertyChangingEventArgs("hasExamples"));
+                PropertyChanging?.Invoke(this, new PropertyChangingEventArgs("hasExamples"));
                 m_hasExamples = value;
-                if (PropertyChanged != null)
-                    PropertyChanged(this, new PropertyChangedEventArgs("hasExamples"));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("hasExamples"));
             }
         }
 
@@ -55,11 +53,9 @@ namespace JDictU {
             get { return m_formalText; }
             set
             {
-                if (PropertyChanging != null)
-                    PropertyChanging(this, new PropertyChangingEventArgs("formalText"));
+                PropertyChanging?.Invoke(this, new PropertyChangingEventArgs("formalText"));
                 m_formalText = value;
-                if (PropertyChanged != null)
-                    PropertyChanged(this, new PropertyChangedEventArgs("formalText"));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("formalText"));
             }
         }
 
@@ -70,11 +66,9 @@ namespace JDictU {
             get { return m_kanaText; }
             set
             {
-                if (PropertyChanging != null)
-                    PropertyChanging(this, new PropertyChangingEventArgs("kanaText"));
+                PropertyChanging?.Invoke(this, new PropertyChangingEventArgs("kanaText"));
                 m_kanaText = value;
-                if (PropertyChanged != null)
-                    PropertyChanged(this, new PropertyChangedEventArgs("kanaText"));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("kanaText"));
             }
         }
 
@@ -85,11 +79,9 @@ namespace JDictU {
             get { return m_tenseText; }
             set
             {
-                if (PropertyChanging != null)
-                    PropertyChanging(this, new PropertyChangingEventArgs("tenseText"));
+                PropertyChanging?.Invoke(this, new PropertyChangingEventArgs("tenseText"));
                 m_tenseText = value;
-                if (PropertyChanged != null)
-                    PropertyChanged(this, new PropertyChangedEventArgs("tenseText"));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("tenseText"));
             }
         }
 
@@ -100,11 +92,9 @@ namespace JDictU {
             get { return m_agreementText; }
             set
             {
-                if (PropertyChanging != null)
-                    PropertyChanging(this, new PropertyChangingEventArgs("agreementText"));
+                PropertyChanging?.Invoke(this, new PropertyChangingEventArgs("agreementText"));
                 m_agreementText = value;
-                if (PropertyChanged != null)
-                    PropertyChanged(this, new PropertyChangedEventArgs("agreementText"));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("agreementText"));
             }
         }
 
@@ -165,7 +155,7 @@ namespace JDictU {
 
         }
 
-        private async void getKanjiForWord(string kanjis) {
+        private void getKanjiForWord(string kanjis) {
             foreach(char c in kanjis) {
                 string cstring = "" + c;
                 if(StringTools.ContainsUnicodeCharacter(cstring) && !StringTools.allKana(cstring)) {

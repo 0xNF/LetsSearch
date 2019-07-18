@@ -110,7 +110,7 @@ namespace JDictU.Model {
             ProgressBarActive = false;
         }
 
-        private async void updateUI(ResettableObservableCollection<SearchResult> to, List<SearchResult> from, SynchronizationContext sync) {
+        private void updateUI(ResettableObservableCollection<SearchResult> to, List<SearchResult> from, SynchronizationContext sync) {
             sync.Post(new SendOrPostCallback(o => {
                 int takecount = DISPLAY_LIMIT - to.Count;
                 to.AddRange(from.Take(takecount));
@@ -202,9 +202,10 @@ namespace JDictU.Model {
                         Task.Run(async () => {
                             var fromKanjiDict = await SearchToolsAsync.getKanji(searchText);
                             List<SearchResult> lst = new List<SearchResult>();
-                            SearchResult sr = new SearchResult();
-                            sr.headerText = fromKanjiDict.literal + " [Kanji]";
-                            if(fromKanjiDict.meaning != "") {
+                            SearchResult sr = new SearchResult {
+                                headerText = fromKanjiDict.literal + " [Kanji]"
+                            };
+                            if (fromKanjiDict.meaning != "") {
                                 var splits = fromKanjiDict.meaning.Split('|');
                                 string deftext = "";
                                 foreach(string split in splits) {
@@ -250,16 +251,11 @@ namespace JDictU.Model {
         // The CallerMemberName attribute that is applied to the optional propertyName 
         // parameter causes the property name of the caller to be substituted as an argument. 
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "") {
-            if (PropertyChanged != null) {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         protected void OnPropertyChanged(string name) {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null) {
-                handler(this, new PropertyChangedEventArgs(name));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
 

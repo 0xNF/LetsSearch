@@ -151,7 +151,7 @@ namespace JDictU
             }
         }
 
-        private async void keyByKeySearch(object sender, TextChangedEventArgs e) {
+        private void keyByKeySearch(object sender, TextChangedEventArgs e) {
             if(TextBox_Search.Text == oldText) {
                 return;
             }
@@ -289,8 +289,9 @@ namespace JDictU
         private void copyText(object sender, RoutedEventArgs e) {
             FrameworkElement tb = sender as FrameworkElement;
             string text = (string)tb.DataContext;
-            DataPackage dp = new DataPackage();
-            dp.RequestedOperation = DataPackageOperation.Copy;
+            DataPackage dp = new DataPackage {
+                RequestedOperation = DataPackageOperation.Copy
+            };
             dp.SetText(text);
             Clipboard.SetContent(dp);
         }

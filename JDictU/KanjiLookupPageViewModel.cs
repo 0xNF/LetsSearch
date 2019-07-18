@@ -58,7 +58,7 @@ namespace JDictU {
         public ObservableCollection<string> matchingKanji { get; set; } = new ObservableCollection<string>();
         public List<string> selectedRadicals { get; set; }
         public List<string> validRadicals { get; set; }
-        KanjiLookupPageModel model = new KanjiLookupPageModel();
+        readonly KanjiLookupPageModel model = new KanjiLookupPageModel();
         ListBox lb_1 { get; set; }
         ListBox lb_2 { get; set; }
         ListBox lb_3 { get; set; }

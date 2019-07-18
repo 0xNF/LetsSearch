@@ -461,8 +461,9 @@ namespace JDictU {
         private void copyText(object sender, RoutedEventArgs e) {
             FrameworkElement tb = sender as FrameworkElement;
             string text = (string)tb.DataContext;
-            DataPackage dp = new DataPackage();
-            dp.RequestedOperation = DataPackageOperation.Copy;
+            DataPackage dp = new DataPackage {
+                RequestedOperation = DataPackageOperation.Copy
+            };
             dp.SetText(text);
             Clipboard.SetContent(dp);
         }
@@ -471,8 +472,9 @@ namespace JDictU {
             FrameworkElement tb = sender as FrameworkElement;
             var hws = tb.DataContext as HeadwordSentence;
             var text = $"{hws.beforeForm}{hws.form}{hws.afterForm}";
-            DataPackage dp = new DataPackage();
-            dp.RequestedOperation = DataPackageOperation.Copy;
+            DataPackage dp = new DataPackage {
+                RequestedOperation = DataPackageOperation.Copy
+            };
             dp.SetText(text);
             Clipboard.SetContent(dp);
         }
