@@ -1,15 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
-using JDictU.Model;
 using SQLite.Net;
-using System.IO;
 
-namespace JDictU.Model
-{
+namespace JDictU.Model {
     public class UserData {
 
 

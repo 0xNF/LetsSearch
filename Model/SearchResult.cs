@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using JDictU.Model;
 
-namespace JDictU.Model
-{
+namespace JDictU.Model {
 
     public class SearchResult {
         //visible to user data

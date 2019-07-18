@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using JDictU.Model;
-using System.Collections.ObjectModel;
 using Windows.UI.Xaml.Media;
 using Windows.UI;
 using System.Threading.Tasks;

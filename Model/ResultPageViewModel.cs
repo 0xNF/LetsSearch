@@ -3,37 +3,29 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
 using JDictU.Model;
 using System.ComponentModel;
 
-namespace JDictU
-{
+namespace JDictU {
     public class ResultPageViewModel : INotifyPropertyChanged {
 
         public event PropertyChangedEventHandler PropertyChanged;
         public event PropertyChangingEventHandler PropertyChanging;
 
         private SearchResult _sr { get; set; }
-        private string _mainKanji;
-        public string MainKanji {
-            get { return _mainKanji; }
-            set { _mainKanji = value; }
-        }
+        public string MainKanji { get; set; }
         public Verb verb { get; set; }
-        private bool _noKanji;
+        private bool _noKanji = false;
         public List<string> kana { get; set; }
         public List<string> KanjiList { get; set; }
-        private string _mainEnglish;
-        public string MainEnglish { get { return _mainEnglish; } set { _mainEnglish = value; } }
+        public string MainEnglish { get; set; }
         public List<Tuple<string, string>> KanaRomaMap { get; set; }
         public List<string> DefinitionList { get; set; }
         public List<string> PoSList { get; set; }
         public ObservableCollection<HeadwordSentence> HWSList { get; set; }
-        //public ObservableCollection<KanjiDict> KanjiComponents { get; set; }
         public ObservableCollection<KanjiPageViewModel> KanjiComponents { get; set; }
         public ICollectionView hwsview { get; set; }
         public bool isFavorite { get; set; }

@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Linq;
-using System.Diagnostics;
-using JDictU.Model;
+﻿using System.Linq;
 
-namespace JDictU.Model
-{
+namespace JDictU.Model {
     //Applies various rules to a japanese words to produce conjugations of that word
     public class Conjugator
     {

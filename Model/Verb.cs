@@ -2,11 +2,8 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Reflection;
-using System.Text;
 
-namespace JDictU.Model
-{
+namespace JDictU.Model {
     public class Verb {
         public type verbtype { get; set; }
         public int entry_id { get; set; }

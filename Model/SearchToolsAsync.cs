@@ -1,16 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Text;
 using System.Threading.Tasks;
 using System.Linq;
 using SQLite.Net.Async;
-using JDictU.Model;
-using System.Diagnostics;
-using Windows.Foundation;
 
-namespace JDictU.Model
-{
+namespace JDictU.Model {
     public class SearchToolsAsync
     {
 

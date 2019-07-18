@@ -1,21 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Windows.Storage;
 using System.Diagnostics;
 using Windows.ApplicationModel;
-using System.IO;
 using System.Threading.Tasks;
-using JDictU.Model;
-using Windows.UI.Xaml;
 using SQLite.Net;
 using SQLite.Net.Async;
 using SQLite.Net.Platform.WinRT;
-//using System.Data.
 
 
-namespace JDictU.Model
-{
+namespace JDictU.Model {
 
 
     public class DBInfo {
@@ -38,18 +31,18 @@ namespace JDictU.Model
             try {
                 StorageFile storageFile = await loc.GetFileAsync(culledFile);
             }
-            catch(System.IO.FileNotFoundException fnf) {
+            catch(System.IO.FileNotFoundException) {
                 Debug.WriteLine("Existence was false, loading the DB");
                 StorageFolder installed = Package.Current.InstalledLocation;
                 StorageFile databaseFile = await Package.Current.InstalledLocation.GetFileAsync(file); //this one stays the same, because we need to move it from Model\\whatever.db
                 try {
                     await databaseFile.CopyAsync(loc, culledFile, NameCollisionOption.FailIfExists);
                 }
-                catch(Exception e) {
+                catch(Exception) {
                     Debug.WriteLine("Already existed, everything is OK");
                 }
             }
-            catch(System.Exception e) {
+            catch(Exception e) {
                 Debug.WriteLine("Error loading...");
                 Debug.WriteLine(e);
             }

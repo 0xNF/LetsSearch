@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text;
 using System.Linq;
-using JDictU.Model;
 
-namespace JDictU.Model
-{
+namespace JDictU.Model {
     //Stub
     class StringTools
     {
