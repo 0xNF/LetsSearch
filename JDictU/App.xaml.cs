@@ -58,28 +58,19 @@ namespace JDictU
             {
                 this.DebugSettings.EnableFrameRateCounter = true;
             }
+
 #endif
-
-            var rootFrame = Window.Current.Content as Frame;
-            //rootFrame.KeyUp += checkGlobalHotkeysUp;
-            //rootFrame.KeyDown += checkGlobalHotkeysDown;
-
-
-
-
 
             // Do not repeat app initialization when the Window already has content,
             // just ensure that the window is active
-            if (rootFrame == null)
-            {
+            if (!(Window.Current.Content is Frame rootFrame)) {
                 // Create a Frame to act as the navigation context and navigate to the first page
                 rootFrame = new Frame();
 
                 rootFrame.NavigationFailed += OnNavigationFailed;
                 rootFrame.Navigated += OnNavigated;
 
-                if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
-                {
+                if (e.PreviousExecutionState == ApplicationExecutionState.Terminated) {
                     //TODO: Load state from previously suspended application
                 }
 
