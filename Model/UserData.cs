@@ -28,7 +28,7 @@ namespace JDictU.Model {
 
         public static async Task deleteItemFromSearchHistory(int id) {
             try {
-                await DBInfo.UconnAsync.ExecuteAsync("delete * from history where id is " + id);
+                await DBInfo.UconnAsync.ExecuteAsync("delete * from history where id is ?;", id);
             }
             catch (SQLiteException sle) {
                 Debug.WriteLine(sle);
@@ -87,8 +87,6 @@ namespace JDictU.Model {
         /** Checks if a given entry ID is favorited **/
         public static bool isFavorited(int entryID) {
             try {
-                //    var x= await DBInfo.UconnAsync.QueryAsync<Favorites>("select * from favorites where entry_id is ?", entryID));
-                //    return x.Count > 0;
                 var x = Task.Run(() => DBInfo.UconnAsync.QueryAsync<Favorites>("select entry_id from favorites where entry_id is ?", entryID));
                 x.Wait();
                 return x.Result.Count > 0;
@@ -101,12 +99,12 @@ namespace JDictU.Model {
 
         /** Retrieves records from Search **/
         public static async Task<List<History>> retrieveSearchHistory(string order, string dir) {
-            //TryCatch take splace at location of method call
-            string q = $"SELECT * FROM history ORDER BY ? ";
+            //TryCatch takes place at location of method call
+            string q = $"SELECT * FROM history ORDER BY ?";
             if (dir == "ASC") {
-                q += "ASC";
+                q += " ASC";
             } else {
-                q += "DESC";
+                q += " DESC";
             }
             List<History> retSearch = await DBInfo.UconnAsync.QueryAsync<History>(q, order);
             return retSearch;
