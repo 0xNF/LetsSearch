@@ -15,9 +15,6 @@ namespace JDictU {
     /// </summary>
     public sealed partial class Result : Page {
 
-        //public event PropertyChangedEventHandler PropertyChanged;
-        //public event PropertyChangingEventHandler PropertyChanging;
-
         private static ResultPageViewModel _viewmodel;
 
         private bool kana = true;
