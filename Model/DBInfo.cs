@@ -66,7 +66,7 @@ namespace JDictU.Model
         //Methods
         //assigns Jaydict to conn
         //This sets the class variable AND returns its handle - necessary or redundant?
-        static async public void getJayDictAsync() {
+        public static async Task getJayDictAsync() {
             await CopyDatabase(jayDict, ApplicationData.Current.LocalFolder);
             if (JconnAsync == null) {
                 var conFunction = new Func<SQLiteConnectionWithLock>(() =>
@@ -79,7 +79,7 @@ namespace JDictU.Model
             }
         }
 
-        static async public void getKanjiAsync() {
+        public static async Task getKanjiAsync() {
             await CopyDatabase(kanji, ApplicationData.Current.LocalFolder);
             if (KconnAsync == null) {
                 var conFunction = new Func<SQLiteConnectionWithLock>(() =>
@@ -92,11 +92,11 @@ namespace JDictU.Model
             }
         }
 
-        static async public void getKradfileAsync() {
+        public static async Task getKradfileAsync() {
             await CopyDatabase(kradfile, ApplicationData.Current.LocalFolder);
         }
 
-        static async public void getUserDataAsync() {
+        public static async Task getUserDataAsync() {
             await CopyDatabase(userdata, ApplicationData.Current.RoamingFolder);
             if (UconnAsync == null) {
                 var conFunction = new Func<SQLiteConnectionWithLock>(() =>

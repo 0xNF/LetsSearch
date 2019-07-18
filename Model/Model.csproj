@@ -133,11 +133,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResettableObservableCollection.cs" />
     <Compile Include="ResultPageViewModel.cs" />
-    <Compile Include="Search.cs" />
     <Compile Include="SearchPageViewModel.cs" />
     <Compile Include="SearchResult.cs" />
-    <Compile Include="SearchResultData.cs" />
-    <Compile Include="SearchTools.cs" />
     <Compile Include="SearchToolsAsync.cs" />
     <Compile Include="StringTools.cs" />
     <Compile Include="TableObjectMap.cs" />
