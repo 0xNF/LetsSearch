@@ -4,12 +4,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("JDictU")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Let's Search!")]
+[assembly: AssemblyDescription("A Japanese Dictionary for Windows 10")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("JDictU")]
-[assembly: AssemblyCopyright("Copyright ©  2015")]
+[assembly: AssemblyCompany("Articulate Insights")]
+[assembly: AssemblyProduct("Let's Search!")]
+[assembly: AssemblyCopyright("Copyright ©2015-2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
