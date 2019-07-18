@@ -35,14 +35,11 @@ namespace JDictU
             this.InitializeComponent();
             this.Suspending += OnSuspending;
 
-            JDictU.Model.DBInfo.getJayDict();
-            JDictU.Model.DBInfo.getJayDictAsync();
-            JDictU.Model.DBInfo.getUserDataAsync();
-            JDictU.Model.DBInfo.getKradfileAsync();
-            JDictU.Model.DBInfo.getKanjiAsync();
-            JDictU.Model.KanjiLookupPageModel.prepareModel();
-            
-
+            Model.DBInfo.getJayDictAsync();
+            Model.DBInfo.getUserDataAsync();
+            Model.DBInfo.getKradfileAsync();
+            Model.DBInfo.getKanjiAsync();
+            Model.KanjiLookupPageModel.prepareModel();
         }
 
         /// <summary>

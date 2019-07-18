@@ -12,7 +12,7 @@ namespace JDictU.Model {
 
         private const string kradfile = "kradfile-u.txt";
 
-        private static Dictionary<string, List<String>> radicals { get; set; }
+        private static Dictionary<string, List<string>> radicals { get; set; }
 
         public readonly static Dictionary<int, List<string>> radDict = new Dictionary<int, List<string>>() {
             { 1, new List<String>() { "一", "｜", "丶", "ノ", "乙", "亅" } },
@@ -300,7 +300,14 @@ namespace JDictU.Model {
                 foreach (string line in lines) {
                     if (line != "" && !line.StartsWith("#")) {
                         string[] splits = line.Split(':');
-                        results[splits[0].Trim()] = splits[1].Split(' ').Where(x => x != "").ToList();
+                        //results[splits[0].Trim()] = splits[1].Split(' ').Where(x => x != "").ToList(); /* caused a number of allocations that were unnecessary. */
+                        List<string> nonEmpty = new List<string>();
+                        foreach (string s in splits[1].Split(' ')) {
+                            if(!s.Equals("")) {
+                                nonEmpty.Add(s);
+                            }
+                        }
+                        results[splits[0].Trim()] = nonEmpty;
                     }
                 }
                 return results;

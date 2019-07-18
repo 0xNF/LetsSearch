@@ -24,9 +24,7 @@ namespace JDictU.Model
         private const string kradfile = "model\\kradfile-u.txt";
         private const string kanji = "model\\kanji.sqlite";
         public static SQLiteAsyncConnection JconnAsync = null; //SQlite connect to Jaydict, filled in later
-        public static SQLiteConnection Jconn = null;
         public static SQLiteAsyncConnection UconnAsync = null;
-        public static SQLiteConnection Uconn = null;
         public static SQLiteAsyncConnection KconnAsync = null;
 
 
@@ -96,13 +94,6 @@ namespace JDictU.Model
 
         static async public void getKradfileAsync() {
             await CopyDatabase(kradfile, ApplicationData.Current.LocalFolder);
-        }
-
-        static public void getJayDict() {
-            //return Jconn ?? (Jconn = new SQLiteConnection(jayDict));
-            if(Jconn == null) {
-                Jconn = new SQLite.Net.SQLiteConnection(new SQLite.Net.Platform.WinRT.SQLitePlatformWinRT(), jayDict);
-            }
         }
 
         static async public void getUserDataAsync() {
