@@ -102,7 +102,13 @@ namespace JDictU.Model {
         /** Retrieves records from Search **/
         public static async Task<List<History>> retrieveSearchHistory(string order, string dir) {
             //TryCatch take splace at location of method call
-            List<History> retSearch = await DBInfo.UconnAsync.QueryAsync<History>("select * from history order by " + order + " " + dir);
+            string q = $"SELECT * FROM history ORDER BY ? ";
+            if (dir == "ASC") {
+                q += "ASC";
+            } else {
+                q += "DESC";
+            }
+            List<History> retSearch = await DBInfo.UconnAsync.QueryAsync<History>(q, order);
             return retSearch;
         }
     }

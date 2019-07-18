@@ -1,22 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using JDictU.Model;
-using System.Collections.ObjectModel;
 
 
 namespace JDictU {
@@ -25,26 +14,23 @@ namespace JDictU {
         private static string fieldToOrderBy = "search_date";
         private static string direction = "DESC";
 
-        public ObservableCollection<History> history { get;set; }
+        public ResettableObservableCollection<History> history { get; } = new ResettableObservableCollection<History>();
 
         public HistoryPage() {
             this.InitializeComponent();
-            history = new ObservableCollection<History>();
             this.DataContext = this;
         }
 
 
         protected override async void OnNavigatedTo(NavigationEventArgs e) {
-            await getHistory(fieldToOrderBy, direction);
+            await getHistory(fieldToOrderBy);
         }
 
-        private async Task getHistory(string field, string order) {
+        private async Task getHistory(string field) {
             history.Clear();
             changeArrow();
-            var res = await Task.Run(() => UserData.retrieveSearchHistory(field, order));
-            foreach(History h in res) {
-                history.Add(h);
-            }
+            var res = await Task.Run(() => UserData.retrieveSearchHistory(field, direction));
+            history.AddRange(res);
         }
 
         private void changeArrow() {
@@ -69,15 +55,13 @@ namespace JDictU {
         }
 
         private void searchChangeSort(object sender, TappedRoutedEventArgs e) {
-            direction = direction == "DESC" ? "ASC" : "DESC";
             fieldToOrderBy = "search_query";
-            getHistory("search_query", direction).ConfigureAwait(false);
+            getHistory("search_query").ConfigureAwait(false);
         }
 
         private void dateChangeSort(object sender, TappedRoutedEventArgs e) {
-            direction = direction == "DESC" ? "ASC" : "DESC";
             fieldToOrderBy = "search_date";
-            getHistory("search_date", direction).ConfigureAwait(false);
+            getHistory("search_date").ConfigureAwait(false);
         }
 
         private void searchThis(object sender, TappedRoutedEventArgs e) {
@@ -94,7 +78,7 @@ namespace JDictU {
         //Deleting history
         private async Task clearHistoryHelper() {
             await UserData.clearHistory();
-            await getHistory(fieldToOrderBy, direction);
+            await getHistory(fieldToOrderBy);
         }
 
         private async void clearHistory(IUICommand u) {

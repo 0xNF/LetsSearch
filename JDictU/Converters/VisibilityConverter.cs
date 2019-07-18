@@ -1,17 +1,11 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Data;
 using System.Diagnostics;
-using System.Linq;
-using JDictU.Model;
 
 
-namespace JDictU{
+namespace JDictU {
     public class VisibilityConverter : BaseValueConverter
     {
 

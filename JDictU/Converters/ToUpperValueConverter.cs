@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Globalization;
-using System.Windows;
-using JDictU.Model;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Media;
 
 
-namespace JDictU{
+namespace JDictU {
     public class ToUpperValueConverter : BaseValueConverter {
         public override object Convert(object value, Type targetType,
                                object parameter, CultureInfo culture) {

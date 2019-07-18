@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Globalization;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Data;
 
 namespace JDictU {
