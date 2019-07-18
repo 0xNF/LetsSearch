@@ -72,7 +72,7 @@
                                     <ColumnDefinition Width="3*"/>
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ScrollViewer x:Name="ScrollViewer_KanjiSpace" HorizontalScrollBarVisibility="Disabled" VerticalScrollMode="Disabled"  HorizontalScrollMode="Enabled"  VerticalScrollBarVisibility="Hidden" Margin="0,10,0,-10" d:LayoutOverrides="TopMargin, BottomMargin">
+                                <ScrollViewer x:Name="ScrollViewer_KanjiSpace" HorizontalScrollBarVisibility="Disabled" VerticalScrollMode="Disabled"  HorizontalScrollMode="Enabled"  VerticalScrollBarVisibility="Hidden" Margin="0,10,0,-10">
                                     <TextBlock x:Name="TextBlock_KanjiSpace"  Margin="22,16,1,20"  FontSize="48" FontFamily="Segoe WP SemiLight" Foreground="{StaticResource IceBlueBrush}" Text="{Binding MainKanji, FallbackValue='error'}">
                                    <interactions:Interaction.Behaviors>
                                             <core:EventTriggerBehavior EventName="RightTapped">

@@ -24,10 +24,10 @@ namespace JDictU {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class Result : Page, INotifyPropertyChanged {
+    public sealed partial class Result : Page {
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        public event PropertyChangingEventHandler PropertyChanging;
+        //public event PropertyChangedEventHandler PropertyChanged;
+        //public event PropertyChangingEventHandler PropertyChanging;
 
         private static ResultPageViewModel _viewmodel;
 
@@ -57,7 +57,7 @@ namespace JDictU {
                 throw new Exception("viewmodel type could not be determiend. Original link was neither a SearchResult nor an int");
             }
             _viewmodel.pr = LoadingExamples;
-            _viewmodel.getExamples(_viewmodel.MainKanji);
+            _viewmodel.getExamples(_viewmodel.MainKanji).ConfigureAwait(false);
             this.DataContext = _viewmodel;
             TextBlock_KanjiSpace.DataContext = _viewmodel;
             TextBlock_Translation.DataContext = _viewmodel;
@@ -76,7 +76,6 @@ namespace JDictU {
                 TextBlock_SoundGuide.DataContext = _viewmodel.verb;
                 TextBlock_DictionaryForm.DataContext = _viewmodel.verb;
                 setConjugationBlocks();
-                //Debug.WriteLine(_viewmodel.verb.ToString());
             }
             Image_Favorite.Symbol = _viewmodel.isFavorite ? Image_Favorite.Symbol = Symbol.UnFavorite : Symbol.Favorite;
 

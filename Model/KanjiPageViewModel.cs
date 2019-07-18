@@ -115,7 +115,7 @@ namespace JDictU {
             this.radicalsForThisKanji = new ObservableCollection<string>();
 
             this.query_codes = new ObservableCollection<KanjiDict.QueryCode>();
-            getKanji(literal);
+            getKanji(literal).ConfigureAwait(false);
         }
 
         private void getReadingsFromKanji() {

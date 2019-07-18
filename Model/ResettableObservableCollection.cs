@@ -62,7 +62,7 @@ namespace JDictU.Model {
                 this.Items.Remove(item);
             }
 
-            public void Remove(T item) {
+            public new void Remove(T item) {
                 this.RemoveObservable(item);
                 this._source.Remove(item);
                 this.OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));

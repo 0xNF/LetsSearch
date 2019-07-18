@@ -127,7 +127,7 @@ namespace JDictU.Model {
             ProgressBarActive = true;
             SearchComplete = false;
             if(limit >= DISPLAY_LIMIT) { //this means that it was a search by enter, not by typing
-                UserData.insertIntoSearchHistory(searchText);
+                Task.Run(() => UserData.insertIntoSearchHistory(searchText));
             }
             if (!StringTools.ContainsUnicodeCharacter(searchText)) {  //If it does not contain any unicode, limit searching to either Romaji or Definitions
                 if (searchText.Contains(" ") || StringTools.endsInConsonantNotN(searchText)) {//If it contains a space, it's guaranteed to be found within Definitions

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
@@ -35,11 +36,13 @@ namespace JDictU
             this.InitializeComponent();
             this.Suspending += OnSuspending;
 
-            Model.DBInfo.getJayDictAsync();
-            Model.DBInfo.getUserDataAsync();
-            Model.DBInfo.getKradfileAsync();
-            Model.DBInfo.getKanjiAsync();
-            Model.KanjiLookupPageModel.prepareModel();
+            Task.Run(() => {
+                Model.DBInfo.getJayDictAsync().ConfigureAwait(false);
+                Model.DBInfo.getUserDataAsync().ConfigureAwait(false);
+                Model.DBInfo.getKradfileAsync().ConfigureAwait(false);
+                Model.DBInfo.getKanjiAsync().ConfigureAwait(false);
+                Model.KanjiLookupPageModel.prepareModel().ConfigureAwait(false);
+            });
         }
 
         /// <summary>
@@ -57,6 +60,7 @@ namespace JDictU
             }
 #endif
 
+            var rootFrame = Window.Current.Content as Frame;
             //rootFrame.KeyUp += checkGlobalHotkeysUp;
             //rootFrame.KeyDown += checkGlobalHotkeysDown;
 
@@ -66,14 +70,16 @@ namespace JDictU
 
             // Do not repeat app initialization when the Window already has content,
             // just ensure that the window is active
-            if (!(Window.Current.Content is Frame rootFrame)) {
+            if (rootFrame == null)
+            {
                 // Create a Frame to act as the navigation context and navigate to the first page
                 rootFrame = new Frame();
 
                 rootFrame.NavigationFailed += OnNavigationFailed;
                 rootFrame.Navigated += OnNavigated;
 
-                if (e.PreviousExecutionState == ApplicationExecutionState.Terminated) {
+                if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
+                {
                     //TODO: Load state from previously suspended application
                 }
 
