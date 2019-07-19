@@ -16,7 +16,6 @@
                 Source="{x:Bind view.KanjiByOrder, Mode=OneWay}"
                 IsSourceGrouped="True"
                 />
-
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
