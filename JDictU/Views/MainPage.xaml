@@ -55,7 +55,7 @@
         </Grid>
         <Grid Grid.Row="1">
             <!--Results Panel-->
-            <ScrollViewer x:Name="ScrollViewer_Searches"  IsHorizontalScrollChainingEnabled="True">
+            <ScrollViewer x:Name="ScrollViewer_Searches" IsHorizontalScrollChainingEnabled="True">
                 <StackPanel x:Name="StackPanel_Search">
                     <StackPanel x:Name="StackPanel_ExactMatches_TextBlock" Orientation="Horizontal" Tapped="collapse">
                         <TextBlock x:Name="TextBlock_ExactMatches_Sign" Text="-" TextWrapping="Wrap" FontSize="36" Visibility="Visible" Foreground="#FF91C3FF" FontFamily="Segoe WP"/>
@@ -63,65 +63,10 @@
                         <TextBlock x:Name="TextBlock_ExactMatches_Count" Text="{Binding Count}" TextWrapping="Wrap" FontSize="36" Visibility="Visible" Foreground="#FF91C3FF" FontFamily="Segoe WP"/>
                         <TextBlock x:Name="TextBlock_ExactMatches_Close" Text=")" TextWrapping="Wrap" FontSize="36" Visibility="Visible" Foreground="#FF91C3FF" FontFamily="Segoe WP"/>
                     </StackPanel>
-                    <!-- ListView replacement -->
-                    <!--<ListView
-                        x:Name="StackPanel_ExactMatches"
-                        SelectionMode="None"
-                        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                        ScrollViewer.HorizontalScrollMode="Disabled"
-                        ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                        ScrollViewer.VerticalScrollMode="Disabled"
-                        HorizontalContentAlignment="Stretch"
-                        ItemsSource="{Binding Exacts}">
-                        <ListView.ItemContainerStyle>
-                            <Style TargetType="ListViewItem">
-                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                            </Style>
-                        </ListView.ItemContainerStyle>
-                        <ListView.ItemTemplate>
-                            <DataTemplate x:DataType="model:SearchResult">
-                                <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollMode="Disabled">
-                                    <Grid Height="68" MinWidth="{Binding ActualHeight, ElementName=ScrollViewer_Searches}" Background="{Binding Source={StaticResource SearchPageViewModel}, Path=CurrentColor}" Tag="{x:Bind}" Tapped="resultClicked" >
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="32*"/>
-                                            <RowDefinition Height="32"/>
-                                        </Grid.RowDefinitions>
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="{x:Bind headerText}" FontSize="30" FontFamily="Segoe WP" Grid.Row="0" Foreground="White" Margin="5,0,0,0">
-                                            <interactions:Interaction.Behaviors>
-                                                <core:EventTriggerBehavior EventName="RightTapped">
-                                                    <behaviors:OpenFlyoutAction/>
-                                                </core:EventTriggerBehavior>
-                                            </interactions:Interaction.Behaviors>
-                                            <FlyoutBase.AttachedFlyout>
-                                                <MenuFlyout>
-                                                    <MenuFlyoutItem Text="Copy" Click="copyText" DataContext="{x:Bind headerText}"/>
-                                                </MenuFlyout>
-                                            </FlyoutBase.AttachedFlyout>
-                                            </TextBlock>
-                                            <TextBlock Text="{x:Bind exampleText}" FontSize="10" FontFamily=" Segoe WP" Grid.Row="0" Grid.Column="1" Foreground="White"/>
-                                        </StackPanel>
-                                        <TextBlock Text="{x:Bind defText}" FontSize="20" FontFamily="Segoe WP" Grid.Row="1" Foreground="#FFCBC8C8" Margin="5,0,0,0">
-                                            <interactions:Interaction.Behaviors>
-                                                <core:EventTriggerBehavior EventName="RightTapped">
-                                                    <behaviors:OpenFlyoutAction/>
-                                                </core:EventTriggerBehavior>
-                                            </interactions:Interaction.Behaviors>
-                                            <FlyoutBase.AttachedFlyout>
-                                                <MenuFlyout>
-                                                    <MenuFlyoutItem Text="Copy" Click="copyText" DataContext="{x:Bind defText}"/>
-                                                </MenuFlyout>
-                                            </FlyoutBase.AttachedFlyout>
-                                        </TextBlock>
-                                    </Grid>
-                                </ScrollViewer>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>-->
                     <ItemsControl  x:Name="StackPanel_ExactMatches">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <StackPanel Orientation="Vertical" Visibility="Visible"/>
+                                <ItemsStackPanel Orientation="Vertical" Visibility="Visible" CacheLength="4"/>
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
@@ -170,64 +115,10 @@
                         <TextBlock x:Name="TextBlock_InexactMatches_Count" Text="{Binding Count}" TextWrapping="Wrap" FontSize="36" Visibility="Visible" Foreground="#FF91C3FF" FontFamily="Segoe WP"/>
                         <TextBlock x:Name="TextBlock_InexactMatches_Close" Text=")" TextWrapping="Wrap" FontSize="36" Visibility="Visible" Foreground="#FF91C3FF" FontFamily="Segoe WP"/>
                     </StackPanel>
-                    <!--<ListView
-                        x:Name="StackPanel_InexactMatches"
-                        SelectionMode="None"
-                        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                        ScrollViewer.HorizontalScrollMode="Disabled"
-                        ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                        ScrollViewer.VerticalScrollMode="Disabled"
-                        HorizontalContentAlignment="Stretch"
-                        ItemsSource="{Binding Partials}">
-                        <ListView.ItemContainerStyle>
-                            <Style TargetType="ListViewItem">
-                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                            </Style>
-                        </ListView.ItemContainerStyle>
-                        <ListView.ItemTemplate>
-                            <DataTemplate x:DataType="model:SearchResult">
-                                <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollMode="Disabled">
-                                    <Grid Height="68" MinWidth="{Binding ActualHeight, ElementName=ScrollViewer_Searches}" Background="{Binding Source={StaticResource SearchPageViewModel}, Path=CurrentColor}" Tag="{x:Bind}" Tapped="resultClicked" >
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="32*"/>
-                                            <RowDefinition Height="32"/>
-                                        </Grid.RowDefinitions>
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="{x:Bind headerText}" FontSize="30" FontFamily="Segoe WP" Grid.Row="0" Foreground="White" Margin="5,0,0,0">
-                                            <interactions:Interaction.Behaviors>
-                                                <core:EventTriggerBehavior EventName="RightTapped">
-                                                    <behaviors:OpenFlyoutAction/>
-                                                </core:EventTriggerBehavior>
-                                            </interactions:Interaction.Behaviors>
-                                            <FlyoutBase.AttachedFlyout>
-                                                <MenuFlyout>
-                                                    <MenuFlyoutItem Text="Copy" Click="copyText" DataContext="{x:Bind headerText}"/>
-                                                </MenuFlyout>
-                                            </FlyoutBase.AttachedFlyout>
-                                            </TextBlock>
-                                            <TextBlock Text="{x:Bind exampleText}" FontSize="10" FontFamily=" Segoe WP" Grid.Row="0" Grid.Column="1" Foreground="White"/>
-                                        </StackPanel>
-                                        <TextBlock Text="{x:Bind defText}" FontSize="20" FontFamily="Segoe WP" Grid.Row="1" Foreground="#FFCBC8C8" Margin="5,0,0,0">
-                                            <interactions:Interaction.Behaviors>
-                                                <core:EventTriggerBehavior EventName="RightTapped">
-                                                    <behaviors:OpenFlyoutAction/>
-                                                </core:EventTriggerBehavior>
-                                            </interactions:Interaction.Behaviors>
-                                            <FlyoutBase.AttachedFlyout>
-                                                <MenuFlyout>
-                                                    <MenuFlyoutItem Text="Copy" Click="copyText" DataContext="{x:Bind defText}"/>
-                                                </MenuFlyout>
-                                            </FlyoutBase.AttachedFlyout>
-                                        </TextBlock>
-                                    </Grid>
-                                </ScrollViewer>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>-->
                     <ItemsControl  x:Name="StackPanel_InexactMatches">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <StackPanel Orientation="Vertical"/>
+                                <ItemsStackPanel Orientation="Vertical" Visibility="Visible" CacheLength="4"/>
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>

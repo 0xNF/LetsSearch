@@ -42,12 +42,12 @@
             
             <StackPanel Grid.Row="0">
                 <TextBlock Text="Version" Foreground="{StaticResource IceBlueBrush}" FontSize="30"/>
-                <TextBlock Text="{Binding version, FallbackValue='1.1.7'}" FontSize="20"/>
+                <TextBlock Text="{Binding version, FallbackValue='1.2.0'}" FontSize="20"/>
             </StackPanel>
 
             <StackPanel Grid.Row="1">
                 <TextBlock Text="Release Notes" Foreground="{StaticResource IceBlueBrush}" FontSize="30"/>
-                <HyperlinkButton Content="www.articulateinsights.com/sagasou" NavigateUri="http://www.articulateinsights.com/tallyup#releasenotes" Foreground="White" FontSize="20"/>
+                    <HyperlinkButton Content="www.articulateinsights.com/products/letssearch#releasenotes" NavigateUri="https://articulateinsights.com/products/letssearch/#releasenotes" Foreground="White" FontSize="20"/>
             </StackPanel>
 
             <StackPanel Grid.Row="2">

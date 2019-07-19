@@ -18,10 +18,12 @@ namespace JDictU.Views {
         }
 
         private async void ComposeEmail() {
-            var emailMessage = new Windows.ApplicationModel.Email.EmailMessage();
-            emailMessage.Subject = "Feedback about Let's Search!";
-            var emailRecipient = new Windows.ApplicationModel.Email.EmailRecipient("sagasou@articulateinsights.com");
-            emailRecipient.Name = "Let's Search! Devs";
+            var emailMessage = new Windows.ApplicationModel.Email.EmailMessage {
+                Subject = "Feedback about Let's Search!"
+            };
+            var emailRecipient = new Windows.ApplicationModel.Email.EmailRecipient("support@articulateinsights.com") {
+                Name = "Let's Search! Devs"
+            };
             emailMessage.To.Add(emailRecipient);
             await Windows.ApplicationModel.Email.EmailManager.ShowComposeNewEmailAsync(emailMessage);
         }

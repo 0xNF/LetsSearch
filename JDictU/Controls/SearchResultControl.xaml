@@ -1,0 +1,51 @@
+﻿<UserControl
+    x:Class="JDictU.Controls.SearchResultControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:JDictU.Controls"
+    xmlns:interactions="using:Microsoft.Xaml.Interactivity"
+    xmlns:behaviors="using:Template10.Behaviors"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+
+    <!--<ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollMode="Disabled">
+        <Grid Height="68" MinWidth="{Binding ActualHeight, ElementName=ScrollViewer_Searches}" Background="{Binding Source={StaticResource SearchPageViewModel}, Path=CurrentColor}" Tag="{x:Bind}" Tapped="resultClicked" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="32*"/>
+                <RowDefinition Height="32"/>
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{x:Bind headerText}" FontSize="30" FontFamily="Segoe WP" Grid.Row="0" Foreground="White" Margin="5,0,0,0">
+                    <interactions:Interaction.Behaviors>
+                        <core:EventTriggerBehavior EventName="RightTapped">
+                            <behaviors:OpenFlyoutAction/>
+                                                </core:EventTriggerBehavior>
+                    </interactions:Interaction.Behaviors>
+                    <FlyoutBase.AttachedFlyout>
+                        <MenuFlyout>
+                            <MenuFlyoutItem Text="Copy" Click="copyText" DataContext="{x:Bind headerText}"/>
+                        </MenuFlyout>
+                    </FlyoutBase.AttachedFlyout>
+                </TextBlock>
+                <TextBlock Text="{x:Bind exampleText}" FontSize="10" FontFamily=" Segoe WP" Grid.Row="0" Grid.Column="1" Foreground="White"/>
+            </StackPanel>
+            <TextBlock Text="{x:Bind defText}" FontSize="20" FontFamily="Segoe WP" Grid.Row="1" Foreground="#FFCBC8C8" Margin="5,0,0,0">
+                <interactions:Interaction.Behaviors>
+                    <core:EventTriggerBehavior EventName="RightTapped">
+                        <behaviors:OpenFlyoutAction/>
+                    </core:EventTriggerBehavior>
+                </interactions:Interaction.Behaviors>
+                <FlyoutBase.AttachedFlyout>
+                    <MenuFlyout>
+                        <MenuFlyoutItem Text="Copy" Click="copyText" DataContext="{x:Bind defText}"/>
+                    </MenuFlyout>
+                </FlyoutBase.AttachedFlyout>
+            </TextBlock>
+        </Grid>
+    </ScrollViewer>-->
+
+</UserControl>
