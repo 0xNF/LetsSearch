@@ -8,7 +8,7 @@ using Windows.UI.Xaml.Navigation;
 using JDictU.Model;
 
 
-namespace JDictU {
+namespace JDictU.Views {
     public sealed partial class HistoryPage : Page {
 
         enum SortOrder {

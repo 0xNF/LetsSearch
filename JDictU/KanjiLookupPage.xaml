@@ -2,7 +2,6 @@
     x:Class="JDictU.Views.KanjiLookupPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:JDictU"
     xmlns:model="using:JDictU.Model"
     xmlns:viewmodels="using:JDictU.ViewModels"
     xmlns:converters="using:JDictU.Converters"

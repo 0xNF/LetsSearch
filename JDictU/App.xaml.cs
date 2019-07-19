@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JDictU.Views;
+using System;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
