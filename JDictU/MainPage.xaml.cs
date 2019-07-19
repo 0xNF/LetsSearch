@@ -37,12 +37,6 @@ namespace JDictU {
             TextBlock_InexactMatches_Count.DataContext = viewmodel.Partials;
             StackPanel_ExactMatches.ItemsSource = viewmodel.Exacts;
             StackPanel_InexactMatches.ItemsSource = viewmodel.Partials;
-
-
-            //gv_ExactMatches.ItemsSource = viewmodel.Exacts;
-
-
-
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e) {

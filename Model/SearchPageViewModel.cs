@@ -89,8 +89,8 @@ namespace JDictU.Model {
         public bool useDoubleLike = false;
 
 
-        public ResettableObservableCollection<SearchResult> Exacts = new ResettableObservableCollection<SearchResult>(); 
-        public ResettableObservableCollection<SearchResult> Partials = new ResettableObservableCollection<SearchResult>();
+        public ResettableObservableCollection<SearchResult> Exacts { get; } = new ResettableObservableCollection<SearchResult>(); 
+        public ResettableObservableCollection<SearchResult> Partials { get; } = new ResettableObservableCollection<SearchResult>();
 
         private List<SearchResult> _exactsFull = new List<SearchResult>();
         private List<SearchResult> _partialsFull = new List<SearchResult>();
