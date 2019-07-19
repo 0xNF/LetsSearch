@@ -19,8 +19,6 @@
         <viewmodel:SearchPageViewModel x:Key="SearchPageViewModel"/>
         <converters:VisibilityConverter x:Key="VisibilityConverter"/>
         <converters:VisibilityConverterListEmpty  x:Key="VisibilityConverterListEmpty"/>
-        <SolidColorBrush x:Key="IceBlueBuBrush" Color="#FF91C3FF"/>
-        <SolidColorBrush x:Key="DullGreyBrush" Color="#FFCBC8C8"/>
     </Page.Resources>
 
 

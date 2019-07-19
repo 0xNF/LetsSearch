@@ -12,7 +12,6 @@
 
     <Page.Resources>
         <viewmodels:KanjiLookupPageModel x:Key="klpm"/>
-        <SolidColorBrush x:Key="IceBlueBuBrush" Color="#FF91C3FF"/>
         <converters:ToKanjiObjectConverter x:Key="tkosconverter"/>
         <converters:ToUpDownConverter x:Key="updownconverter"/>
         <CollectionViewSource
@@ -24,15 +23,14 @@
 
     </Page.Resources>
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">       
-
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Pivot Grid.Row="1">
             <Pivot.Title>
                 <TextBlock Text="Let's Search! - Kanji Lookup" FontSize="20" FontFamily="Segoe WP"  HorizontalAlignment="Left" Foreground="#FF91C3FF" FontWeight="Normal"/>
             </Pivot.Title>
             <PivotItem>
                 <PivotItem.Header>
-                    <TextBlock Text="Lookup by Radical" Foreground="{StaticResource IceBlueBuBrush}"/>
+                    <TextBlock Text="Lookup by Radical" Foreground="{StaticResource IceBlueBrush}"/>
                 </PivotItem.Header>
                 <Grid>
                     <Grid.RowDefinitions>
@@ -332,7 +330,7 @@
             </PivotItem>
             <PivotItem>
                 <PivotItem.Header>
-                    <TextBlock Text="Kanji by Ordering" Foreground="{StaticResource IceBlueBuBrush}"/>
+                    <TextBlock Text="Kanji by Ordering" Foreground="{StaticResource IceBlueBrush}"/>
                 </PivotItem.Header>
                 <Grid>
                     <Grid.RowDefinitions>

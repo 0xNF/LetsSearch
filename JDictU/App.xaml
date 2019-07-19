@@ -5,4 +5,11 @@
     xmlns:local="using:JDictU"
     RequestedTheme="Dark">
 
+    <Application.Resources>
+        <!-- Colors -->
+        <SolidColorBrush x:Key="IceBlueBrush" Color="#FF91C3FF"/>
+        <SolidColorBrush x:Key="DullGreyBrush" Color="#FFCBC8C8"/>
+        
+    </Application.Resources>
+
 </Application>
