@@ -3,7 +3,7 @@ using System.Globalization;
 using Windows.UI.Xaml;
 
 
-namespace JDictU {
+namespace JDictU.Converters {
     public class ToUpperValueConverter : BaseValueConverter {
         public override object Convert(object value, Type targetType,
                                object parameter, CultureInfo culture) {

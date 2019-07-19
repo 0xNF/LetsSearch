@@ -4,8 +4,7 @@ using System.Globalization;
 using Windows.UI.Xaml;
 using System.Diagnostics;
 
-
-namespace JDictU {
+namespace JDictU.Converters {
     public class VisibilityConverter : BaseValueConverter
     {
 

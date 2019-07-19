@@ -2,7 +2,7 @@
 using System.Globalization;
 using Windows.UI.Xaml;
 
-namespace JDictU{
+namespace JDictU.Converters {
     public class PlusMinusConverter : BaseValueConverter {
 
         //http://dotnet.dzone.com/articles/build-both-converters-windows

@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:JDictU.Model"
     xmlns:model="using:JDictU.Model"
+    xmlns:converters="using:JDictU.Converters"
     xmlns:viewmodel="using:JDictU.ViewModels"
     xmlns:main="using:JDictU"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -18,8 +19,8 @@
 
     <Page.Resources>
         <viewmodel:SearchPageViewModel x:Key="SearchPageViewModel"/>
-        <main:VisibilityConverter x:Key="VisibilityConverter"/>
-        <main:VisibilityConverterListEmpty  x:Key="VisibilityConverterListEmpty"/>
+        <converters:VisibilityConverter x:Key="VisibilityConverter"/>
+        <converters:VisibilityConverterListEmpty  x:Key="VisibilityConverterListEmpty"/>
         <SolidColorBrush x:Key="IceBlueBuBrush" Color="#FF91C3FF"/>
         <SolidColorBrush x:Key="DullGreyBrush" Color="#FFCBC8C8"/>
     </Page.Resources>

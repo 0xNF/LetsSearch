@@ -2,7 +2,7 @@
 using System.Globalization;
 using JDictU.Model;
 
-namespace JDictU {
+namespace JDictU.Converters {
     public class ToKanjiObjectConverter : BaseValueConverter {
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
             if (value == null) {

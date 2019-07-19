@@ -5,6 +5,7 @@
     xmlns:local="using:JDictU"
     xmlns:model="using:JDictU.Model"
     xmlns:viewmodels="using:JDictU.ViewModels"
+    xmlns:converters="using:JDictU.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
@@ -12,8 +13,8 @@
     <Page.Resources>
         <viewmodels:KanjiLookupPageModel x:Key="klpm"/>
         <SolidColorBrush x:Key="IceBlueBuBrush" Color="#FF91C3FF"/>
-        <local:ToKanjiObjectConverter x:Key="tkosconverter"/>
-        <local:ToUpDownConverter x:Key="updownconverter"/>
+        <converters:ToKanjiObjectConverter x:Key="tkosconverter"/>
+        <converters:ToUpDownConverter x:Key="updownconverter"/>
         <CollectionViewSource
                 x:Key="CVSKanjiOrder"
                 x:Name="CVSKanjiOrder"

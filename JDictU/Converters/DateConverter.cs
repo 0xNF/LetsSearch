@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 
-namespace JDictU{
+namespace JDictU.Converters {
     public class DateConverter : BaseValueConverter
     {
 

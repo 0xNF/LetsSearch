@@ -4,8 +4,7 @@ using Windows.UI.Xaml.Media;
 using JDictU.Model;
 using JDictU.ViewModels;
 
-namespace JDictU
-{
+namespace JDictU.Converters {
     public class ColorBrushConverter : BaseValueConverter {
 
         //{Binding Path=verified, Converter={StaticResource ColorBrushConverter}}

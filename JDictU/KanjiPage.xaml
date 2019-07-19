@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:JDictU"
+    xmlns:converters="using:JDictU.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:interactions="using:Microsoft.Xaml.Interactivity"
@@ -12,11 +13,11 @@
 
     <Page.Resources>
 
-        <local:ColorBrushConverter x:Key="ColorBrushConverter"/>
-        <local:InverseColorBrushConverter x:Key="InverseColorBrushConverter"/>
-        <local:TrueIfListNotEmptyConverter x:Key="TrueIfListNotEmptyConverter"/>
-        <local:VisibilityConverterListCount x:Key="VisibilityConverter"/>
-        <local:VisibilityConverterStringisEmptyString x:Key="VisibilityConverterStringisEmptyString"/>
+        <converters:ColorBrushConverter x:Key="ColorBrushConverter"/>
+        <converters:InverseColorBrushConverter x:Key="InverseColorBrushConverter"/>
+        <converters:TrueIfListNotEmptyConverter x:Key="TrueIfListNotEmptyConverter"/>
+        <converters:VisibilityConverterListCount x:Key="VisibilityConverter"/>
+        <converters:VisibilityConverterStringisEmptyString x:Key="VisibilityConverterStringisEmptyString"/>
         <ItemsPanelTemplate x:Key="GridViewItemsPanel">
             <ItemsWrapGrid Orientation="Vertical" />
         </ItemsPanelTemplate>

@@ -2,7 +2,7 @@
 using System.Globalization;
 using Windows.UI.Xaml.Data;
 
-namespace JDictU {
+namespace JDictU.Converters {
     public abstract class BaseValueConverter : IValueConverter {
         public abstract object Convert(object value, Type targetType,
                                        object parameter, CultureInfo culture);
