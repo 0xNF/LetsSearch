@@ -17,8 +17,6 @@
 
     <Page.Resources>
         <viewmodel:SearchPageViewModel x:Key="SearchPageViewModel"/>
-        <converters:VisibilityConverter x:Key="VisibilityConverter"/>
-        <converters:VisibilityConverterListEmpty  x:Key="VisibilityConverterListEmpty"/>
     </Page.Resources>
 
 

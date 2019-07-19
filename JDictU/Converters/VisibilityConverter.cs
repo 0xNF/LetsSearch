@@ -5,6 +5,7 @@ using Windows.UI.Xaml;
 using System.Diagnostics;
 
 namespace JDictU.Converters {
+
     public class VisibilityConverter : BaseValueConverter
     {
 
