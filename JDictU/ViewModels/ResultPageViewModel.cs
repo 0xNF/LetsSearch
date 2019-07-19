@@ -9,7 +9,7 @@ using Windows.UI.Xaml.Data;
 using JDictU.Model;
 using System.ComponentModel;
 
-namespace JDictU {
+namespace JDictU.ViewModels {
     public class ResultPageViewModel : INotifyPropertyChanged {
 
         public event PropertyChangedEventHandler PropertyChanged;

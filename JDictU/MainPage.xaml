@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:JDictU.Model"
     xmlns:model="using:JDictU.Model"
+    xmlns:viewmodel="using:JDictU.ViewModels"
     xmlns:main="using:JDictU"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -16,7 +17,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Page.Resources>
-        <local:SearchPageViewModel x:Key="SearchPageViewModel"/>
+        <viewmodel:SearchPageViewModel x:Key="SearchPageViewModel"/>
         <main:VisibilityConverter x:Key="VisibilityConverter"/>
         <main:VisibilityConverterListEmpty  x:Key="VisibilityConverterListEmpty"/>
         <SolidColorBrush x:Key="IceBlueBuBrush" Color="#FF91C3FF"/>

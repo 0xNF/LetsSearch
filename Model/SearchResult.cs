@@ -6,19 +6,19 @@ namespace JDictU.Model {
 
     public class SearchResult {
         //visible to user data
-        internal List<string> kanji { get; set; }
-        internal List<string> kana { get; set; }
-        internal List<string> romaji { get; set; }
-        internal List<string> definitions { get; set; }
-        internal List<string> pos { get; set; }
-        internal int example_total { get; set; }
-        internal int example_verified { get; set; }
+        public List<string> kanji { get; set; }
+        public List<string> kana { get; set; }
+        public List<string> romaji { get; set; }
+        public List<string> definitions { get; set; }
+        public List<string> pos { get; set; }
+        public int example_total { get; set; }
+        public int example_verified { get; set; }
 
         //Note for data binding - {get;set;} needs to be attached to each property that you would like to expose to the xaml
         public string headerText {get;set;}
         public string defText {get;set;}
         public string exampleText { get; set; }
-        //internal use only data
+        //public use only data
         public int entry_id { get; set; }
 
         /// <summary>

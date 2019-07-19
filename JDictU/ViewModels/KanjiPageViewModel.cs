@@ -6,7 +6,7 @@ using JDictU.Model;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 
-namespace JDictU {
+namespace JDictU.ViewModels {
 
 
     public class KanjiPageViewModel : INotifyPropertyChanged {

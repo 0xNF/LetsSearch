@@ -1,6 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using JDictU.Model;
+using System.Threading.Tasks;
 
-namespace JDictU.Model {
+namespace JDictU.ViewModels {
 
     public class KanjiPageModel {
 

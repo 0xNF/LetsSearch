@@ -31,7 +31,7 @@ namespace JDictU {
                 Model.DBInfo.getUserDataAsync().ConfigureAwait(false);
                 Model.DBInfo.getKradfileAsync().ConfigureAwait(false);
                 Model.DBInfo.getKanjiAsync().ConfigureAwait(false);
-                Model.KanjiLookupPageModel.prepareModel().ConfigureAwait(false);
+                ViewModels.KanjiLookupPageModel.prepareModel().ConfigureAwait(false);
             });
         }
 

@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Globalization;
 using Windows.UI.Xaml.Media;
-
 using JDictU.Model;
-
+using JDictU.ViewModels;
 
 namespace JDictU
 {

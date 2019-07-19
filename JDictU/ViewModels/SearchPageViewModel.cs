@@ -9,8 +9,9 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using Windows.UI.Xaml;
 using System.Linq;
+using JDictU.Model;
 
-namespace JDictU.Model {
+namespace JDictU.ViewModels {
     public class SearchPageViewModel : INotifyPropertyChanged// : BaseViewModel
     {
 

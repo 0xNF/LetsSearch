@@ -122,7 +122,8 @@
     <Compile Include="KanjiLookupPage.xaml.cs">
       <DependentUpon>KanjiLookupPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="KanjiLookupPageViewModel.cs" />
+    <Compile Include="ViewModels\KanjiLookupPageModel.cs" />
+    <Compile Include="ViewModels\KanjiLookupPageViewModel.cs" />
     <Compile Include="KanjiPage.xaml.cs">
       <DependentUpon>KanjiPage.xaml</DependentUpon>
     </Compile>
@@ -133,6 +134,10 @@
     <Compile Include="Result.xaml.cs">
       <DependentUpon>Result.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\KanjiPageModel.cs" />
+    <Compile Include="ViewModels\KanjiPageViewModel.cs" />
+    <Compile Include="ViewModels\ResultPageViewModel.cs" />
+    <Compile Include="ViewModels\SearchPageViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -220,6 +225,9 @@
     <PackageReference Include="Template10">
       <Version>1.1.11</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
